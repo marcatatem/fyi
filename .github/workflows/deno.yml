@@ -1,0 +1,51 @@
+name: Deploy marca.fyi
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  test_and_deploy:
+    runs-on: ubuntu-latest
+    env:
+      DENO_DIR: ~/.deno_cache
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v3
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.8.1
+        with:
+          node-version: "20.7.0"
+      - name: Install esbuild globally
+        run: npm install -g esbuild
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: "1.37.1"
+      - name: Run linter
+        run: deno lint
+      - name: Cache Deno dependencies 
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.DENO_DIR }}
+          key: ${{ hashFiles('deno.lock') }}
+      - name: Run tests
+        run: deno test -A
+      - name: Build
+        run: deno task build -r
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: 'dist'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2

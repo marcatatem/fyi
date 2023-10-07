@@ -1,0 +1,42 @@
+{{> header}}
+<article>
+  <section id="about">
+    <div class="columns">
+      <div class="span-4 heading" id="trigger">
+        {{!-- <h2>fyi</h2>  --}}
+        <img src="{{data.about.image.src}}" alt="{{data.about.image.alt}}" width="{{data.about.image.width}}" height="{{data.about.image.height}}">
+      </div>
+      <div class="span-7 content">
+        {{{markdown data.about.content}}}
+        <p class="source">
+          The source code for this website is available on <a href="https://github.com/marcatatem/fyi">GitHub</a>.
+        </p>
+        <p class="contact">
+          Marca Tatem<br>
+          <a href="tel: +(415) 325 0182" class="mosquito">(415) 325 0182</a><br>
+          <a href="mailto:abraham.syncope@gmail.com" class="pigeon">acram;&#x6D;&#x6F;&#x63;&#x2E;&#x65;&#x6D;</a><br>
+          <a href="https://www.linkedin.com/in/marca-tatem/" class="linked-in">LinkedIn</a>
+        </p>
+      </div>
+    </div>
+  </section>
+  {{#each data.sections}}
+  <section id="{{parameterize this.name}}">
+    <div class="columns">
+      <div class="span-4 heading">
+        <hgroup>
+          <h2>{{this.name}}</h2>
+          <p>{{this.role}}</p>
+          <p>{{this.displayDate}}</p>
+        </hgroup>
+      </div>
+      <div class="span-7 content">
+        {{{markdown this.content}}}
+      </div>
+    </div>
+  </section>
+  {{#if this.figure}}
+    {{> figure}}
+  {{/if}}
+  {{/each}}
+</article>

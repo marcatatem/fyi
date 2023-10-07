@@ -1,0 +1,56 @@
+/* @override 
+	http://127.0.0.1:8000/static/styles/sections.css */
+
+article {
+  padding-top: 159px;
+}
+
+article h2 {
+  font: 60px "Montserrat";
+  font-weight: 300;
+  letter-spacing: -1.5px;
+  margin-bottom: 9px;
+  margin-left: -5px;
+  margin-top: 23px;
+}
+
+article hgroup p {
+  opacity: .5;
+  margin-bottom: 0;
+}
+
+article p {
+  margin-bottom: 15px;
+}
+
+article em {
+  font-style: italic;
+}
+
+article strong {
+  font-weight: 600;
+}
+
+article section {
+  padding-top: 75px;
+  padding-bottom: 73px;
+}
+
+article section .content {
+  max-width: 616px;
+}
+
+article figure {
+  background-color: var(--rose);
+  text-align: center;
+  padding-top: 15px;
+  padding-bottom: 13px;
+  margin-top: 14px;
+  margin-bottom: 15px;
+}
+
+article figcaption {
+  font-size: 14px;
+  display: block;
+  opacity: 0.8;
+}

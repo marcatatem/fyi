@@ -1,0 +1,82 @@
+:root {
+  --margin: 80px;
+  --max-width: 1280px;
+  --gutter: 8.635%;
+  --column-colors: rgba(255, 0, 0, .03);
+  --grid-background-color: rgba(255, 0, 0, .03);
+}
+
+.layout {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.layout .canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: calc(var(--max-width) + var(--margin));
+  margin: 0 auto;
+}
+
+.layout .canvas .columns {
+  display: block;
+  width: calc(100% - var(--margin));
+  height: 100%;
+  margin: 0 auto;
+  background-color: var(--grid-background-color);
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--column-colors),
+    var(--column-colors) 5%,
+    transparent 5%,
+    transparent var(--gutter));
+}
+
+body.grid {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 0, 0, .08),
+    rgba(255, 0, 0, .08) 1px,
+    transparent 1px,
+    transparent 15px
+  );
+}
+
+.inner, .columns {
+  width: 100%;
+  max-width: calc(var(--max-width) + var(--margin));
+  margin: 0 auto;
+  padding: 0 40px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: 3.635%;
+}
+
+body.grid .inner > *, body.grid .columns > *  {
+  border: 1px solid rgba(255, 0, 0, 0.2);
+}
+
+.span-2 {
+  grid-column: span 2;
+}
+
+.span-4 {
+  grid-column: span 4;
+}
+
+.span-6 {
+  grid-column: span 6;
+}
+
+.span-7 {
+  grid-column: span 7;
+}
+
+.span-8 {
+  grid-column: span 8;
+}

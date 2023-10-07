@@ -1,0 +1,174 @@
+/* @override 
+	http://127.0.0.1:8000/static/styles.css */
+
+@import "styles/vendor/reset.css";
+@import "styles/typography.css";
+@import "styles/colors.css";
+@import "styles/icons.css";
+@import "styles/columns.css";
+@import "styles/header.css";
+@import "styles/sections.css";
+
+html, body {
+  height: 100%;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Iosevka Custom Web';
+  font-size: 16px;
+  line-height: 30px;
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+a {
+  color: var(--blue);
+  transition: color 80ms ease-in-out 0s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a:hover {
+  color: var(--love)
+}
+
+
+#about .contact {
+  margin-bottom: 0;
+  margin-top: 30px;
+}
+
+.contact .mosquito {
+  color: var(--foregroud);
+  text-decoration: none;
+}
+
+.contact .pigeon {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  text-align: left;
+}
+
+#about img {
+  border-radius: 50%;
+  width: 180px;
+  margin-bottom: 13px;
+  margin-left: -10px;
+  margin-top: 5px;
+}
+
+#about .source {
+  font-style: italic;
+}
+
+footer {
+  border-top: 1px dashed var(--light);
+  padding-top: 21px;
+  padding-bottom: 22px;
+  margin-top: 45px;
+}
+
+footer .back-to-top {
+  text-align: right;
+}
+
+/* The header is too wide */
+@media only screen and (max-width: 1124px) {
+  #lemonchik h2 {
+    letter-spacing: -5px;
+  }
+}
+
+/* iPad */
+@media only screen and (max-width: 1024px) {
+
+  article {
+    padding-top: 149px;
+  }
+  
+  article figure {
+    margin-top: 5px !important;
+  }
+  
+  article section {
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+  
+  section .content {
+    grid-column: span 8;
+    max-width: 100%;
+  }
+
+}
+
+/* Phones */
+@media only screen and (max-width: 740px) {
+  .inner, .columns {
+    padding: 0 20px;
+  }
+  .columns {
+    display: inherit;
+  }
+  article {
+    padding-top: 135px;
+  }
+  article .heading {
+    width: 100%;
+    margin-bottom: 28px;
+  }
+  article .content {
+    min-width: 100%;
+  }
+  article h2 {
+    font-size: 50px;
+    margin-bottom: 11px;
+    margin-top: 0;
+    margin-left: -4px;
+  }
+  article section {
+    padding-top: 24px;
+    padding-bottom: 22px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+  }
+  article figure {
+    margin-bottom: 24px;
+    margin-top: -20px !important;
+  }
+  #about img {
+    margin: 15px auto 60px;
+    display: block;
+  }
+  #lemonchik h2 {
+    letter-spacing: -1.5px;
+  }
+}
+
+@media only screen and (max-width: 430px) {
+  body {
+    font-size: 19px;
+    line-height: 35px;
+  }
+  header {
+    line-height: 35px;
+    padding-top: 21px;
+    padding-bottom: 18px;
+  }
+  header nav {
+    background: var(--background);
+    padding-top: 4px;
+  }
+  header nav ul.primary {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+  header .menu.close {
+    margin-right: 20px;
+  }
+}
+
+
+

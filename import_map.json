@@ -1,0 +1,11 @@
+{
+  "imports": {
+    "std/": "https://deno.land/std@0.198.0/",
+    "utils/": "./utils/",
+    "data/": "./src/data/",
+    "lightningcss": "npm:lightningcss@1.22.0",
+    "prettier": "npm:prettier@3.0.2",
+    "smartypants": "npm:smartypants@0.2.2",
+    "case": "https://deno.land/x/case@2.2.0/mod.ts"
+  }
+}

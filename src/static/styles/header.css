@@ -1,0 +1,162 @@
+/* @override 
+	http://127.0.0.1:8000/static/styles/header.css */
+
+header {
+  position: fixed;
+  width: 100%;
+  line-height: 45px;
+  padding-top: 17px;
+  z-index: 1000;
+  padding-bottom: 12px;
+}
+
+header.scrolled {
+  background-color: var(--background);
+  border-bottom: 1px dashed var(--light);
+}
+
+header .menu {
+  display: none;
+}
+
+header .menu {
+  color: var(--foreground);
+}
+
+header hgroup h1 {
+  font-weight: 600;
+}
+
+header hgroup p {
+  font-style: italic;
+  opacity: .5;
+}
+
+header nav ul.primary a {
+  display: block;
+  text-decoration: none;
+  color: var(--foreground);
+}
+
+header nav ul.primary a:hover {
+  color: var(--love);
+}
+
+header nav ul.primary span {
+  display: block;
+}
+
+header nav ul.primary span.at {
+  font-style: italic;
+}
+
+header nav ul.primary span.year {
+  opacity: .5;
+}
+
+header hgroup {
+  grid-column: span 4;
+}
+
+header nav {
+  grid-column: span 8;
+  display: flex;
+  justify-content: space-between;
+}
+
+header nav ul.primary {
+  flex-grow: 1;
+  max-width: 630px;
+}
+
+header nav ul.primary {
+  display: flex;
+  justify-content: space-between;
+}
+
+header nav ul.secondary {
+  padding-left: 116px;
+}
+
+header nav ul.secondary a.icon {
+  width: 24px;
+  height: 24px;
+}
+
+@media only screen and (max-width: 1024px) {
+  
+  header .menu {
+    display: block;
+  }
+  
+  header hgroup {
+    grid-column: span 11;
+  }
+  
+  header .menu.close {
+    text-align: right;
+    display: block;
+    margin-right: 40px;
+    margin-top: 17px;
+  }
+  
+  header .menu.open {
+    text-align: right;
+  }
+  
+  header nav {
+    position: fixed;
+    width: 370px;
+    height: 100%;
+    top: 0;
+    right: 0;
+    display: block;
+    visibility: hidden;
+    background: var(--surface);
+    transform: translateX(100%);
+    transition: transform 300ms ease-out;
+  }
+  
+  header nav.visible {
+    visibility: visible;
+  }
+  
+  header nav.open {
+    transform: translateX(0%);
+  }
+  
+  header nav ul.primary {
+    max-width: 100%;
+    margin-bottom: 34px;
+    padding: 0 40px;
+    display: block;
+  }
+  
+  header nav ul.primary li a {
+    border-bottom: 1px solid var(--love) !important;
+    padding-bottom: 14px !important;
+    padding-top: 15px;
+    display: block;
+  }
+  
+  header nav ul.primary li a:last-child {
+    border: none;
+    padding-bottom: 0;
+  }
+  
+  header nav ul.secondary {
+    padding: 0 40px;
+  }
+  
+}
+
+@media only screen and (max-width: 740px) {
+  header nav {
+    width: 100%;
+    left: 0;
+  }
+}
+
+
+
+

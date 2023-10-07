@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marca Tatem — FYI</title>
+  <meta name="description" content="{{data.description}}">
+  <meta property="og:title" content="Marca Tatem">
+  <meta property="og:image" content="{{data.about.image.src}}">
+  <meta property="og:description" content="{{data.description}}">
+  <link rel="preload" as="font" type="font/woff2" href="static/fonts/woff2/Montserrat-Light.woff2">
+  <link rel="preload" as="font" type="font/woff2" href="static/fonts/woff2/iosevka-custom-regular.woff2">
+  <link rel="preload" as="font" type="font/woff2" href="static/fonts/woff2/iosevka-custom-italic.woff2">
+  <link rel="preload" as="font" type="font/woff2" href="static/fonts/woff2/iosevka-custom-semibold.woff2">
+  {{#if meta.release}}
+  <link rel="stylesheet" type="text/css" href="static/styles.bundled.css?{{meta.rev}}">
+  {{else}}
+  <link rel="stylesheet" type="text/css" href="static/styles.css">
+  {{/if}}
+  {{#if meta.release}}
+  <script type="text/javascript" src="static/scripts/main.js?{{meta.rev}}"></script>
+  {{else}}
+  <script type="text/javascript" src="static/scripts/main.js"></script>
+  {{/if}}
+  <script type="application/ld+json">{{{stringify meta.schema}}}</script>
+</head>
+<body>
+  {{{ body }}}
+  {{> footer }}
+</body>
+</html>

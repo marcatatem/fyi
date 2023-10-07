@@ -1,0 +1,26 @@
+:root {
+  --background: rgb(255, 255, 255);
+  --foreground: rgb(87, 82, 121);
+  --surface: rgb(255, 250, 243);
+  --light: rgb(87, 82, 121, 0.3);
+  --link: rgb(40, 105, 131);
+  --love: rgb(235, 111, 146);
+  --rose: rgb(244, 219, 214);
+  --pine: rgb(40, 105, 131);
+  --gold: rgb(234, 157, 52);
+  --blue: rgb(30, 102, 245);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: rgb(35, 33, 54);
+    --foreground: rgb(224, 222, 244);
+    --surface: rgb(42, 39, 63);
+    --link: rgb(62, 143, 176);
+    --rose: rgb(238, 190, 190);
+    --blue: rgb(140, 170, 238);
+  }
+  article figure {
+    color: var(--background);
+  }
+}

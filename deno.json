@@ -1,0 +1,15 @@
+{
+  "tasks": {
+    "build": "deno run -A main.ts"
+  },
+  "fmt": {
+    "options": {
+      "lineWidth": 90
+    }
+  },
+  "importMap": "import_map.json",
+  "exclude": [
+    "./dist",
+    "./src/scripts/**/*"
+  ]
+}
