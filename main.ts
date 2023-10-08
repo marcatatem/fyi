@@ -1,4 +1,4 @@
-import { bundle } from "lightningcss";
+import { bundle, Features } from "lightningcss";
 import { format } from "prettier";
 import { debounce } from "std/async/debounce.ts";
 import { existsSync } from "std/fs/mod.ts";
@@ -15,7 +15,7 @@ import { Handlebars, HandlebarsConfig } from "utils/vendor/handlebars.ts";
 import { schema } from "./src/html/schema.ts";
 import { short } from "utils/git.ts";
 
-// flags
+// flags, we don't need to use a library for these simple flags
 const watch = Deno.args.includes("-w");
 const release = Deno.args.includes("-r");
 
@@ -36,13 +36,17 @@ const handlebars = new Handlebars(
 // initial build
 (async () => {
   const t = performance.now();
+  // rsync static assets
   rsync("src/static", "dist");
+  // bundle and minify stylesheets and scripts
   bundleStylesheets();
   buildScripts();
+  // build HTML from handlebars templates and json data
   await buildHTML();
   log("done", `build took ${(performance.now() - t).toFixed(3)}ms`);
 })();
 
+// if watch flag is passed, watch for changes and update the dist folder
 if (watch) {
   const watcher = Deno.watchFs("src", { recursive: true });
   log("watching", relative(".", "src"), "blue");
@@ -51,6 +55,7 @@ if (watch) {
   }
 }
 
+/** handles any change in the src directory */
 async function handler(file?: string) {
   if (!file) return;
   if (!existsSync(file)) {
@@ -88,21 +93,20 @@ async function handler(file?: string) {
   log("watching", relative(".", "src"), "blue");
 }
 
-/**
- * Bundles the stylesheets
- */
+/** bundles and minifies the stylesheets */
 function bundleStylesheets() {
   log("bundle", "src/static/styles.css", "green");
-  const { code } = bundle({ filename: "src/static/styles.css", minify: true });
+  const { code } = bundle({
+    filename: "src/static/styles.css",
+    include: Features.MediaQueries,
+  });
   Deno.writeTextFileSync(
     "dist/static/styles.bundled.css",
     new TextDecoder().decode(code).replaceAll("/static/", ""),
   );
 }
 
-/**
- * Builds the scripts and minify them
- */
+/** bundles and minifies the scripts */
 function buildScripts() {
   mkdirUnlessExist("dist/static/scripts");
   log("building", "src/static/scripts", "green");
@@ -124,9 +128,7 @@ function buildScripts() {
   }
 }
 
-/**
- * Builds the HTML from the handlebars templates
- */
+/** builds the HTML from handlebars templates and json data */
 async function buildHTML() {
   log("building", "html", "green");
   const data = await import("data/data.json", {
