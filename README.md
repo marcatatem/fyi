@@ -1,6 +1,8 @@
 # marca.fyi
 
-Welcome to the automated builder for my personal website. While this might seem overkill for generating a single HTML page, the intent behind this project is to demonstrate best practices suitable for larger projects. Features include CI/CD, documentation, tests, generating pages from JSON data, assets bundling, and more.
+Visit the website here: [marca.fyi](https://marca.fyi)
+
+This is an automated builder for my [personal website](https://marca.fyi). While this might seem overkill for generating a single HTML page, the intent behind this project is to demonstrate best practices suitable for larger projects. Features include CI/CD, documentation, tests, generating pages from JSON data, assets bundling, and more.
 
 ## Requirements
 
@@ -66,4 +68,4 @@ deno task build -r
 
 ## Conclusion
 
-Enjoy building! Remember, the essence of this project isn't just about generating a webpage but showcasing the robust practices that can be applied to more substantial projects.
+Happy building! Remember, the essence of this project isn't just about generating a webpage but showcasing the robust practices that can be applied to more substantial projects.
