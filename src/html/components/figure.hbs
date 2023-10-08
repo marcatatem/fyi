@@ -1,5 +1,5 @@
 <figure>
-  {{#if meta.release}}
+  {{#if @root.meta.release}}
   <picture>
     <source media="(max-width: 430px)" srcset="{{imgix this.figure.src "430x"}}&lossless=true&fm=webp">
     <source media="(max-width: 1024px)" srcset="{{imgix this.figure.src "1024x"}}&lossless=true&fm=webp">
