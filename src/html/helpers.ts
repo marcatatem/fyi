@@ -30,23 +30,38 @@ export default {
     return JSON.stringify(obj);
   },
   /**
-   * Get the path to the Imgix image
-   * @param src The source image
+   * Create an imgix URL from a source image
+   * @param src the source image's path
    * @param {size} size of the image
    * @returns The new URL as string
    */
   imgix(src: string, size?: string): string {
-    // baseImgixURL
-    const url = new URL(
-      relative("static/images", src),
-      data.baseImgixURL,
-    );
-    if (typeof size === "string") {
-      const [w, h] = size.split("x").map(Number);
-      url.searchParams.set("w", String(w * 2));
-      if (h) url.searchParams.set("h", String(h * 2));
-    }
-    // url.searchParams.set("auto", "format");
+    return imgixURL(src, size).toString();
+  },
+  /**
+   * Create a WebP imgix URL from a source image
+   * @param src The source image
+   * @param {size} size of the image
+   * @returns The new URL as string
+   */
+  imgixWebP(src: string, size?: string): string {
+    const url = imgixURL(src, size);
+    url.searchParams.set("lossless", "true");
+    url.searchParams.set("fm", "webp");
     return url.toString();
   },
 };
+
+function imgixURL(src: string, size?: string): URL {
+  // baseImgixURL
+  const url = new URL(
+    relative("static/images", src),
+    data.baseImgixURL,
+  );
+  if (typeof size === "string") {
+    const [w, h] = size.split("x").map(Number);
+    url.searchParams.set("w", String(w * 2));
+    if (h) url.searchParams.set("h", String(h * 2));
+  }
+  return url;
+}

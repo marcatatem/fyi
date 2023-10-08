@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".smooth").forEach((smooth) => {
     smooth.addEventListener("click", function (e) {
       e.preventDefault();
-      const id = (e.currentTarget as HTMLElement).getAttribute("href");
+      const id = (e.currentTarget as HTMLElement).getAttribute("href")!;
       const headerNav = document.querySelector("header nav")!;
       if (headerNav.classList.contains("open")) {
         headerNav.classList.remove("open");
@@ -119,14 +119,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
-
-  function scrollTo(id) {
-    const target = document.querySelector(id);
-    window.scrollTo({
-      top: target.offsetTop,
-      behavior: "smooth",
-    });
-  }
 });
 
 function scrollTo(id: string, smooth = true) {
