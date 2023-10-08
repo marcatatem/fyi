@@ -15,3 +15,7 @@ Deno.test("markdown", () => {
 Deno.test("stringify", () => {
   assertEquals(helpers.stringify({ hello: "world" }), `{"hello":"world"}`);
 });
+
+Deno.test("small", () => {
+  assertEquals(helpers.small("hello.jpg"), "hello@small.jpg");
+});

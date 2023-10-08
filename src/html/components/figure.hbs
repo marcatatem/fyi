@@ -1,4 +1,4 @@
 <figure>
-  <img src="{{this.figure.src}}" alt="{{this.figure.alt}}" width="100%" height="auto" style="max-width: {{this.figure.maxWidth}}px">
+  <img src="{{this.figure.src}}" srcset="{{small this.figure.src}} 430w, {{this.figure.src}}" alt="{{this.figure.alt}}" width="100%" height="auto" style="max-width: {{this.figure.maxWidth}}px">
   <figcaption>{{this.figure.caption}}</figcaption>
 </figure>

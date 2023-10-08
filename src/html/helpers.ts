@@ -1,4 +1,5 @@
 import { paramCase } from "case";
+import { extname } from "std/path/mod.ts";
 import { Marked } from "npm:@ts-stack/markdown";
 import smartypants from "smartypants";
 
@@ -26,5 +27,14 @@ export default {
    */
   stringify(obj: unknown): string {
     return JSON.stringify(obj);
+  },
+  /**
+   * Get the small version of an image
+   * @param src The source of the image
+   * @returns The source of the small image
+   */
+  small(src: string): string {
+    const ext = extname(src);
+    return src.replace(ext, `@small${ext}`);
   },
 };
