@@ -4,7 +4,8 @@
     "jpeg",
     "png",
     "webp",
-    "svg"
+    "svg",
+    "ico"
   ],
   "script": [
     "ts",
