@@ -129,12 +129,16 @@ function buildScripts() {
  */
 async function buildHTML() {
   log("building", "html", "green");
-  const data = await import("data/sections.json", {
+  const data = await import("data/data.json", {
     with: { type: "json" },
   });
   const html = await handlebars.renderView("routes/index", {
     data: data.default,
-    meta: { release: release, schema: schema, rev: short() },
+    meta: {
+      release: release,
+      schema: schema,
+      rev: short(),
+    },
   });
   const formatted = await format(html, {
     parser: "html",

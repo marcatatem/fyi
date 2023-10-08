@@ -1,4 +1,13 @@
 <figure>
-  <img src="{{this.figure.src}}" srcset="{{small this.figure.src}} 430w, {{this.figure.src}}" alt="{{this.figure.alt}}" width="100%" height="auto" style="max-width: {{this.figure.maxWidth}}px">
+  {{#if meta.release}}
+  <picture>
+    <source media="(max-width: 430px)" srcset="{{imgix this.figure.src "430x"}}&lossless=true&fm=webp">
+    <source media="(max-width: 1024px)" srcset="{{imgix this.figure.src "1024x"}}&lossless=true&fm=webp">
+    <source media="(min-width: 1024px)" srcset="{{imgix this.figure.src}}&lossless=true&fm=webp">
+    <img src="{{imgix this.figure.src}}" alt="{{this.figure.alt}}" style="width: 100%; max-width: {{this.figure.maxWidth}}px;">
+  </picture>
+  {{else}}
+  <img src="{{this.figure.src}}" alt="{{this.figure.alt}}" width="100%" height="auto" style="max-width: {{this.figure.maxWidth}}px">
+  {{/if}}
   <figcaption>{{this.figure.caption}}</figcaption>
 </figure>

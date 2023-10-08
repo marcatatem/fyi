@@ -3,8 +3,11 @@
   <section id="about">
     <div class="columns">
       <div class="span-4 heading" id="trigger">
-        {{!-- <h2>fyi</h2>  --}}
-        <img src="{{data.about.image.src}}" alt="{{data.about.image.alt}}" width="{{data.about.image.width}}" height="{{data.about.image.height}}">
+        {{#if meta.release}}
+        <img src="{{imgix data.about.image.src "180x"}}" alt="{{data.about.image.alt}}" width="{{data.about.image.size.width}}" height="{{data.about.image.size.height}}">
+        {{else}}
+        <img src="{{data.about.image.src}}" alt="{{data.about.image.alt}}" width="{{data.about.image.size.width}}" height="{{data.about.image.size.height}}">
+        {{/if}}
       </div>
       <div class="span-7 content">
         {{{markdown data.about.content}}}

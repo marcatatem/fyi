@@ -1,7 +1,8 @@
 import { paramCase } from "case";
-import { extname } from "std/path/mod.ts";
+import { extname, join, relative } from "std/path/mod.ts";
 import { Marked } from "npm:@ts-stack/markdown";
 import smartypants from "smartypants";
+import data from "data/data.json" with { type: "json" };
 
 export default {
   /**
@@ -29,12 +30,31 @@ export default {
     return JSON.stringify(obj);
   },
   /**
-   * Get the small version of an image
-   * @param src The source of the image
-   * @returns The source of the small image
+   * Get the path to the Imgix image
+   * @param src The source image
+   * @param {size} The size of the image
+   * @returns The new URL as string
    */
-  small(src: string): string {
-    const ext = extname(src);
-    return src.replace(ext, `@small${ext}`);
+  imgix(src: string, size?: string): string {
+    // baseImgixURL
+    const url = new URL(
+      relative("static/images", src),
+      data.baseImgixURL,
+    );
+    if (typeof size === "string") {
+      const [w, h] = size.split("x").map(Number);
+      url.searchParams.set("w", String(w * 2));
+      if (h) url.searchParams.set("h", String(h * 2));
+    }
+    // url.searchParams.set("auto", "format");
+    return url.toString();
+  },
+  /**
+   * Takes a width and doubles it
+   * @param width The width to double
+   * @returns The doubled width
+   */
+  doubleWidth(width: string): string {
+    return String(parseInt(width) * 2);
   },
 };

@@ -1,4 +1,4 @@
-import data from "data/sections.json" with { type: "json" };
+import data from "data/data.json" with { type: "json" };
 
 export const schema = {
   "@context": "https://schema.org",
