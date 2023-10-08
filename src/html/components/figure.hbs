@@ -4,10 +4,10 @@
     <source media="(max-width: 430px)" srcset="{{imgixWebP this.figure.src "430x"}}">
     <source media="(max-width: 1024px)" srcset="{{imgixWebP this.figure.src "1024x"}}">
     <source media="(min-width: 1024px)" srcset="{{imgixWebP this.figure.src}}">
-    <img src="{{imgix this.figure.src}}" alt="{{this.figure.alt}}" style="width: 100%; max-width: {{this.figure.maxWidth}}px;">
+    <img src="{{imgix this.figure.src}}" alt="{{this.figure.alt}}" loading="lazy" style="width: 100%; max-width: {{this.figure.maxWidth}}px;">
   </picture>
   {{else}}
-  <img src="{{this.figure.src}}" alt="{{this.figure.alt}}" width="100%" height="auto" style="max-width: {{this.figure.maxWidth}}px">
+  <img src="{{this.figure.src}}" alt="{{this.figure.alt}}" loading="lazy" width="100%" height="auto" style="max-width: {{this.figure.maxWidth}}px">
   {{/if}}
   <figcaption>{{this.figure.caption}}</figcaption>
 </figure>
