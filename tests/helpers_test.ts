@@ -16,6 +16,13 @@ Deno.test("stringify", () => {
   assertEquals(helpers.stringify({ hello: "world" }), `{"hello":"world"}`);
 });
 
-Deno.test("small", () => {
-  assertEquals(helpers.small("hello.jpg"), "hello@small.jpg");
+Deno.test("imgix", () => {
+  assertEquals(
+    helpers.imgix("static/images/hello.jpg", "100x300"),
+    "https://fyi.imgix.net/hello.jpg?w=200&h=600",
+  );
+  assertEquals(
+    helpers.imgix("static/images/hello.jpg", "100x"),
+    "https://fyi.imgix.net/hello.jpg?w=200",
+  );
 });
