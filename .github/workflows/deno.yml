@@ -49,3 +49,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+      - name: Invalidate cache for index.html
+        run: curl -X "POST" "https://api.cloudflare.com/client/v4/zones/9a58d566db437a131f72fad966a3e65d/purge_cache" -d '{"files":["https://marca.fyi/"]}' -H 'Authorization: Bearer ${{ secrets.CLOUDFLARE_TOKEN }}'
