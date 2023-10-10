@@ -13,15 +13,11 @@
   <link rel="preload" as="font" type="font/woff2" href="static/fonts/woff2/iosevka-custom-italic.woff2">
   <link rel="preload" as="font" type="font/woff2" href="static/fonts/woff2/iosevka-custom-semibold.woff2">
   {{#if meta.release}}
-  <link rel="stylesheet" type="text/css" href="static/styles.bundled.css?{{meta.rev}}">
+  <link rel="stylesheet" type="text/css" href="static/styles.bundled-{{meta.rev}}.css">
   {{else}}
   <link rel="stylesheet" type="text/css" href="static/styles.css">
   {{/if}}
-  {{#if meta.release}}
-  <script type="text/javascript" src="static/scripts/main.js?{{meta.rev}}"></script>
-  {{else}}
-  <script type="text/javascript" src="static/scripts/main.js"></script>
-  {{/if}}
+  <script type="text/javascript" src="static/scripts/main-{{meta.rev}}.js"></script>
   <link rel="apple-touch-icon" sizes="180x180" href="static/images/favicons/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="static/images/favicons/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="static/images/favicons/favicon-16x16.png">

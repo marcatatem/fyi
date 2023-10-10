@@ -22,6 +22,9 @@ const release = Deno.args.includes("-r");
 // creating a debounced handler
 const debouncedHandler = debounce(handler, 200);
 
+// get git current revision
+const rev = short();
+
 // handlebars config
 const handlebars = new Handlebars(
   <HandlebarsConfig> {
@@ -101,7 +104,7 @@ function bundleStylesheets() {
     include: Features.MediaQueries,
   });
   Deno.writeTextFileSync(
-    "dist/static/styles.bundled.css",
+    `dist/static/styles.bundled-${rev}.css`,
     new TextDecoder().decode(code).replaceAll("/static/", ""),
   );
 }
@@ -115,7 +118,7 @@ function buildScripts() {
       "esbuild",
       "src/scripts/main.ts",
       "--bundle",
-      "--outdir=dist/static/scripts",
+      `--outfile=dist/static/scripts/main-${rev}.js`,
       "--minify",
       "--sourcemap",
     ],
@@ -123,7 +126,7 @@ function buildScripts() {
   const { code } = cmd.outputSync();
   if (code !== 0) {
     throw new Error(
-      `Couldn't build src/scripts/main.ts, please install esbuild (npm i esbuild -g)`,
+      `Couldn't build src/scripts/main.ts, have you installed esbuild (npm i esbuild -g)?`,
     );
   }
 }
@@ -139,7 +142,7 @@ async function buildHTML() {
     meta: {
       release: release,
       schema: schema,
-      rev: short(),
+      rev: rev,
     },
   });
   const formatted = await format(html, {
