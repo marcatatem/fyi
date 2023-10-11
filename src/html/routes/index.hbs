@@ -28,7 +28,11 @@
     <div class="columns">
       <div class="span-4 heading">
         <hgroup>
+          {{#if this.displayName}}
+          <h2>{{{this.displayName}}}</h2>
+          {{else}}
           <h2>{{this.name}}</h2>
+          {{/if}}
           <p>{{this.role}}</p>
           <p>{{this.displayDate}}</p>
         </hgroup>
