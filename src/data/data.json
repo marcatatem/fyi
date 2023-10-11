@@ -36,6 +36,7 @@
         "src": "static/images/melvil.png",
         "alt": "3 screenshots of the Melvil iPhone app and Melvil logo",
         "maxWidth": 1279,
+        "maxHeight": 821,
         "caption": "Time-capsule—Melvil iPhone App"
       }
     },
@@ -52,6 +53,7 @@
         "src": "static/images/lemonchik.png",
         "alt": "Screenshot of Lemonchik’s website homepage",
         "maxWidth": 1359,
+        "maxHeight": 951,
         "caption": "Time-capsule—Lemonchik’s website"
       }
     },
@@ -68,6 +70,7 @@
         "src": "static/images/guzzle.png",
         "alt": "Screenshot of Guzzle website homepage",
         "maxWidth": 1359,
+        "maxHeight": 998,
         "caption": "Time-capsule—Guzzle, a topic-based news dashboard"
       }
     },
