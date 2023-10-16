@@ -1,0 +1,25 @@
+/* @override 
+	http://127.0.0.1:3000/css/styles/footer.css */
+
+footer {
+  border-top: 1px dashed var(--light);
+  padding-top: 21px;
+  padding-bottom: 22px;
+  margin-top: 45px;
+}
+
+footer .back-to-top {
+  text-align: right;
+}
+
+footer .compact {
+  display: none;
+  width: calc(100% - var(--margin));
+  margin: 0 auto;
+  justify-content: space-between;
+}
+
+footer .build-info {
+  font-size: 12px;
+  opacity: .6;
+}

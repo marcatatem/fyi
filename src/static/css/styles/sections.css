@@ -1,5 +1,5 @@
 /* @override 
-	http://127.0.0.1:8000/static/styles/sections.css */
+	http://127.0.0.1:3000/css/styles/sections.css */
 
 article {
   padding-top: 159px;
@@ -48,9 +48,9 @@ article figure {
   background-color: var(--rose);
   text-align: center;
   padding-top: 15px;
-  padding-bottom: 13px;
+  padding-bottom: 18px;
   margin-top: 14px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 article figcaption {

@@ -1,20 +1,15 @@
-import { log } from "utils/log.ts";
-
 /**
- * Get the current git commit hash
- * @returns {string} the current git commit hash
+ * Get the current git revision.
+ * @returns {string} The current git revision.
  */
-export function short(): string | never {
+export function getShortRevision(): string {
   const cmd = new Deno.Command("git", {
     args: ["rev-parse", "--short", "HEAD"],
   });
-  const { stdout, code, stderr } = cmd.outputSync();
+  const { stdout, code } = cmd.outputSync();
   if (code !== 0) {
-    throw new Error(
-      `Couldn't get git revision (${new TextDecoder().decode(stderr).trim()})`,
-    );
+    return "unknown";
   }
   const rev = new TextDecoder().decode(stdout).trim();
-  log("git revision", rev, "green");
   return rev;
 }

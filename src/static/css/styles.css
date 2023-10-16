@@ -1,5 +1,5 @@
 /* @override 
-	http://127.0.0.1:8000/static/styles.css */
+	http://127.0.0.1:3000/css/styles.css */
 
 @import "styles/vendor/reset.css";
 @import "styles/typography.css";
@@ -7,16 +7,18 @@
 @import "styles/icons.css";
 @import "styles/columns.css";
 @import "styles/header.css";
+@import "styles/footer.css";
 @import "styles/sections.css";
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Iosevka Custom Web';
+  font-family: 'Iosevka Custom Web', monospace;
   font-size: 16px;
   line-height: 30px;
   -moz-text-size-adjust: none;
@@ -40,15 +42,9 @@ a:hover {
   margin-top: 30px;
 }
 
-.contact .mosquito {
+.contact a:not(.linked-in) {
   color: var(--foregroud);
   text-decoration: none;
-}
-
-.contact .pigeon {
-  unicode-bidi: bidi-override;
-  direction: rtl;
-  text-align: left;
 }
 
 #about img {
@@ -61,17 +57,6 @@ a:hover {
 
 #about .source {
   font-style: italic;
-}
-
-footer {
-  border-top: 1px dashed var(--light);
-  padding-top: 21px;
-  padding-bottom: 22px;
-  margin-top: 45px;
-}
-
-footer .back-to-top {
-  text-align: right;
 }
 
 /* The header is too wide */
@@ -87,86 +72,107 @@ footer .back-to-top {
   article {
     padding-top: 149px;
   }
-  
+
   article figure {
     margin-top: 5px !important;
   }
-  
+
   article section {
     padding-top: 40px;
     padding-bottom: 48px;
   }
-  
+
   section .content {
     grid-column: span 8;
     max-width: 100%;
   }
-  
-  #lemonchik h2, #freelance h2 {
+
+  #lemonchik h2,
+  #freelance h2 {
     line-height: 60px;
   }
-  
+
   #lemonchik h2 span {
     display: inline-block;
   }
-  
+
   #freelance h2 span {
     display: inline-block;
   }
+
+  footer .compact {
+    display: flex;
+  }
+
+  footer .columns {
+    display: none;
+  }
+
 
 }
 
 /* Phones */
 @media only screen and (max-width: 740px) {
-  .inner, .columns {
+
+  .inner,
+  .columns {
     padding: 0 20px;
   }
+
   .columns {
     display: inherit;
   }
+
   article {
     padding-top: 135px;
   }
+
   article .heading {
     width: 100%;
     margin-bottom: 28px;
   }
+
   article .content {
     min-width: 100%;
   }
+
   article h2 {
     font-size: 50px;
     margin-bottom: 8px;
     margin-top: 0;
     margin-left: -4px;
   }
+
   article section {
     padding-top: 24px;
     padding-bottom: 22px;
     margin-top: 15px;
     margin-bottom: 30px;
   }
+
   article figure {
     margin-bottom: 24px;
-    /*background: transparent;*/
     margin-top: -34px !important;
   }
+
   #about img {
     margin: 15px auto 60px;
     display: block;
   }
+
   #lemonchik h2 {
     letter-spacing: -1.5px;
   }
-  
-  #lemonchik h2, #freelance h2 {
+
+  #lemonchik h2,
+  #freelance h2 {
     line-height: inherit;
   }
-  
+
   #lemonchik h2 span {
     display: none;
   }
-  
+
   #freelance h2 span {
     display: none;
   }
@@ -178,29 +184,32 @@ footer .back-to-top {
     font-size: 19px;
     line-height: 35px;
   }
+
   header {
     line-height: 35px;
     padding-top: 21px;
     padding-bottom: 18px;
   }
+
   header nav {
     background: var(--background);
     padding-top: 4px;
   }
+
   header nav ul.primary {
     padding-right: 20px;
     padding-left: 20px;
   }
+
   header .menu.close {
     margin-right: 20px;
   }
+
   article p {
     margin-bottom: 20px;
   }
+
   article figcaption {
     margin-top: -1px;
   }
 }
-
-
-

@@ -9,7 +9,14 @@
   },
   "importMap": "import_map.json",
   "exclude": [
-    "./dist",
-    "./src/scripts/**/*"
-  ]
+    "./dist"
+  ],
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "npm:preact",
+    "lib": [
+      "deno.ns",
+      "dom"
+    ]
+  }
 }
