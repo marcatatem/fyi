@@ -1,10 +1,8 @@
 {
-  "baseImgixURL": "https://fyi.imgix.net/",
-  "description": "Professional journey of a versatile software engineer and creative, showcasing a blend of design and technology across multiple projects, ventures, and collaborations.",
   "about": {
     "content": "Driven to bridge the gap between technology and design, I craft distinctive user experiences. As a Senior Software Engineer at Apple, I focus on crafting flawless and delightful user-centric solutions. With a history as Melvil and Lemonchik's founder, my unwavering commitment to innovation actively shapes the future of User Experience.",
     "image": {
-      "src": "static/images/marca.jpg",
+      "src": "marca-profile.jpg",
       "alt": "Close-up portrait of Marca",
       "size": {
         "width": 180,
@@ -15,25 +13,21 @@
   "sections": [
     {
       "name": "Apple",
+      "hidden": false,
       "date": "Present",
       "role": "Senior Software Engineer (L5)",
       "displayDate": "2018—Present",
-      "content": "Joining the **AI/ML** team, I channeled my expertise to uplift the search experience across Apple's platforms.\n\nEntrusted with product ideation, I've guided concepts from inception to polished prototypes, ensuring each aspect—from core intent to aesthetic appeal—is meticulously addressed. These prototypes have played a pivotal role in influencing the development of features seamlessly blending within the Apple ecosystem.\n\nThis journey underlines my ability to deliver high-quality prototypes, a testament to my dedication to unparalleled User Experience and design.",
-      "tags": [
-        "User Experience", "Typescript", "Go", "Swift", "Sketch"
-      ]
+      "content": "Joining the **AI/ML** team, I channeled my expertise to uplift the search experience across Apple's platforms.\n\nEntrusted with product ideation, I've guided concepts from inception to polished prototypes, ensuring each aspect—from core intent to aesthetic appeal—is meticulously addressed. These prototypes have played a pivotal role in influencing the development of features seamlessly blending within the Apple ecosystem.\n\nThis journey underlines my ability to deliver high-quality prototypes, a testament to my dedication to unparalleled User Experience and design."
     },
     {
       "name": "Melvil",
+      "hidden": false,
       "date": "2015—2017",
       "role": "Co-Founder and Chief Technologist",
       "displayDate": "2015—2017",
       "content": "At Melvil, I spearheaded a seasoned team of engineers, successfully navigating two rounds of seed funding. Our ambition led to the birth of an avant-garde entity-based search engine, designed for optimal data extraction from open databases and adept web crawling.\n\nThe culmination of our efforts materialized as an iPhone app, boasting advanced autocomplete features and offering users a wealth of information on diverse topics.\n\nMy role encompassed team leadership, shaping our product's direction, architecting scalable solutions, managing vast datasets, and mastering both front-end and back-end web technologies.",
-      "tags": [
-        "Found Raising", "Product Vision", "Team Management", "User Experience", "Massive Datasets", "Distributed Computing"
-      ],
       "figure": {
-        "src": "static/images/melvil.png",
+        "src": "melvil.png",
         "alt": "3 screenshots of the Melvil iPhone app and Melvil logo",
         "maxWidth": 1279,
         "maxHeight": 821,
@@ -41,17 +35,14 @@
       }
     },
     {
-      "name": "Lemonchik",
-      "displayName": "Lemon<span>–</span>chik",
+      "name": "Lemon–chik",
+      "hidden": false,
       "date": "2008—2015",
       "role": "Founding Partner and Creative Director",
       "displayDate": "2008—2015",
       "content": "As the Founding Partner and Creative Director of Lemonchik from 2008 until its acquisition by ProFirst in 2015, I led a successful Interactive Agency operating in Paris and New York. Lemonchik specialized in creating top-tier websites and applications, primarily focusing on the Fashion and Beauty industry.\n\nNotable clients included prestigious names like **Dior**, **Guerlain**, **Issey Miyake**, **Chanel**, and **Billy Cotton**.\n\nMy responsibilities at Lemonchik spanned team management, fostering the agency's distinctive attention to detail, and overseeing the development of _Sleek_, a custom Content Management System known for its ease of use. In 2015, I decided to sell Lemonchik to shift my focus toward the development of Melvil.",
-      "tags": [
-        "Creative Direction", "Team Guidance", "Ruby"
-      ],
       "figure": {
-        "src": "static/images/lemonchik.png",
+        "src": "lemonchik.png",
         "alt": "Screenshot of Lemonchik’s website homepage",
         "maxWidth": 1359,
         "maxHeight": 951,
@@ -64,11 +55,8 @@
       "role": "A Lemonchik project",
       "displayDate": "2010",
       "content": "Lemonchik's Guzzle, a news dashboard, earned acclaim from leading publications like [ReadWrite](https://readwrite.com/guzzleit-a-personalized-news-d/), [TechCrunch](https://techcrunch.com/2010/07/16/guzzle-for-iphone/), and Mashable.\n\nGuzzle was praised for its user-friendly interface, lightning-fast setup, and personalized news aggregation. Users could customize their experience, creating scannable layouts, exploring images, and diving into in-depth reading.\n\nIt received the _Best News App Award_ from AppAwards in 2010.",
-      "tags": [
-        "Product Building", "User Experience", "Ruby on Rails", "Sphinx (Manticore Search)"
-      ],
       "figure": {
-        "src": "static/images/guzzle.png",
+        "src": "guzzle.png",
         "alt": "Screenshot of Guzzle website homepage",
         "maxWidth": 1359,
         "maxHeight": 998,
@@ -76,8 +64,8 @@
       }
     },
     {
-      "name": "Freelance",
-      "displayName": "Free<span>–</span>lance",
+      "name": "Free–lance",
+      "hidden": false,
       "date": "2004—2008",
       "displayDate": "2004—2008",
       "content": "In the dance between tech and art, I partnered with notable names in the French media landscape.\n\nAt **Madame Figaro**, I played a pivotal role in transitioning the esteemed fashion and beauty magazine to the digital world, ensuring its iconic elegance resonated vibrantly online.\nMy collaboration with **TF1**, France's leading private broadcaster, allowed me to showcase my versatility: I engineered an immersive online video game for _'Koh-Lanta'_ and created the candidate selection system for the French take on _'Who Wants to Be a Millionaire?'_.\nAt **ELLE**, I brought popup websites to life, composing and integrating music to offer a more textured digital journey.\n\nAmidst these projects, my venture into app development led to **Ciboulette**, a file encryption shareware that earned a spot on the accompanying CDs of select print Mac magazines."

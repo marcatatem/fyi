@@ -1,10 +1,17 @@
 {
   "imports": {
-    "std/": "https://deno.land/std@0.198.0/",
-    "utils/": "./utils/",
+    "main.ts": "./main.ts",
     "data/": "./src/data/",
+    "html/": "./src/html/",
+    "utils/": "./utils/",
+    "std/": "https://deno.land/std@0.198.0/",
+    "types/": "./types/",
+    "preact": "npm:preact@10.18.1",
+    "preact-render-to-string": "npm:preact-render-to-string@6.2.2",
     "lightningcss": "npm:lightningcss@1.22.0",
+    "esbuild": "https://deno.land/x/esbuild@v0.19.4/mod.js",
     "prettier": "npm:prettier@3.0.2",
+    "markdown": "npm:@ts-stack/markdown",
     "smartypants": "npm:smartypants@0.2.2",
     "case": "https://deno.land/x/case@2.2.0/mod.ts"
   }

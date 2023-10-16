@@ -25,28 +25,26 @@
 .layout .canvas .columns {
   display: block;
   width: calc(100% - var(--margin));
-  height: 100%;
   margin: 0 auto;
+  height: 100%;
   background-color: var(--grid-background-color);
-  background-image: repeating-linear-gradient(
-    to right,
-    var(--column-colors),
-    var(--column-colors) 5%,
-    transparent 5%,
-    transparent var(--gutter));
+  background-image: repeating-linear-gradient(to right,
+      var(--column-colors),
+      var(--column-colors) 5%,
+      transparent 5%,
+      transparent var(--gutter));
 }
 
 body.grid {
-  background-image: repeating-linear-gradient(
-    to bottom,
-    rgba(255, 0, 0, .08),
-    rgba(255, 0, 0, .08) 1px,
-    transparent 1px,
-    transparent 15px
-  );
+  background-image: repeating-linear-gradient(to bottom,
+      rgba(255, 0, 0, .08),
+      rgba(255, 0, 0, .08) 1px,
+      transparent 1px,
+      transparent 15px);
 }
 
-.inner, .columns {
+.inner,
+.columns {
   width: 100%;
   max-width: calc(var(--max-width) + var(--margin));
   margin: 0 auto;
@@ -57,7 +55,8 @@ body.grid {
   grid-gap: 3.635%;
 }
 
-body.grid .inner > *, body.grid .columns > *  {
+body.grid .inner>*,
+body.grid .columns>* {
   border: 1px solid rgba(255, 0, 0, 0.2);
 }
 

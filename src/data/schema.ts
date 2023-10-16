@@ -1,4 +1,4 @@
-import data from "data/data.json" with { type: "json" };
+import meta from "data/meta.json" with { type: "json" };
 
 export const schema = {
   "@context": "https://schema.org",
@@ -24,13 +24,13 @@ export const schema = {
       },
     ],
   },
-  "abstract": data.description,
+  "abstract": meta.head.description,
   "mainContentOfPage": {
     "cssSelector": "article",
   },
   "primaryImageOfPage": {
     "@type": "ImageObject",
-    "url": "https://marca.fyi/static/images/profile.jpg",
+    "url": "https://marca.fyi/img/marca.jpg",
     "caption": "Portrait of Marca",
   },
 };

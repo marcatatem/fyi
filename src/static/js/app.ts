@@ -1,14 +1,9 @@
-import textBalancer from "./vendor/text-balancer";
-import FontFaceObserver from "./vendor/fontfaceobserver.standalone";
+interface BuildInfo {
+  revision: string;
+  took: number;
+}
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Reflow text small screens
-  if (window.innerWidth <= 414) {
-    const observer = new FontFaceObserver("Iosevka Custom Web");
-    observer.load().then(() => {
-      textBalancer.balanceText(".content p");
-    });
-  }
   // show grid if needed
   const url = new URL(window.location.href);
   if (url.searchParams.has("grid")) {
@@ -18,34 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
       '<div class="layout"><div class="canvas"><div class="columns"></div></div></div>',
     );
   }
-  // simple obfuscation
-  const pigeon = document.querySelector(".contact .pigeon")!;
-  const value = pigeon.innerHTML;
-  const reformulated = value
-    .split("")
-    .reverse()
-    .join("")
-    .split(";")
-    .reverse()
-    .join(String.fromCharCode(64));
-  let prefix = pigeon.getAttribute("href")!.split(":")[0];
-  document.querySelectorAll(".contact .pigeon").forEach((pigeon) => {
-    pigeon.setAttribute("href", `${prefix}:${reformulated}`);
-    pigeon.innerHTML = value.split(";").reverse().join("@");
-  });
-  const mosquito = document.querySelector(".contact .mosquito")!;
-  const groups = mosquito.innerHTML.split(" ");
-  const lemongrass = [
-    groups[0],
-    groups[1].split("").reverse().join(""),
-    groups[2].split("").reverse().join(""),
-  ];
-  mosquito.innerHTML = lemongrass.join(" ");
-  prefix = mosquito.getAttribute("href")!.split(":")[0];
-  mosquito.setAttribute(
-    "href",
-    `${prefix}:1-${lemongrass.join("-").replace(/\(|\)/g, "")}`,
-  );
   // attach events
   document.querySelector("header .open.menu")?.addEventListener(
     "click",
@@ -62,8 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       const nav = document.querySelector("header nav")!;
       nav.classList.remove("open");
-      nav.addEventListener("transitionend", function handler(e) {
-        window.requestAnimationFrame(() => {
+      nav.addEventListener("transitionend", function handler() {
+        requestAnimationFrame(() => {
           nav.classList.remove("visible");
         });
         // Remove the event listener after it has executed
@@ -79,25 +46,23 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   );
   // header
-  window.addEventListener("scroll", function (_) {
+  addEventListener("scroll", function (_) {
     const trigger = document.querySelector("#trigger")!;
     const header = document.querySelector("header")!;
-    const triggerPosition = trigger.getBoundingClientRect().top +
-      window.pageYOffset;
+    const triggerPosition = trigger.getBoundingClientRect().top + window.scrollY;
     const headerHeight = header.offsetHeight;
-
-    if (window.pageYOffset > triggerPosition - headerHeight) {
+    if (window.scrollY > triggerPosition - headerHeight) {
       header.classList.add("scrolled");
     } else {
       header.classList.remove("scrolled");
     }
   });
-
+  // add scroll margin to sections
   document.querySelectorAll("section").forEach((section) => {
     const headerHeight = document.querySelector("header")!.offsetHeight;
     section.style.scrollMarginTop = `${headerHeight}px`;
   });
-
+  // add smooth transitions to navigation links
   document.querySelectorAll(".smooth").forEach((smooth) => {
     smooth.addEventListener("click", function (e) {
       e.preventDefault();
@@ -105,9 +70,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const headerNav = document.querySelector("header nav")!;
       if (headerNav.classList.contains("open")) {
         headerNav.classList.remove("open");
-        headerNav.addEventListener("transitionend", function handler(e) {
+        headerNav.addEventListener("transitionend", function handler() {
           headerNav.classList.remove("visible");
-          window.requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
             setTimeout(() => {
               scrollTo(id);
             }, 150);
@@ -120,6 +85,30 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+onload = async () => {
+  // update revision and build time
+  if ("fetch" in window) {
+    const response = await fetch("/build-info.json");
+    const info: BuildInfo = await response.json();
+    const originalLabel = document.querySelector(".build-info")?.innerHTML;
+    if (originalLabel) {
+      let label = originalLabel;
+      const matches = originalLabel.matchAll(/\[([\w]+)\]/g);
+      for (const match of matches) {
+        const value = info[match[1] as keyof BuildInfo];
+        label = label.replace(match[0], String(value));
+      }
+      document.querySelectorAll(".build-info").forEach((el) => {
+        el.innerHTML = label;
+      });
+    }
+  } else {
+    document.querySelectorAll(".build-info").forEach((el) => {
+      el.innerHTML = "Fetch API not supported.";
+    });
+  }
+};
 
 function scrollTo(id: string, smooth = true) {
   document.querySelector(id)?.scrollIntoView({

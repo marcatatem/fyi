@@ -1,5 +1,5 @@
 /* @override 
-	http://127.0.0.1:8000/static/styles/header.css */
+  http://127.0.0.1:3000/css/styles/footer.css */
 
 header {
   position: fixed;
@@ -23,8 +23,10 @@ header .menu {
   color: var(--foreground);
 }
 
-header hgroup h1 {
+header hgroup h1 a {
   font-weight: 600;
+  color: var(--foreground);
+  text-decoration: none;
 }
 
 header hgroup p {
@@ -84,26 +86,26 @@ header nav ul.secondary a.icon {
 }
 
 @media only screen and (max-width: 1024px) {
-  
+
   header .menu {
     display: block;
   }
-  
+
   header hgroup {
     grid-column: span 11;
   }
-  
+
   header .menu.close {
     text-align: right;
     display: block;
     margin-right: 40px;
     margin-top: 17px;
   }
-  
+
   header .menu.open {
     text-align: right;
   }
-  
+
   header nav {
     position: fixed;
     width: 370px;
@@ -116,38 +118,38 @@ header nav ul.secondary a.icon {
     transform: translateX(100%);
     transition: transform 300ms ease-out;
   }
-  
+
   header nav.visible {
     visibility: visible;
   }
-  
+
   header nav.open {
     transform: translateX(0%);
   }
-  
+
   header nav ul.primary {
     max-width: 100%;
     margin-bottom: 34px;
     padding: 0 40px;
     display: block;
   }
-  
+
   header nav ul.primary li a {
     border-bottom: 1px solid var(--love) !important;
     padding-bottom: 14px !important;
     padding-top: 15px;
     display: block;
   }
-  
+
   header nav ul.primary li a:last-child {
     border: none;
     padding-bottom: 0;
   }
-  
+
   header nav ul.secondary {
     padding: 0 40px;
   }
-  
+
 }
 
 @media only screen and (max-width: 740px) {
@@ -156,7 +158,3 @@ header nav ul.secondary a.icon {
     left: 0;
   }
 }
-
-
-
-
