@@ -4,7 +4,7 @@ export const Footer = () => {
       <div class="columns">
         <div class="span-4">
           <p>Marca Tatem</p>
-          <p class="build-info">Build [revison], took [took]ms</p>
+          <p class="build-info">Build [revision], took [took]ms</p>
         </div>
         <div class="span-2">
           <p class="contact">
@@ -31,7 +31,7 @@ export const Footer = () => {
           <p>
             <a href="mailto:marca@me.com">marca@me.com</a>
           </p>
-          <p class="build-info">Build [revison], took [took]ms</p>
+          <p class="build-info">Build [revision], took [took]ms</p>
         </div>
         <div class="tools">
           <p class="back-to-top">

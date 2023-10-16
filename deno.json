@@ -1,6 +1,7 @@
 {
   "tasks": {
-    "build": "deno run -A main.ts"
+    "build": "deno run -A main.ts",
+    "dev": "nodemon -e tsx,json,ts,css -i dist --exec deno run -A main.ts"
   },
   "fmt": {
     "options": {
