@@ -43,6 +43,8 @@ export const Head = ({ mode, revision }: AppProps) => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       >
       </script>
+      <script defer data-domain="marca.fyi" src="https://plausible.io/js/script.js">
+      </script>
     </head>
   );
 };
