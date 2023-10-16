@@ -15,6 +15,13 @@ export function caesura(str: string): string {
   return str.replaceAll(/(-|–|—)/g, "<span>$1</span>");
 }
 
+export function esperluette(str: string, connector = " and "): string {
+  return str.replaceAll(
+    connector,
+    `<span class="and">${connector}</span><span class=\"esperluette\"> & </span>`,
+  );
+}
+
 /**
  * Parse a string of Markdown and smarten punctuation
  * @param str The string to parse

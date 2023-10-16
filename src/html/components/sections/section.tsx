@@ -2,7 +2,13 @@ import content from "data/content.json" with { type: "json" };
 
 import { RenderingMode } from "html/app.tsx";
 import { Figure } from "html/components/figure.tsx";
-import { caesura, markdown, parameterize, removeHyphens } from "html/helpers.ts";
+import {
+  caesura,
+  esperluette,
+  markdown,
+  parameterize,
+  removeHyphens,
+} from "html/helpers.ts";
 
 type SectionProps = {
   mode: RenderingMode;
@@ -19,7 +25,9 @@ export const Section = ({ mode, section }: SectionProps) => {
               <h2
                 dangerouslySetInnerHTML={{ __html: caesura(section.name) }}
               />
-              <p>{section.role}</p>
+              {section.role && (
+                <p dangerouslySetInnerHTML={{ __html: esperluette(section.role) }} />
+              )}
               <p>{section.displayDate}</p>
             </hgroup>
           </div>

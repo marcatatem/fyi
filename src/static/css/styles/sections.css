@@ -5,6 +5,10 @@ article {
   padding-top: 159px;
 }
 
+article .esperluette {
+  display: none;
+}
+
 article h2 {
   font: 60px "Montserrat";
   font-weight: 300;
