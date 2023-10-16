@@ -84,6 +84,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+  // transition for lazy loaded images
+  document.querySelectorAll("figure img").forEach((img) => {
+    img.addEventListener("load", function (_) {
+      img.classList.add("loaded");
+    });
+  });
 });
 
 onload = async () => {

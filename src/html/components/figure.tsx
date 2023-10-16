@@ -23,6 +23,7 @@ export const Figure = ({ mode, figure }: SectionProps) => {
               alt={figure.alt}
               loading="lazy"
               width={`${figure.maxWidth}`}
+              height={`${figure.maxHeight}`}
               style={`width: 100%; max-width: ${figure.maxWidth}px; height: auto`}
             />
           </picture>
@@ -89,6 +90,7 @@ export const Figure = ({ mode, figure }: SectionProps) => {
               alt={figure.alt}
               loading="lazy"
               width={`${figure.maxWidth}`}
+              height={`${figure.maxHeight}`}
               style={`width: 100%; max-width: ${figure.maxWidth}px; height: auto`}
             />
           </picture>
