@@ -20,7 +20,10 @@ export const About = ({ mode }: AppProps) => {
             : (
               <img
                 alt={content.about.image.alt}
-                src={imgixAsset(pathForAsset("img", content.about.image.src))}
+                src={imgixAsset(
+                  pathForAsset("img", content.about.image.src),
+                  { fm: "jpg" },
+                )}
                 width="180"
                 height="180"
                 srcset={srcsetBuilder(pathForAsset("img", content.about.image.src), [
