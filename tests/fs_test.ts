@@ -3,7 +3,7 @@ import { assertEquals } from "std/assert/mod.ts";
 
 Deno.test("fs", async (t) => {
   try {
-    Deno.mkdirSync("dist/tests");
+    Deno.mkdirSync("dist/tests", { recursive: true });
     await t.step("rsync", async () => {
       await fs.rsync("src/data", "dist/tests");
       assertEquals(Deno.statSync("dist/tests/content.json").isFile, true);
