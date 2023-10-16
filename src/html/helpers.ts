@@ -15,6 +15,12 @@ export function caesura(str: string): string {
   return str.replaceAll(/(-|–|—)/g, "<span>$1</span>");
 }
 
+/**
+ * Turns connector words into ampersands (esperluette)
+ * @param str The string to parse
+ * @param connector The connector word (e.g. "and")
+ * @returns The parsed string
+ */
 export function esperluette(str: string, connector = " and "): string {
   return str.replaceAll(
     connector,
