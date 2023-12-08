@@ -5,7 +5,7 @@ export const schema = {
   "@type": "Person",
   "givenName": "Marca",
   "familyName": "Tatem",
-  "address": {
+  "homeAddress": {
     "@type": "PostalAddress",
     "addressLocality": "San Francisco",
     "addressRegion": "CA",
