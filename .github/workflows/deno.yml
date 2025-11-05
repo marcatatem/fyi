@@ -7,6 +7,7 @@ on:
     branches: ["main"]
 
 permissions:
+  actions: read        # required by actions/deploy-pages@v4
   contents: read
   pages: write
   id-token: write
@@ -18,33 +19,44 @@ jobs:
       DENO_DIR: ~/.deno_cache
     steps:
       - name: Setup repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
       - name: Setup Deno
         uses: denoland/setup-deno@v1
         with:
           deno-version: "1.37.1"
+
       - name: Run linter
         run: deno lint
-      - name: Cache Deno dependencies 
-        uses: actions/cache@v2
+
+      - name: Cache Deno dependencies
+        uses: actions/cache@v4
         with:
           path: ${{ env.DENO_DIR }}
-          key: ${{ hashFiles('deno.lock') }}
+          key: ${{ runner.os }}-deno-1.37.1-${{ hashFiles('deno.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-deno-1.37.1-
+
       - name: Run tests
         run: deno test -A
+
       - name: Build
         run: deno task build -r
+
       - name: Setup Pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v5
+
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: 'dist'
+          path: dist
+
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
+
       - name: Invalidate cache for index.html
         run: >
-          curl -X "POST" "https://api.cloudflare.com/client/v4/zones/${{ vars.CLOUDFLARE_ZONE }}/purge_cache" 
-          -d '{"files":["${{ vars.CLOUDFLARE_URL }}"]}' 
+          curl -X "POST" "https://api.cloudflare.com/client/v4/zones/${{ vars.CLOUDFLARE_ZONE }}/purge_cache"
+          -d '{"files":["${{ vars.CLOUDFLARE_URL }}"]}'
           -H 'Authorization: Bearer ${{ secrets.CLOUDFLARE_TOKEN }}'
