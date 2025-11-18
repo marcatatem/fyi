@@ -28,7 +28,7 @@ export function mkDirSync(path: string): string | never {
   try {
     Deno.mkdirSync(path);
   } catch (err) {
-    if (err.code !== "EEXIST") throw err;
+    if ((err as Error).cause !== "EEXIST") throw err;
   }
   return path;
 }
