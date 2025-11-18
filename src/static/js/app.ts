@@ -1,3 +1,5 @@
+// deno-lint-ignore-file
+
 interface BuildInfo {
   revision: string;
   took: number;

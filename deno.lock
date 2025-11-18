@@ -258,6 +258,7 @@
       "npm:preact-render-to-string@6.2.2",
       "npm:preact@10.18.1",
       "npm:prettier@3.0.2",
+      "npm:rsyncjs@*",
       "npm:smartypants@0.2.2"
     ]
   }

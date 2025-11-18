@@ -13,6 +13,7 @@
     "prettier": "npm:prettier@3.0.2",
     "markdown": "npm:@ts-stack/markdown",
     "smartypants": "npm:smartypants@0.2.2",
-    "case": "https://deno.land/x/case@2.2.0/mod.ts"
+    "case": "https://deno.land/x/case@2.2.0/mod.ts",
+    "rsyncjs": "npm:rsyncjs"
   }
 }

@@ -1,5 +1,5 @@
 // @ts-expect-error: improper type definitions
-import { async as syncDirectory } from "npm:rsyncjs";
+import { async as syncDirectory } from "rsyncjs";
 import { resolve } from "std/path/mod.ts";
 import { log } from "utils/log.ts";
 

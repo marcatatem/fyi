@@ -1,3 +1,4 @@
+// deno-lint-ignore-file jsx-curly-braces
 import content from "data/content.json" with { type: "json" };
 
 import { parameterize, removeHyphens } from "html/helpers.ts";
