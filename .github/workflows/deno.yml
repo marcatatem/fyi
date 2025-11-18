@@ -7,7 +7,7 @@ on:
     branches: ["main"]
 
 permissions:
-  actions: read        # required by actions/deploy-pages@v4
+  actions: read # required by actions/deploy-pages@v4
   contents: read
   pages: write
   id-token: write
@@ -24,7 +24,7 @@ jobs:
       - name: Setup Deno
         uses: denoland/setup-deno@v1
         with:
-          deno-version: "1.37.1"
+          deno-version: "2.5.6"
 
       - name: Run linter
         run: deno lint
