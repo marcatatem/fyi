@@ -13,8 +13,8 @@ export const About = ({ mode }: AppProps) => {
               <img
                 alt={content.about.image.alt}
                 src={pathForAsset("img", content.about.image.src)}
-                width="180"
-                height="180"
+                width="128"
+                height="128"
               />
             )
             : (
@@ -24,26 +24,22 @@ export const About = ({ mode }: AppProps) => {
                   pathForAsset("img", content.about.image.src),
                   { fm: "jpg" },
                 )}
-                width="180"
-                height="180"
+                width="128"
+                height="128"
                 srcset={srcsetBuilder(pathForAsset("img", content.about.image.src), [
                   1,
                   2,
                   3,
-                ], "180x180")}
+                ], "128x128")}
               />
             )}
         </div>
         <div class="span-7 content">
-          <p dangerouslySetInnerHTML={{ __html: markdown(content.about.content) }} />
           <p class="source">
             The source code for this website is available on{" "}
             <a href="https://github.com/marcatatem/fyi">GitHub</a>.
           </p>
           <p class="contact">
-            Marca Tatem<br />
-            <a href="tel:+(415)-523-2810">(415) 523 2810</a>
-            <br />
             <a href="mailto:marca@me.com">marca@me.com</a>
             <br />
             <a
@@ -52,6 +48,10 @@ export const About = ({ mode }: AppProps) => {
             >
               LinkedIn
             </a>
+            <br />
+            <a href="https://thoughts-and-things.ghost.io" class="linked-in">
+              Thoughts and Things
+            </a>&nbsp;(Blog)
           </p>
         </div>
       </div>

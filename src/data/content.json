@@ -1,6 +1,6 @@
 {
   "about": {
-    "content": "Driven to bridge the gap between technology and design, I craft distinctive user experiences. As a Senior Software Engineer at Apple, I focus on crafting flawless and delightful user-centric solutions. With a history as Melvil and Lemonchik's founder, my unwavering commitment to innovation actively shapes the future of User Experience.",
+    "content": "I work at the intersection of *design*, *engineering*, and *music* — creating products and stories that feel intuitive, expressive, and distinctly human",
     "image": {
       "src": "marca-profile.jpg",
       "alt": "Close-up portrait of Marca",
@@ -12,11 +12,29 @@
   },
   "sections": [
     {
-      "name": "Apple",
+      "name": "Music Artist",
       "hidden": false,
       "date": "Present",
+      "role": "Creative Director and Music Artist",
+      "displayDate": "Present",
+      "content": "I shape my music’s creative direction across production, visuals, and storytelling, building a cohesive French Touch–inspired identity.\n\nMy recent singles, including [Love Resolved](https://open.spotify.com/track/2bO2GXMEBB9Z1DjdEKJ9zm), [El-sa](https://open.spotify.com/track/3b4Igjt2EWVcIUPRuHfrs8), and [Daddy’s Got A—](https://soundcloud.com/marca-tatem-393280298/daddys-got-a), reflect this approach, pairing emotional production with a strong, architected aesthetic. In parallel, I write long-form essays that explore culture, sound design, and creative process, such as [Recreating Daft Punk’s “Something About Us”](https://thoughts-and-things.ghost.io/recreating-daft-punks-something-about-us/) and [From Punk Energy to French Touch Smooth—How AI Changed the Remix Game](https://thoughts-and-things.ghost.io/from-punk-energy-to-french-touch-smooth-how-ai-changed-the-remix-game/), offering insight into the technical and artistic thinking behind the work.\n\nThis independent chapter reinforces my ability to drive creative direction end-to-end — uniting design, technology, and music into expressive, culturally grounded experiences.",
+      "figure": {
+        "src": "daddy-landscape.jpg",
+        "mobileSquareSrc": "daddy.jpg",
+        "alt": "Daddy's Got A— Cover Art",
+        "maxWidth": 1279,
+        "maxHeight": 895,
+        "caption": "*Daddy's Got A—* Cover Art",
+        "hasMargin": true,
+        "noBackground": true
+      }
+    },
+    {
+      "name": "Apple",
+      "hidden": false,
+      "date": "2017—2025",
       "role": "Senior Software Engineer (L5)",
-      "displayDate": "2017—Present",
+      "displayDate": "2017—2025",
       "content": "Joining the **AI/ML** team, I channeled my expertise to uplift the search experience across Apple's platforms.\n\nEntrusted with product ideation, I've guided concepts from inception to polished prototypes, ensuring each aspect—from core intent to aesthetic appeal—is meticulously addressed. These prototypes have played a pivotal role in influencing the development of features seamlessly blending within the Apple ecosystem.\n\nThis journey underlines my ability to deliver high-quality prototypes, a testament to my dedication to unparalleled User Experience and design."
     },
     {
@@ -25,7 +43,7 @@
       "date": "2015—2017",
       "role": "Co-Founder and Chief Technologist",
       "displayDate": "2015—2017",
-      "content": "At Melvil, I spearheaded a seasoned team of engineers, successfully navigating two rounds of seed funding. Our ambition led to the birth of an avant-garde entity-based search engine, designed for optimal data extraction from open databases and adept web crawling.\n\nThe culmination of our efforts materialized as an iPhone app, boasting advanced autocomplete features and offering users a wealth of information on diverse topics.\n\nMy role encompassed team leadership, shaping our product's direction, architecting scalable solutions, managing vast datasets, and mastering both front-end and back-end web technologies.",
+      "content": "At Melvil, I spearheaded a seasoned team of engineers, successfully navigating **two rounds of seed funding**. Our ambition led to the birth of an exploratory entity-based search engine, designed for optimal data extraction from open databases and adept web crawling.\n\nThe culmination of our efforts materialized in 2015 as an iPhone app, boasting advanced autocomplete features and offering users a wealth of information on diverse topics.\n\nMy role encompassed team leadership, shaping our product's direction, architecting scalable solutions, managing vast datasets, and mastering both front-end and back-end web technologies.",
       "figure": {
         "src": "melvil.png",
         "alt": "3 screenshots of the Melvil iPhone app and Melvil logo",
@@ -35,12 +53,12 @@
       }
     },
     {
-      "name": "Lemon–chik",
+      "name": "Lemonchik",
       "hidden": false,
       "date": "2008—2015",
       "role": "Founding Partner and Creative Director",
       "displayDate": "2008—2015",
-      "content": "As the Founding Partner and Creative Director of Lemonchik from 2008 until its acquisition by ProFirst in 2015, I led a successful Interactive Agency operating in Paris and New York. Lemonchik specialized in creating top-tier websites and applications, primarily focusing on the Fashion and Beauty industry.\n\nNotable clients included prestigious names like **Dior**, **Guerlain**, **Issey Miyake**, **Chanel**, and **Billy Cotton**.\n\nMy responsibilities at Lemonchik spanned team management, fostering the agency's distinctive attention to detail, and overseeing the development of _Sleek_, a custom Content Management System known for its ease of use. In 2015, I decided to sell Lemonchik to shift my focus toward the development of Melvil.",
+      "content": "As *Founding Partner* and *Creative Director* of Lemonchik from 2008 to 2015, I led an interactive agency operating between **Paris** and **New York**, focused on high-end web experiences for the fashion and beauty industry.\n\nLemonchik collaborated with prestigious clients including **Dior**, **Guerlain**, **Issey Miyake**, **Chanel**, and **Billy Cotton**, delivering design-led digital experiences defined by strong visual identity, attention to detail, and refined interaction.\n\nMy role spanned creative direction, team leadership, and technical oversight. I supervised multidisciplinary teams while also overseeing the development of *Sleek*, a custom content management system recognized for its clarity, flexibility, and ease of use. In 2015, I chose to move on from Lemonchik to focus on building Melvil.",
       "figure": {
         "src": "lemonchik.png",
         "alt": "Screenshot of Lemonchik’s website homepage",
@@ -64,11 +82,11 @@
       }
     },
     {
-      "name": "Free–lance",
-      "hidden": false,
+      "name": "Freelance",
+      "hidden": true,
       "date": "2004—2008",
       "displayDate": "2004—2008",
-      "content": "In the dance between tech and art, I partnered with notable names in the French media landscape.\n\nAt **Madame Figaro**, I played a pivotal role in transitioning the esteemed fashion and beauty magazine to the digital world, ensuring its iconic elegance resonated vibrantly online.\nMy collaboration with **TF1**, France's leading private broadcaster, allowed me to showcase my versatility: I engineered an immersive online video game for _'Koh-Lanta'_ and created the candidate selection system for the French take on _'Who Wants to Be a Millionaire?'_.\nAt **ELLE**, I brought popup websites to life, composing and integrating music to offer a more textured digital journey.\n\nAmidst these projects, my venture into app development led to **Ciboulette**, a file encryption shareware that earned a spot on the accompanying CDs of select print Mac magazines."
+      "content": "Early in my career, I worked at the intersection of *technology*, *media*, and *design* across a range of digital projects in the French media landscape.\n\nAt **Madame Figaro**, I contributed to the magazine’s transition to digital, helping translate its fashion and beauty identity into an emerging online format. My work with **TF1**, France’s leading private broadcaster, included building an online game experience for *Koh-Lanta* and developing the candidate selection system for the French adaptation of *Who Wants to Be a Millionaire*?\n\nFor **ELLE**, I designed and built interactive popup sites, integrating custom music and motion to enrich the digital storytelling experience. Alongside client work, I began developing standalone applications, including **Ciboulette**, a file-encryption shareware distributed on the cover CDs of *several Mac magazines*."
     }
   ]
 }

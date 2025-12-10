@@ -38,6 +38,14 @@ export const Header = () => {
                 GitHub
               </a>
             </li>
+            <li>
+              <a
+                href="https://open.spotify.com/intl-fr/artist/3ec4lWjkgZ0CLUh6ZJaAGC"
+                class="icon spotify"
+              >
+                Spotify
+              </a>
+            </li>
           </ul>
         </nav>
         <a href="#menu" class="open menu">Menu</a>

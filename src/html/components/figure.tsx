@@ -1,5 +1,5 @@
 import { RenderingMode } from "html/app.tsx";
-import { imgixAsset, mediaQuery, pathForAsset } from "html/helpers.ts";
+import { imgixAsset, markdown, mediaQuery, pathForAsset } from "html/helpers.ts";
 
 type SectionProps = {
   mode: RenderingMode;
@@ -14,7 +14,7 @@ type SectionProps = {
 
 export const Figure = ({ mode, figure }: SectionProps) => {
   return (
-    <figure>
+    <figure className={figure.noBackground ? "no-background" : ""}>
       {(mode === "development")
         ? (
           <picture>
@@ -95,7 +95,9 @@ export const Figure = ({ mode, figure }: SectionProps) => {
             />
           </picture>
         )}
-      <figcaption>{figure.caption}</figcaption>
+      <figcaption
+        dangerouslySetInnerHTML={{ __html: markdown(figure.caption) }}
+      />
     </figure>
   );
 };

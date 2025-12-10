@@ -59,11 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
       header.classList.remove("scrolled");
     }
   });
-  // add scroll margin to sections
-  document.querySelectorAll("section").forEach((section) => {
-    const headerHeight = document.querySelector("header")!.offsetHeight;
-    section.style.scrollMarginTop = `${headerHeight}px`;
-  });
   // add smooth transitions to navigation links
   document.querySelectorAll(".smooth").forEach((smooth) => {
     smooth.addEventListener("click", function (e) {
@@ -116,6 +111,11 @@ onload = async () => {
       el.innerHTML = "Fetch API not supported.";
     });
   }
+  // add scroll margin to sections
+  document.querySelectorAll<HTMLElement>("section").forEach((section) => {
+    const marginTop = window.getComputedStyle(section).marginTop;
+    section.style.scrollMarginTop = marginTop;
+  });
 };
 
 function scrollTo(id: string, smooth = true) {

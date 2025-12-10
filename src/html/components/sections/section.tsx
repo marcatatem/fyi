@@ -7,6 +7,7 @@ import {
   esperluette,
   markdown,
   parameterize,
+  pathForAsset,
   removeHyphens,
 } from "html/helpers.ts";
 
@@ -18,28 +19,28 @@ type SectionProps = {
 export const Section = ({ mode, section }: SectionProps) => {
   return (
     <>
-      <section id={parameterize(removeHyphens(section.name))}>
-        <div class="columns">
-          <div class="span-4 heading">
-            <hgroup>
-              <h2
-                dangerouslySetInnerHTML={{ __html: caesura(section.name) }}
-              />
-              {section.role && (
-                <p dangerouslySetInnerHTML={{ __html: esperluette(section.role) }} />
-              )}
-              <p>{section.displayDate}</p>
-            </hgroup>
+      <article>
+        <section id={parameterize(removeHyphens(section.name))}>
+          <div class="columns">
+            <div class="span-4 heading">
+              <hgroup>
+                <h2
+                  dangerouslySetInnerHTML={{ __html: caesura(section.name) }}
+                />
+                {section.role && <p dangerouslySetInnerHTML={{ __html: section.role }} />}
+                <p>{section.displayDate}</p>
+              </hgroup>
+            </div>
+            <div
+              class="span-7 content"
+              dangerouslySetInnerHTML={{ __html: markdown(section.content) }}
+            >
+            </div>
           </div>
-          <div
-            class="span-7 content"
-            dangerouslySetInnerHTML={{ __html: markdown(section.content) }}
-          >
-          </div>
-        </div>
-      </section>
-      {section.figure &&
-        <Figure mode={mode} figure={section.figure} />}
+        </section>
+        {section.figure &&
+          <Figure mode={mode} figure={section.figure} />}
+      </article>
     </>
   );
 };

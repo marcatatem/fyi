@@ -26,7 +26,8 @@
     ],
     "preload": {
       "fonts": [
-        "woff2/Montserrat-Light.woff2"
+        "AktivGrotesk-Medium.woff2",
+        "AktivGrotesk-MediumItalic.woff2"
       ]
     }
   },

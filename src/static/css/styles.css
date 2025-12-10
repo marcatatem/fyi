@@ -1,14 +1,18 @@
 /* @override 
-	http://127.0.0.1:8000/css/styles.css */
+	http://127.0.0.1:8000/css/styles.css
+	http://localhost:8000/css/styles.css
+*/
 
 @import "styles/vendor/reset.css";
+@import "styles/columns.css";
 @import "styles/typography.css";
 @import "styles/colors.css";
+/*
 @import "styles/icons.css";
-@import "styles/columns.css";
+
 @import "styles/header.css";
 @import "styles/footer.css";
-@import "styles/sections.css";
+@import "styles/sections.css";*/
 
 html,
 body {
@@ -18,9 +22,7 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Iosevka Custom Web', monospace;
-  font-size: 16px;
-  line-height: 30px;
+  font: 1.25rem/1.88rem 'Aktiv Grotesk';
   -moz-text-size-adjust: none;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
@@ -36,187 +38,233 @@ a:hover {
   color: var(--love)
 }
 
-#about .contact {
-  margin-bottom: 0;
-  margin-top: 30px;
+header {
+  margin-top: 2.4rem;
+  border-bottom: 1px dashed #484848;
+  padding-bottom: 4.62rem;
 }
 
-.contact a:not(.linked-in) {
-  color: var(--foregroud);
+header hgroup {
+  grid-column: span 9;
+}
+
+header h1 {
+  font-weight: 500;
+}
+
+header h2 {
+  color: gray;
+  margin-bottom: 1.95rem;
+}
+
+header p {
+  font-size: 2.25rem;
+  line-height: 2.85rem;
+  margin-bottom: 5.5rem;
+  font-weight: normal;
+}
+
+header p::after {
+  content: "";
+  width: 3px;
+  height: 2.25rem;
+  display: inline-block;
+  animation: cursor-blink 1.5s steps(2) infinite;
+  vertical-align: -0.3rem;
+  background-color: red;
+  margin-left: -0.45rem;
+}
+
+@keyframes cursor-blink {
+  0% {
+    opacity: 0;
+  }
+}
+
+header nav {
+  
+}
+
+a {
   text-decoration: none;
 }
 
-#about img {
-  border-radius: 50%;
-  width: 180px;
-  margin-bottom: 13px;
-  margin-left: -10px;
-  margin-top: 5px;
+.content a:hover {
+  text-decoration: underline;
 }
 
-#about .source {
+header nav li {
+  margin-bottom:0.95rem;
+}
+
+header nav a .year {
+  color: gray;
+  margin-left: 0.5rem;
+}
+
+em {
   font-style: italic;
+}
+
+strong {
+  font-weight: 500;
+}
+
+article {
+  margin-bottom: 8.9rem;
+}
+
+section {
+  margin-top: 4.52rem;
+  margin-bottom: 4.62rem;
+}
+
+section .content p {
+  margin-bottom:1.4rem;
+}
+
+section .content p:last-of-type {
+  margin-bottom: 0;
+}
+
+section .heading > hgroup {
+  margin-bottom:1.5rem;
+  position: sticky;
+  top: 4.62rem
+}
+
+section h2 {
+  font-weight: 500;
+}
+
+section .heading p {
+  opacity: 0.5;
+}
+
+figure {
+  text-align: center;
+}
+
+figure.no-background {
+  background: transparent;
+  
+}
+
+figure.no-background img {
+  margin-bottom: 0.7rem;
+}
+
+figcaption {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+footer {
+  padding-bottom: 5rem;
+}
+
+footer .build-info {
+  opacity: 0.5;
+}
+
+#about img {
+  border-radius: 100%;
 }
 
 /* The header is too wide */
 @media only screen and (max-width: 1124px) {
-  #lemonchik h2 {
-    letter-spacing: -5px;
+  header hgroup {
+    grid-column: span 12;
   }
 }
 
 /* iPad */
 @media only screen and (max-width: 1024px) {
 
-  article {
-    padding-top: 149px;
-  }
-
-  article figure {
-    margin-top: 5px !important;
-  }
-
-  article section {
-    padding-top: 40px;
-    padding-bottom: 48px;
-  }
-
-  section .content {
-    grid-column: span 8;
-    max-width: 100%;
-  }
-
-  #lemonchik h2,
-  #freelance h2 {
-    line-height: 60px;
-  }
-
-  #lemonchik h2 span {
-    display: inline-block;
-  }
-
-  #freelance h2 span {
-    display: inline-block;
-  }
-
-  footer .compact {
-    display: flex;
-    width: calc(100% - 40px);
-  }
-
-  footer .columns {
-    display: none;
-  }
-
-
 }
 
 /* Phones */
 @media only screen and (max-width: 740px) {
-
   .inner,
   .columns {
     padding: 0 20px;
   }
-
   .columns {
     display: inherit;
   }
+  header {
+    border: none;
+  }
+  header p {
+    font-size: 1.8rem;
+    line-height: 2.5rem;
+    margin-top: 2.2rem;
+    margin-bottom: 4.5rem;
+  }
+  header hgroup {
+    grid-column: span 12;
+  }
+
+  section {
+    margin-top: 1.8rem;
+    margin-bottom: 2.8rem;
+  }
+
+  section .heading > hgroup {
+    margin-bottom: 1.3rem;
+  }
 
   article {
-    padding-top: 135px;
+    margin-bottom: 4rem;
   }
 
-  article .heading {
-    width: 100%;
-    margin-bottom: 28px;
+  section .heading, section .content {
+    grid-column: span 12;
   }
 
-  article .content {
-    min-width: 100%;
+  figure {
+    margin-left: 10px;
+    margin-right: 10px;
   }
 
-  article h2 {
-    font-size: 50px;
-    margin-bottom: 8px;
-    margin-top: 0;
-    margin-left: -4px;
+  figcaption {
+    margin-top: 0.35rem;
   }
 
-  article section {
-    padding-top: 24px;
-    padding-bottom: 22px;
-    margin-top: 15px;
-    margin-bottom: 30px;
+  figure.no-background {
+    margin-left: 0;
+    margin-right: 0;
   }
 
-  article figure {
-    margin-bottom: 24px;
-    margin-top: -34px !important;
-  }
-  
-  article .esperluette {
-    display: inline;
+  figure.no-background img {
+    margin-bottom: 0;
   }
 
-  article .and {
-    display: none;
+  #about {
+    margin-top: 5.1rem;
   }
 
   #about img {
-    margin: 15px auto 60px;
-    display: block;
+    margin-left: -0.3rem;
+    margin-bottom: 0.8rem;
   }
 
-  #lemonchik h2 {
-    letter-spacing: -1.5px;
+  footer {
+    padding-bottom: 2rem;
   }
 
-  #lemonchik h2 span {
-    display: none;
-  }
-
-  #freelance h2 span {
-    display: none;
-  }
+  section#music-artist + figure.no-background img {
+    aspect-ratio: 1 / 1;
+      object-fit: cover;
+      object-position: left center;
+      width: 100%;
+      height: auto; 
+    }
 
 }
 
 @media only screen and (max-width: 430px) {
-  body {
-    font-size: 19px;
-    line-height: 35px;
-  }
-
-  header {
-    line-height: 35px;
-    padding-top: 21px;
-    padding-bottom: 18px;
-  }
-
-  header nav {
-    background: var(--background);
-    padding-top: 4px;
-  }
-
-  header nav ul.primary {
-    padding-right: 20px;
-    padding-left: 20px;
-  }
-
-  header .menu.close {
-    margin-right: 20px;
-  }
-  
-  #about img {
-    margin: 5px auto 67px;
-  }
-
-  article p {
-    margin-bottom: 20px;
-  }
-
-  article figcaption {
-    margin-top: -1px;
+  header hgroup {
+    grid-column: span 12;
   }
 }
