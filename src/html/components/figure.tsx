@@ -9,6 +9,7 @@ type SectionProps = {
     maxWidth: number;
     maxHeight: number;
     caption: string;
+    noBackground?: boolean;
   };
 };
 
