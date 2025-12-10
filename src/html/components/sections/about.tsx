@@ -1,7 +1,7 @@
 import content from "data/content.json" with { type: "json" };
 
 import { AppProps } from "html/app.tsx";
-import { imgixAsset, markdown, pathForAsset, srcsetBuilder } from "html/helpers.ts";
+import { imgixAsset, pathForAsset, srcsetBuilder } from "html/helpers.ts";
 
 export const About = ({ mode }: AppProps) => {
   return (

@@ -2,14 +2,7 @@ import content from "data/content.json" with { type: "json" };
 
 import { RenderingMode } from "html/app.tsx";
 import { Figure } from "html/components/figure.tsx";
-import {
-  caesura,
-  esperluette,
-  markdown,
-  parameterize,
-  pathForAsset,
-  removeHyphens,
-} from "html/helpers.ts";
+import { caesura, markdown, parameterize, removeHyphens } from "html/helpers.ts";
 
 type SectionProps = {
   mode: RenderingMode;
