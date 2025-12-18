@@ -8,7 +8,7 @@
       {
         "store": "Spotify",
         "storeId": "spotify",
-        "url": "xx"
+        "url": "https://open.spotify.com/track/2r1pq32T5hTvCMag9sz8kJ"
       },
       {
         "store": "Apple Music",
@@ -18,7 +18,7 @@
       {
         "store": "TIDAL",
         "storeId": "tidal",
-        "url": "https://tidal.com/track/482792364/u"
+        "url": "https://tidal.com/album/482792363/track/482792364"
       },
       {
         "store": "SoundCloud",
