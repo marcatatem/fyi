@@ -1,0 +1,113 @@
+/* @override 
+	http://localhost:8000/css/release.css */
+
+@import "styles/vendor/reset.css";
+
+body.grid {
+  background-image: repeating-linear-gradient(to bottom,
+      rgba(255, 0, 0, .08),
+      rgba(255, 0, 0, .08) 1px,
+      transparent 1px,
+      transparent 15px);
+}
+
+@font-face {
+    font-family: 'Aktiv Grotesk';
+    src: url('/fonts/AktivGrotesk-Bold.woff2') format('woff2'),
+        url('/fonts/AktivGrotesk-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Aktiv Grotesk';
+    src: url('/fonts/AktivGrotesk-Regular.woff2') format('woff2'),
+        url('/fonts/AktivGrotesk-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    min-height: 100vh; /* Changed from height to min-height for mobile scrolling */
+    font: 18px/25px "Aktiv Grotesk", "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+    background-color: #111111;
+    color: #f5f5f5;
+    margin: 0;
+}
+
+/* Base Styles (Portrait/Mobile) */
+#cover img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+#content {
+    padding: 19px 0 0;
+}
+
+h1 { font-weight: bold; margin: 0 20px; }
+h2 { opacity: 0.5; margin: 0 20px; }
+ul { margin-top: 12px; }
+ul li { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+ul li:last-child {
+  border: none;
+}
+ul li a {
+    color: #f5f5f5;
+    display: block;
+    text-decoration: none;
+    margin: 0 20px;
+    padding: 18px 0;
+}
+
+/* Icon Styles */
+a.apple_music { background: url(/img/releases/apple-music.svg) right center no-repeat; background-size: auto 30px; }
+a.spotify { background: url(/img/releases/spotify-tile.svg) right center no-repeat; background-size: auto 30px; }
+a.tidal { background: url(/img/releases/tidal.svg) right center no-repeat; background-size: auto 30px; }
+a.soundcloud { background: url(/img/releases/soundcloud.svg) right center no-repeat; background-size: auto 30px; }
+
+/* Desktop / Landscape Layout */
+@media (min-width: 769px) {
+    body {
+        height: 100vh;
+        overflow: hidden; /* Prevent double scrollbars */
+    }
+
+    article {
+        display: flex;
+        flex-direction: row;
+        height: 100vh;
+        width: 100%;
+    }
+
+    #cover {
+        flex: 1; /* Takes up half the space (or more depending on image) */
+        height: 100vh;
+    }
+
+    #cover img {
+        height: 100vh;
+        width: 100%;
+        object-fit: cover; /* Ensures image fills the area without stretching */
+    }
+
+    #content {
+        flex: 1;
+        height: 100vh;
+        overflow-y: auto; /* Allows links to scroll if they exceed screen height */
+        padding: 40px 0; /* Extra breathing room on desktop */
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Centers the content vertically on the right */
+    }
+    
+    .content-inner {
+        width: 100%;
+        max-width: 500px; /* Keeps the list from getting too wide on ultra-wide monitors */
+        margin: 0 auto;
+    }
+}

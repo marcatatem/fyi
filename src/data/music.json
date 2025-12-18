@@ -1,0 +1,99 @@
+[
+  {
+    "title": "Mouth of Madness",
+    "artist": "Marca",
+    "releaseDate": "2025-12-18T00:58:16.351Z",
+    "cover": "releases/mouth-of-madness.jpg",
+    "links": [
+      {
+        "store": "Spotify",
+        "storeId": "spotify",
+        "url": "xx"
+      },
+      {
+        "store": "Apple Music",
+        "storeId": "apple_music",
+        "url": "https://music.apple.com/song/mouth-of-madness/1862291222"
+      },
+      {
+        "store": "TIDAL",
+        "storeId": "tidal",
+        "url": "https://tidal.com/track/482792364/u"
+      },
+      {
+        "store": "SoundCloud",
+        "storeId": "soundcloud",
+        "url": "https://soundcloud.com/marca-tatem-393280298/mouth-of-madness"
+      }
+    ]
+  },
+  {
+    "title": "El-sa",
+    "artist": "Marca",
+    "releaseDate": "2025-11-18T00:58:16.351Z",
+    "cover": "releases/elsa.jpg",
+    "links": [
+      {
+        "store": "Spotify",
+        "storeId": "spotify",
+        "url": "https://open.spotify.com/track/3b4Igjt2EWVcIUPRuHfrs8"
+      },
+      {
+        "store": "Apple Music",
+        "storeId": "apple_music",
+        "url": "https://music.apple.com/us/album/el-sa/1851631708"
+      },
+      {
+        "store": "TIDAL",
+        "storeId": "tidal",
+        "url": "https://tidal.com/track/472492693/u"
+      },
+      {
+        "store": "SoundCloud",
+        "storeId": "soundcloud",
+        "url": "https://soundcloud.com/marca-tatem-393280298/el-sa"
+      }
+    ]
+  },
+  {
+    "title": "Love Resolved",
+    "artist": "Marca",
+    "releaseDate": "2025-09-18T00:58:16.351Z",
+    "cover": "releases/love_resolved.jpg",
+    "links": [
+      {
+        "store": "Spotify",
+        "storeId": "spotify",
+        "url": "https://open.spotify.com/track/2bO2GXMEBB9Z1DjdEKJ9zm"
+      },
+      {
+        "store": "Apple Music",
+        "storeId": "apple_music",
+        "url": "https://music.apple.com/us/album/el-sa/1851631708"
+      },
+      {
+        "store": "TIDAL",
+        "storeId": "tidal",
+        "url": "https://tidal.com/track/461968592/u"
+      },
+      {
+        "store": "SoundCloud",
+        "storeId": "soundcloud",
+        "url": "https://soundcloud.com/marca-tatem-393280298/love-resolved"
+      }
+    ]
+  },
+  {
+    "title": "Daddy's Got A—",
+    "artist": "Marca",
+    "releaseDate": "2025-08-18T00:58:16.351Z",
+    "cover": "releases/daddy.jpg",
+    "links": [
+      {
+        "store": "SoundCloud",
+        "storeId": "soundcloud",
+        "url": "https://soundcloud.com/marca-tatem-393280298/daddys-got-a"
+      }
+    ]
+  }
+]

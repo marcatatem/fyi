@@ -2,7 +2,14 @@ import { getShortRevision } from "utils/git.ts";
 import { AppProps } from "html/app.tsx";
 import { rsync } from "utils/fs.ts";
 import { log } from "utils/log.ts";
-import { bundleScripts, bundleStylesheets, renderHTML } from "utils/bundlers.ts";
+import {
+  bundleScripts,
+  bundleStylesheets,
+  renderHTML,
+  renderReleasePage,
+} from "utils/bundlers.ts";
+import music from "data/music.json" with { type: "json" };
+import { ReleaseProps } from "html/release.tsx";
 
 /**
  *  FYI
@@ -44,6 +51,32 @@ Deno.writeTextFile(
     took: took,
   }),
 );
+
+// build releases
+log("building", `release pages`);
+
+export interface Release {
+  title: string;
+  artist: string;
+  releaseDate: string;
+  cover: string;
+  links: {
+    store: string;
+    storeId: string;
+    url: string;
+  }[];
+}
+
+for (const release of music) {
+  console.log(release.title);
+  const releaseProps: ReleaseProps = {
+    mode: props.mode,
+    revision: props.revision,
+    release: release as Release,
+  };
+  await renderReleasePage(release.title, releaseProps);
+}
+
 // done
 log("done", `build took ${took}ms`, "blue");
 Deno.exit();
