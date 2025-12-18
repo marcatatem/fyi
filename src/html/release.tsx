@@ -1,4 +1,4 @@
-import { imgixAsset, pathForAsset } from "./helpers.ts";
+import { pathForAsset } from "./helpers.ts";
 import { Release } from "main.ts";
 
 export type RenderingMode = "development" | "release";
