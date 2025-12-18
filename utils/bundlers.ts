@@ -13,14 +13,14 @@ import { parameterize } from "html/helpers.ts";
  * Bundles and minifies stylesheets
  * @param revision - current code revision
  */
-export async function bundleStylesheets(revision: string) {
-  log("bundle", "src/static/css/styles.css", "green");
+export async function bundleStylesheets(revision: string, name: string) {
+  log("bundle", `src/static/css/${name}.css`, "green");
   const { code } = bundle({
-    filename: "src/static/css/styles.css",
+    filename: `src/static/css/${name}.css`,
     include: Features.MediaQueries,
   });
   await Deno.writeTextFile(
-    `dist/css/styles.bundled.${revision}.css`,
+    `dist/css/${name}.bundled.${revision}.css`,
     new TextDecoder().decode(code),
   );
 }
