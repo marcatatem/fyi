@@ -39,19 +39,10 @@ export const ReleaseApp = (props: ReleaseProps) => {
       <body>
         <article>
           <div id="cover">
-            {(props.mode === "development")
-              ? (
-                <img
-                  src={pathForAsset("img", props.release.cover)}
-                  alt={props.release.title}
-                />
-              )
-              : (
-                <img
-                  src={imgixAsset(pathForAsset("img", props.release.cover))}
-                  alt={props.release.title}
-                />
-              )}
+            <img
+              src={pathForAsset("img", props.release.cover)}
+              alt={props.release.title}
+            />
           </div>
           <div id="content">
             <div className="content-inner">
