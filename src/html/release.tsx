@@ -1,10 +1,4 @@
-import {
-  imgixAsset,
-  markdown,
-  parameterize,
-  pathForAsset,
-  removeHyphens,
-} from "./helpers.ts";
+import { imgixAsset, pathForAsset } from "./helpers.ts";
 import { Release } from "main.ts";
 
 export type RenderingMode = "development" | "release";
