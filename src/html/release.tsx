@@ -35,7 +35,7 @@ export const ReleaseApp = (props: ReleaseProps) => {
         t.src=v;s=b.getElementsByTagName(e)[0];
         s.parentNode.insertBefore(t,s)}(window, document,'script',
         'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '1391547235681032');
+        fbq('init', '1203822274417281');
         fbq('track', 'PageView');
         `}
         </script>
@@ -44,7 +44,7 @@ export const ReleaseApp = (props: ReleaseProps) => {
             height="1"
             width="1"
             style="display:none"
-            src="https://www.facebook.com/tr?id=1391547235681032&ev=PageView&noscript=1"
+            src="https://www.facebook.com/tr?id=1203822274417281&ev=PageView&noscript=1"
           />
         </noscript>
         <link
