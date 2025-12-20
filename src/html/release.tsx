@@ -55,8 +55,15 @@ export const ReleaseApp = (props: ReleaseProps) => {
             revision: props.revision,
           })}
         />
-        <script defer data-domain="marca.fyi" src="https://plausible.io/js/script.js">
-        </script>
+        <script async src="https://plausible.io/js/pa-Z6i4g_NOUqBuY2d6WJJ4t.js"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+              plausible.init()
+            `,
+          }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
