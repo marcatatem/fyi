@@ -148,44 +148,54 @@ export const ReleaseApp = (props: ReleaseProps) => {
                 }
               });
 
-              // --- Plausible platform click tracking (event delegation) ---
-              var linksList = document.getElementById("links-list");
+              // --- Plausible platform click tracking (Direct Binding) ---
+              // Select all anchor tags inside the list immediately
+              var links = document.querySelectorAll("#links-list a");
 
-              if (linksList) {
-                linksList.addEventListener("click", function (e) {
-                  var a = e.target && e.target.closest ? e.target.closest("a") : null;
-                  if (!a) return;
+              // Loop through each link and attach a specific listener
+              links.forEach(function(link) {
+                link.addEventListener("click", function(e) {
+                  
+                  // 1. Get data directly from the element ('link' is the <a> tag)
+                  var href = link.getAttribute("href");
+                  var storeName = link.getAttribute("data-store-name");
 
-                  var href = a.getAttribute("href");
-                  if (!href) return;
+                  // Basic validation
+                  if (!href || !storeName) return;
 
-                  // Single source of truth
-                  var storeName = a.getAttribute("data-store-name");
-                  if (!storeName) return;
+                  // Optional: Respect new tab clicks (cmd+click or target="_blank")
+                  // We return early to let the browser handle these natively
+                  if (link.target === "_blank" || e.metaKey || e.ctrlKey) {
+                      return;
+                  }
 
+                  // 2. Prepare Tracking
                   storeName = storeName.trim();
-
-                  // Event name (no props, no paid features)
                   var eventName = "Platform Click " + storeName;
 
-                  // If Plausible isn't ready or blocked, DO NOT interfere with navigation
+                  // If Plausible isn't loaded/blocked, stop here (browser handles nav normally)
                   if (typeof window.plausible !== "function") return;
 
-                  // Block navigation briefly so the event can be sent
+                  // 3. Intercept Navigation
                   e.preventDefault();
 
-                  window.plausible(eventName, {
-                    callback: function () {
+                  var isNavigating = false;
+                  var navigate = function() {
+                      if (isNavigating) return;
+                      isNavigating = true;
                       window.location.href = href;
-                    }
+                  };
+
+                  // 4. Send Event with Callback
+                  window.plausible(eventName, {
+                    callback: navigate,
+                    props: { platform: storeName }
                   });
 
-                  // Safety fallback: never trap the user
-                  setTimeout(function () {
-                    window.location.href = href;
-                  }, 300);
+                  // 5. Safety Timeout (Fallback for iOS/WebView/AdBlockers)
+                  setTimeout(navigate, 150);
                 });
-              }
+              });
 
 
             });
