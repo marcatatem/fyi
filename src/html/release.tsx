@@ -149,51 +149,31 @@ export const ReleaseApp = (props: ReleaseProps) => {
               });
 
               // --- Plausible platform click tracking (Direct Binding) ---
-              // Select all anchor tags inside the list immediately
               var links = document.querySelectorAll("#links-list a");
 
-              // Loop through each link and attach a specific listener
               links.forEach(function(link) {
                 link.addEventListener("click", function(e) {
-                  
-                  // 1. Get data directly from the element ('link' is the <a> tag)
-                  var href = link.getAttribute("href");
+                  // A. Validate
                   var storeName = link.getAttribute("data-store-name");
+                  if (!storeName) return;
 
-                  // Basic validation
-                  if (!href || !storeName) return;
-
-                  // Optional: Respect new tab clicks (cmd+click or target="_blank")
-                  // We return early to let the browser handle these natively
-                  if (link.target === "_blank" || e.metaKey || e.ctrlKey) {
-                      return;
-                  }
-
-                  // 2. Prepare Tracking
-                  storeName = storeName.trim();
-                  var eventName = "Platform Click " + storeName;
-
-                  // If Plausible isn't loaded/blocked, stop here (browser handles nav normally)
-                  if (typeof window.plausible !== "function") return;
-
-                  // 3. Intercept Navigation
-                  e.preventDefault();
-
-                  var isNavigating = false;
-                  var navigate = function() {
-                      if (isNavigating) return;
-                      isNavigating = true;
-                      window.location.href = href;
+                  // B. Prepare Data (Official Plausible API structure)
+                  // We use text/plain so the browser skips CORS preflight, making it faster.
+                  var payload = {
+                    name: "Platform Click " + storeName.trim(), 
+                    url: window.location.href, 
+                    domain: "marca.fyi",
+                    props: { platform: storeName.trim() }
                   };
+                  var blob = new Blob([JSON.stringify(payload)], { type: 'text/plain' });
 
-                  // 4. Send Event with Callback
-                  window.plausible(eventName, {
-                    callback: navigate,
-                    props: { platform: storeName }
-                  });
+                  // C. Send Beacon
+                  // This queues the request in the browser background process.
+                  // It WILL send even if the app opens 1ms later.
+                  navigator.sendBeacon('https://plausible.io/api/event', blob);
 
-                  // 5. Safety Timeout (Fallback for iOS/WebView/AdBlockers)
-                  setTimeout(navigate, 150);
+                  // D. Do NOT preventDefault
+                  // We let the navigation proceed natively to support Deep Links.
                 });
               });
 
