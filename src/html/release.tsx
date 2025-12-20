@@ -43,8 +43,8 @@ export const ReleaseApp = (props: ReleaseProps) => {
           <img
             height="1"
             width="1"
-            style={{ display: "none" }}
-            src={`https://www.facebook.com/tr?id=${props.release.pixel}&ev=PageView&noscript=1"`}
+            style="display:none"
+            src={`https://www.facebook.com/tr?id=${props.release.pixel}&ev=PageView&noscript=1`}
           />
         </noscript>
         <link
@@ -82,7 +82,7 @@ export const ReleaseApp = (props: ReleaseProps) => {
                 ja: "プラットフォームを選択してください",
                 ko: "플랫폼을 선택하세요",
                 zh: "选择您的平台",
-                bg: "Изберете платформа",
+                bg: "Изберете platформа",
                 vi: "Chọn nền tảng của bạn",
                 ar: "اختر منصتك",
                 fa: "پلتفرم خود را انتخاب کنید"
@@ -118,10 +118,10 @@ export const ReleaseApp = (props: ReleaseProps) => {
               var rtlLangs = ['he', 'ar', 'fa', 'ur'];
               var urlParams = new URLSearchParams(window.location.search);
               var debugLang = urlParams.get('debug-lang');
-              var userLang = navigator.language || navigator.userLanguage; 
-              
+              var userLang = navigator.language || navigator.userLanguage;
+
               var langCode = debugLang ? debugLang : (userLang ? userLang.split('-')[0] : 'en');
-              
+
               var text = translations[langCode];
               var textMore = translationsMore[langCode];
 
@@ -129,7 +129,7 @@ export const ReleaseApp = (props: ReleaseProps) => {
               var scrollMore = document.getElementById("scroll-more");
 
               if (text && heading) {
-                if(rtlLangs.indexOf(langCode) !== -1) {
+                if (rtlLangs.indexOf(langCode) !== -1) {
                   document.documentElement.dir = "rtl";
                   document.documentElement.lang = langCode;
                 }
@@ -141,44 +141,12 @@ export const ReleaseApp = (props: ReleaseProps) => {
               }
 
               window.addEventListener('scroll', function() {
-                 if (window.scrollY > 5) {
-                   document.body.classList.add('is-scrolled');
-                 } else {
-                   document.body.classList.remove('is-scrolled');
-                 }
+                if (window.scrollY > 5) {
+                  document.body.classList.add('is-scrolled');
+                } else {
+                  document.body.classList.remove('is-scrolled');
+                }
               });
-
-              // --- Plausible platform click tracking (event delegation) ---
-              var linksList = document.getElementById("links-list");
-
-              if (linksList) {
-                linksList.addEventListener("click", function (e) {
-                  var a = e.target && e.target.closest ? e.target.closest("a") : null;
-                  if (!a) return;
-
-                  var href = a.getAttribute("href");
-                  var platform = a.getAttribute("data-store-id") || "";
-                  var store = a.getAttribute("data-store-name") || a.textContent || "";
-
-                  // If Plausible isn't ready yet, DO NOT block navigation.
-                  if (typeof window.plausible !== "function") return;
-
-                  // Now we can safely block navigation and send + callback
-                  e.preventDefault();
-  
-                  window.plausible("Platform Click", {
-                    props: { platform: platform, store: store },
-                    callback: function () {
-                      window.location.href = href;
-                    },
-                  });
-
-                  // Safety: if callback never fires, still navigate after a short delay.
-                  setTimeout(function () {
-                    window.location.href = href;
-                  }, 300);
-                });
-              }
 
             });
             `,
@@ -197,23 +165,32 @@ export const ReleaseApp = (props: ReleaseProps) => {
             <div className="content-inner">
               <h1>{props.release.title}</h1>
               <h2 id="platform-heading">Pick your platform</h2>
-              {/* Added ID here for the scroll target */}
               <ul id="links-list">
-                {props.release.links?.map((link) => (
-                  <li key={link.storeId}>
-                    <a href={link.url} className={link.storeId} data-store-id={link.storeId} data-store-name={link.store}>
-                      {link.store}
-                    </a>
-                  </li>
-                ))}
+                {props.release.links?.map((link) => {
+                  const escapedStoreName = link.store.trim().replace(/\s+/g, "+");
+                  return (
+                    <li key={link.storeId}>
+                      <a
+                        href={link.url}
+                        data-store-id={link.storeId}
+                        data-store-name={link.store}
+                        className={[
+                          link.storeId,
+                          `plausible-event-name=Platform+Click+${escapedStoreName}`,
+                        ].join(" ")}
+                      >
+                        {link.store}
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </div>
         </article>
-        
+
         {/* Changed to an anchor tag pointing to the list */}
         <a id="scroll-more" href="#links-list">More</a>
-        
       </body>
     </html>
   );
