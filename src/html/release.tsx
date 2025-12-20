@@ -148,6 +148,46 @@ export const ReleaseApp = (props: ReleaseProps) => {
                 }
               });
 
+              // --- Plausible platform click tracking (event delegation) ---
+              var linksList = document.getElementById("links-list");
+
+              if (linksList) {
+                linksList.addEventListener("click", function (e) {
+                  var a = e.target && e.target.closest ? e.target.closest("a") : null;
+                  if (!a) return;
+
+                  var href = a.getAttribute("href");
+                  if (!href) return;
+
+                  // Single source of truth
+                  var storeName = a.getAttribute("data-store-name");
+                  if (!storeName) return;
+
+                  storeName = storeName.trim();
+
+                  // Event name (no props, no paid features)
+                  var eventName = "Platform Click " + storeName;
+
+                  // If Plausible isn't ready or blocked, DO NOT interfere with navigation
+                  if (typeof window.plausible !== "function") return;
+
+                  // Block navigation briefly so the event can be sent
+                  e.preventDefault();
+
+                  window.plausible(eventName, {
+                    callback: function () {
+                      window.location.href = href;
+                    }
+                  });
+
+                  // Safety fallback: never trap the user
+                  setTimeout(function () {
+                    window.location.href = href;
+                  }, 300);
+                });
+              }
+
+
             });
             `,
           }}
@@ -167,17 +207,13 @@ export const ReleaseApp = (props: ReleaseProps) => {
               <h2 id="platform-heading">Pick your platform</h2>
               <ul id="links-list">
                 {props.release.links?.map((link) => {
-                  const escapedStoreName = link.store.trim().replace(/\s+/g, "+");
                   return (
                     <li key={link.storeId}>
                       <a
                         href={link.url}
                         data-store-id={link.storeId}
                         data-store-name={link.store}
-                        className={[
-                          link.storeId,
-                          `plausible-event-name=Platform+Click+${escapedStoreName}`,
-                        ].join(" ")}
+                        className={link.storeId}
                       >
                         {link.store}
                       </a>
