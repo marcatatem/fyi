@@ -60,6 +60,7 @@ export interface Release {
   artist: string;
   releaseDate: string;
   cover: string;
+  pixel: string;
   links: {
     store: string;
     storeId: string;
