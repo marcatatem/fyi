@@ -43,7 +43,7 @@ export const ReleaseApp = (props: ReleaseProps) => {
           <img
             height="1"
             width="1"
-            style="display:none"
+            style={{ display: "none" }}
             src={`https://www.facebook.com/tr?id=${props.release.pixel}&ev=PageView&noscript=1"`}
           />
         </noscript>
@@ -57,6 +57,133 @@ export const ReleaseApp = (props: ReleaseProps) => {
         />
         <script defer data-domain="marca.fyi" src="https://plausible.io/js/script.js">
         </script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            document.addEventListener("DOMContentLoaded", function() {
+              var translations = {
+                pt: "Selecione sua plataforma",
+                es: "Selecciona tu plataforma",
+                de: "Wählen Sie Ihre Plattform aus",
+                fr: "Sélectionnez votre plateforme",
+                pl: "Wybierz platformę",
+                it: "Seleziona la tua piattaforma",
+                nl: "Selecteer uw platform",
+                tr: "Platformunuzu seçin",
+                cs: "Vyberte platformu",
+                sv: "Välj din plattform",
+                no: "Velg din plattform",
+                he: "בחר את הפלטפורמה שלך",
+                hu: "Válassza ki a platformját",
+                da: "Vælg din platform",
+                uk: "Оберіть платформу",
+                ru: "Выберите платформу",
+                ro: "Selectați platforma",
+                ja: "プラットフォームを選択してください",
+                ko: "플랫폼을 선택하세요",
+                zh: "选择您的平台",
+                bg: "Изберете платформа",
+                vi: "Chọn nền tảng của bạn",
+                ar: "اختر منصتك",
+                fa: "پلتفرم خود را انتخاب کنید"
+              };
+
+              var translationsMore = {
+                pt: "Mais",
+                es: "Más",
+                de: "Mehr",
+                fr: "Plus",
+                pl: "Więcej",
+                it: "Altro",
+                nl: "Meer",
+                tr: "Daha fazla",
+                cs: "Více",
+                sv: "Mer",
+                no: "Mer",
+                he: "עוד",
+                hu: "Tovább",
+                da: "Mere",
+                uk: "Ще",
+                ru: "Ещё",
+                ro: "Mai mult",
+                ja: "もっと",
+                ko: "더 보기",
+                zh: "更多",
+                bg: "Още",
+                vi: "Xem thêm",
+                ar: "المزيد",
+                fa: "بیشتر"
+              };
+
+              var rtlLangs = ['he', 'ar', 'fa', 'ur'];
+              var urlParams = new URLSearchParams(window.location.search);
+              var debugLang = urlParams.get('debug-lang');
+              var userLang = navigator.language || navigator.userLanguage; 
+              
+              var langCode = debugLang ? debugLang : (userLang ? userLang.split('-')[0] : 'en');
+              
+              var text = translations[langCode];
+              var textMore = translationsMore[langCode];
+
+              var heading = document.getElementById("platform-heading");
+              var scrollMore = document.getElementById("scroll-more");
+
+              if (text && heading) {
+                if(rtlLangs.indexOf(langCode) !== -1) {
+                  document.documentElement.dir = "rtl";
+                  document.documentElement.lang = langCode;
+                }
+                heading.innerText = text;
+              }
+
+              if (textMore && scrollMore) {
+                scrollMore.innerText = textMore;
+              }
+
+              window.addEventListener('scroll', function() {
+                 if (window.scrollY > 5) {
+                   document.body.classList.add('is-scrolled');
+                 } else {
+                   document.body.classList.remove('is-scrolled');
+                 }
+              });
+
+              // --- Plausible platform click tracking (event delegation) ---
+              var linksList = document.getElementById("links-list");
+
+              if (linksList) {
+                linksList.addEventListener("click", function (e) {
+                  var a = e.target && e.target.closest ? e.target.closest("a") : null;
+                  if (!a) return;
+
+                  var href = a.getAttribute("href");
+                  var platform = a.getAttribute("data-store-id") || "";
+                  var store = a.getAttribute("data-store-name") || a.textContent || "";
+
+                  // If Plausible isn't ready yet, DO NOT block navigation.
+                  if (typeof window.plausible !== "function") return;
+
+                  // Now we can safely block navigation and send + callback
+                  e.preventDefault();
+  
+                  window.plausible("Platform Click", {
+                    props: { platform: platform, store: store },
+                    callback: function () {
+                      window.location.href = href;
+                    },
+                  });
+
+                  // Safety: if callback never fires, still navigate after a short delay.
+                  setTimeout(function () {
+                    window.location.href = href;
+                  }, 300);
+                });
+              }
+
+            });
+            `,
+          }}
+        />
       </head>
       <body>
         <article>
@@ -69,11 +196,12 @@ export const ReleaseApp = (props: ReleaseProps) => {
           <div id="content">
             <div className="content-inner">
               <h1>{props.release.title}</h1>
-              <h2>{props.release.artist}</h2>
-              <ul>
+              <h2 id="platform-heading">Pick your platform</h2>
+              {/* Added ID here for the scroll target */}
+              <ul id="links-list">
                 {props.release.links?.map((link) => (
                   <li key={link.storeId}>
-                    <a href={link.url} className={link.storeId}>
+                    <a href={link.url} className={link.storeId} data-store-id={link.storeId} data-store-name={link.store}>
                       {link.store}
                     </a>
                   </li>
@@ -82,6 +210,10 @@ export const ReleaseApp = (props: ReleaseProps) => {
             </div>
           </div>
         </article>
+        
+        {/* Changed to an anchor tag pointing to the list */}
+        <a id="scroll-more" href="#links-list">More</a>
+        
       </body>
     </html>
   );

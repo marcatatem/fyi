@@ -3,6 +3,20 @@
 
 @import "styles/vendor/reset.css";
 
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+    --icon-position: right center;
+    --test-color: red;
+}
+
+html[dir="rtl"] {
+    --icon-position: left center;
+    --test-color: green;
+}
+
 body.grid {
   background-image: repeating-linear-gradient(to bottom,
       rgba(255, 0, 0, .08),
@@ -38,6 +52,11 @@ body {
 }
 
 /* Base Styles (Portrait/Mobile) */
+
+#cover {
+  background-color: #2a2a2a;
+}
+
 #cover img {
     width: 100%;
     height: auto;
@@ -51,13 +70,14 @@ body {
 
 h1 { font-weight: bold; margin: 0 20px; }
 h2 { opacity: 0.5; margin: 0 20px; }
-ul { margin-top: 12px; }
+ul { margin-top: 12px; margin-bottom: 24px }
 ul li { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
 ul li:last-child {
   border: none;
 }
 ul li a {
     color: #f5f5f5;
+    background-color: yellow;
     display: block;
     text-decoration: none;
     margin: 0 20px;
@@ -65,10 +85,66 @@ ul li a {
 }
 
 /* Icon Styles */
-a.apple_music { background: url(/img/releases/apple-music.svg) right center no-repeat; background-size: auto 30px; }
-a.spotify { background: url(/img/releases/spotify-tile.svg) right center no-repeat; background-size: auto 30px; }
-a.tidal { background: url(/img/releases/tidal.svg) right center no-repeat; background-size: auto 30px; }
-a.soundcloud { background: url(/img/releases/soundcloud.svg) right center no-repeat; background-size: auto 30px; }
+a.apple_music { 
+    background: url(/img/releases/apple-music.svg) var(--icon-position) no-repeat; 
+    background-size: auto 30px; 
+}
+
+a.spotify { 
+    background: url(/img/releases/spotify-tile.svg) var(--icon-position) no-repeat; 
+    background-size: auto 30px; 
+}
+
+a.tidal { 
+    background: url(/img/releases/tidal.svg) var(--icon-position) no-repeat; 
+    background-size: auto 30px; 
+}
+
+a.soundcloud { 
+    background: url(/img/releases/soundcloud.svg) var(--icon-position) no-repeat; 
+    background-size: auto 30px; 
+}
+
+a.deezer { 
+    background: url(/img/releases/deezer.svg) var(--icon-position) no-repeat; 
+    background-size: auto 30px; 
+}
+
+#scroll-more {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    
+    display: inline-block;
+    padding: 10px 24px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    
+    /* Transition Mechanics */
+    opacity: 1;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    
+    pointer-events: auto; 
+    cursor: pointer;
+}
+
+/* Hide when scrolled */
+body.is-scrolled #scroll-more {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50%) translateY(10px);
+}
 
 /* Desktop / Landscape Layout */
 @media (min-width: 769px) {
@@ -109,5 +185,9 @@ a.soundcloud { background: url(/img/releases/soundcloud.svg) right center no-rep
         width: 100%;
         max-width: 500px; /* Keeps the list from getting too wide on ultra-wide monitors */
         margin: 0 auto;
+    }
+
+    #scroll-more {
+        display: none;
     }
 }

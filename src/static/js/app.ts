@@ -15,107 +15,113 @@ document.addEventListener("DOMContentLoaded", () => {
       '<div class="layout"><div class="canvas"><div class="columns"></div></div></div>',
     );
   }
-  // attach events
-  document.querySelector("header .open.menu")?.addEventListener(
-    "click",
-    function (e) {
-      e.preventDefault();
-      const nav = document.querySelector("header nav")!;
-      nav.classList.add("visible");
-      nav.classList.add("open");
-    },
-  );
-  document.querySelector("header .close.menu")?.addEventListener(
-    "click",
-    function (e) {
-      e.preventDefault();
-      const nav = document.querySelector("header nav")!;
-      nav.classList.remove("open");
-      nav.addEventListener("transitionend", function handler() {
-        requestAnimationFrame(() => {
-          nav.classList.remove("visible");
-        });
-        // Remove the event listener after it has executed
-        nav.removeEventListener("transitionend", handler);
-      });
-    },
-  );
-  document.querySelector(".back-to-top a")?.addEventListener(
-    "click",
-    function (e) {
-      e.preventDefault();
-      window.scrollTo(0, 0);
-    },
-  );
-  // header
-  addEventListener("scroll", function (_) {
-    const trigger = document.querySelector("#trigger")!;
-    const header = document.querySelector("header")!;
-    const triggerPosition = trigger.getBoundingClientRect().top + window.scrollY;
-    const headerHeight = header.offsetHeight;
-    if (window.scrollY > triggerPosition - headerHeight) {
-      header.classList.add("scrolled");
-    } else {
-      header.classList.remove("scrolled");
-    }
-  });
-  // add smooth transitions to navigation links
-  document.querySelectorAll(".smooth").forEach((smooth) => {
-    smooth.addEventListener("click", function (e) {
-      e.preventDefault();
-      const id = (e.currentTarget as HTMLElement).getAttribute("href")!;
-      const headerNav = document.querySelector("header nav")!;
-      if (headerNav.classList.contains("open")) {
-        headerNav.classList.remove("open");
-        headerNav.addEventListener("transitionend", function handler() {
-          headerNav.classList.remove("visible");
+  const trigger = document.querySelector("#trigger")!;
+  if (trigger) {
+    // attach events
+    document.querySelector("header .open.menu")?.addEventListener(
+      "click",
+      function (e) {
+        e.preventDefault();
+        const nav = document.querySelector("header nav")!;
+        nav.classList.add("visible");
+        nav.classList.add("open");
+      },
+    );
+    document.querySelector("header .close.menu")?.addEventListener(
+      "click",
+      function (e) {
+        e.preventDefault();
+        const nav = document.querySelector("header nav")!;
+        nav.classList.remove("open");
+        nav.addEventListener("transitionend", function handler() {
           requestAnimationFrame(() => {
-            setTimeout(() => {
-              scrollTo(id);
-            }, 150);
+            nav.classList.remove("visible");
           });
-          headerNav.removeEventListener("transitionend", handler);
+          // Remove the event listener after it has executed
+          nav.removeEventListener("transitionend", handler);
         });
+      },
+    );
+    document.querySelector(".back-to-top a")?.addEventListener(
+      "click",
+      function (e) {
+        e.preventDefault();
+        window.scrollTo(0, 0);
+      },
+    );
+    // header
+    addEventListener("scroll", function (_) {
+      const trigger = document.querySelector("#trigger")!;
+      const header = document.querySelector("header")!;
+      const triggerPosition = trigger.getBoundingClientRect().top + window.scrollY;
+      const headerHeight = header.offsetHeight;
+      if (window.scrollY > triggerPosition - headerHeight) {
+        header.classList.add("scrolled");
       } else {
-        scrollTo(id);
+        header.classList.remove("scrolled");
       }
     });
-  });
-  // transition for lazy loaded images
-  document.querySelectorAll("figure img").forEach((img) => {
-    img.addEventListener("load", function (_) {
-      img.classList.add("loaded");
+    // add smooth transitions to navigation links
+    document.querySelectorAll(".smooth").forEach((smooth) => {
+      smooth.addEventListener("click", function (e) {
+        e.preventDefault();
+        const id = (e.currentTarget as HTMLElement).getAttribute("href")!;
+        const headerNav = document.querySelector("header nav")!;
+        if (headerNav.classList.contains("open")) {
+          headerNav.classList.remove("open");
+          headerNav.addEventListener("transitionend", function handler() {
+            headerNav.classList.remove("visible");
+            requestAnimationFrame(() => {
+              setTimeout(() => {
+                scrollTo(id);
+              }, 150);
+            });
+            headerNav.removeEventListener("transitionend", handler);
+          });
+        } else {
+          scrollTo(id);
+        }
+      });
     });
-  });
+    // transition for lazy loaded images
+    document.querySelectorAll("figure img").forEach((img) => {
+      img.addEventListener("load", function (_) {
+        img.classList.add("loaded");
+      });
+    });
+  }
 });
 
 onload = async () => {
-  // update revision and build time
-  if ("fetch" in window) {
-    const response = await fetch("/build-info.json");
-    const info: BuildInfo = await response.json();
-    const originalLabel = document.querySelector(".build-info")?.innerHTML;
-    if (originalLabel) {
-      let label = originalLabel;
-      const matches = originalLabel.matchAll(/\[([\w]+)\]/g);
-      for (const match of matches) {
-        const value = info[match[1] as keyof BuildInfo];
-        label = label.replace(match[0], String(value));
+  const trigger = document.querySelector("#trigger")!;
+  if (trigger) {
+    // update revision and build time
+    if ("fetch" in window) {
+      const response = await fetch("/build-info.json");
+      const info: BuildInfo = await response.json();
+      const originalLabel = document.querySelector(".build-info")?.innerHTML;
+      if (originalLabel) {
+        let label = originalLabel;
+        const matches = originalLabel.matchAll(/\[([\w]+)\]/g);
+        for (const match of matches) {
+          const value = info[match[1] as keyof BuildInfo];
+          label = label.replace(match[0], String(value));
+        }
+        document.querySelectorAll(".build-info").forEach((el) => {
+          el.innerHTML = label;
+        });
       }
+    } else {
       document.querySelectorAll(".build-info").forEach((el) => {
-        el.innerHTML = label;
+        el.innerHTML = "Fetch API not supported.";
       });
     }
-  } else {
-    document.querySelectorAll(".build-info").forEach((el) => {
-      el.innerHTML = "Fetch API not supported.";
+    // add scroll margin to sections
+    document.querySelectorAll<HTMLElement>("section").forEach((section) => {
+      const marginTop = window.getComputedStyle(section).marginTop;
+      section.style.scrollMarginTop = marginTop;
     });
   }
-  // add scroll margin to sections
-  document.querySelectorAll<HTMLElement>("section").forEach((section) => {
-    const marginTop = window.getComputedStyle(section).marginTop;
-    section.style.scrollMarginTop = marginTop;
-  });
 };
 
 function scrollTo(id: string, smooth = true) {

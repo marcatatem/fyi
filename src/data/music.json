@@ -25,6 +25,11 @@
         "store": "SoundCloud",
         "storeId": "soundcloud",
         "url": "https://soundcloud.com/marca-tatem-393280298/mouth-of-madness"
+      },
+      {
+        "store": "Deezer",
+        "storeId": "deezer",
+        "url": "https://link.deezer.com/s/31W4TnA56Rgnz5knDVbov"
       }
     ]
   },
