@@ -148,36 +148,6 @@ export const ReleaseApp = (props: ReleaseProps) => {
                 }
               });
 
-              // --- Plausible platform click tracking (Direct Binding) ---
-              var links = document.querySelectorAll("#links-list a");
-
-              links.forEach(function(link) {
-                link.addEventListener("click", function(e) {
-                  // A. Validate
-                  var storeName = link.getAttribute("data-store-name");
-                  if (!storeName) return;
-
-                  // B. Prepare Data (Official Plausible API structure)
-                  // We use text/plain so the browser skips CORS preflight, making it faster.
-                  var payload = {
-                    name: "Platform Click " + storeName.trim(), 
-                    url: window.location.href, 
-                    domain: "marca.fyi",
-                    props: { platform: storeName.trim() }
-                  };
-                  var blob = new Blob([JSON.stringify(payload)], { type: 'text/plain' });
-
-                  // C. Send Beacon
-                  // This queues the request in the browser background process.
-                  // It WILL send even if the app opens 1ms later.
-                  navigator.sendBeacon('https://plausible.io/api/event', blob);
-
-                  // D. Do NOT preventDefault
-                  // We let the navigation proceed natively to support Deep Links.
-                });
-              });
-
-
             });
             `,
           }}
