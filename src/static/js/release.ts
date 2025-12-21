@@ -179,9 +179,11 @@ document.addEventListener("DOMContentLoaded", () => {
         return; // avoid blocking in production, just get to the store
       }
       // trigger meta event
-      window.fbq("trackCustom", "StreamServiceClick", {
-        service: storeName,
+      window.fbq("track", "Lead", {
+        content_category: "Music",
         content_name: trackName,
+        currency: "USD",
+        service: storeName,
       });
       // trigger plausible event
       const eventName = "Platform Click " + storeName.trim();
