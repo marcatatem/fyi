@@ -155,6 +155,29 @@ export const ReleaseApp = (props: ReleaseProps) => {
                 }
               });
 
+              // Plausible
+              var links = document.querySelectorAll("#links-list a[data-store-name]");
+              links.forEach(function (link) {
+                link.addEventListener("click", function (e) {
+                  var a = e.currentTarget;
+                  var href = a.href;
+                  var storeName = a.getAttribute("data-store-name");
+                  if (!storeName) return;
+                  var eventName = "Platform Click " + storeName.trim();
+                  if (typeof window.plausible !== "function") return;
+                  e.preventDefault();
+                  var navigated = false;
+                  function go() {
+                    if (navigated) return;
+                    navigated = true;
+                    window.location.href = href;
+                  }
+                  window.plausible(eventName, { callback: go });
+                  // Safety net for iOS / in-app browsers
+                  setTimeout(go, 150);
+                });
+              });
+
             });
             `,
           }}
