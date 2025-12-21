@@ -39,7 +39,7 @@ await rsync("src/static/css", "dist/css");
 await rsync("src/static/music", "dist/music");
 // bundle and minify css and js
 await bundleStylesheets(revision, "styles");
-await bundleScripts(revision);
+await bundleScripts("app", revision);
 // render tsx to html
 await renderHTML(props);
 // write revision and build time
@@ -78,6 +78,7 @@ for (const release of music) {
   await renderReleasePage(release.title, releaseProps);
 }
 
+await bundleScripts("release", revision);
 await bundleStylesheets(revision, "release");
 
 // done

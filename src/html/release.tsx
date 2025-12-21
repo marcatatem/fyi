@@ -19,7 +19,7 @@ export const ReleaseApp = (props: ReleaseProps) => {
         <meta property="og:image" content={pathForAsset("img", props.release.cover)} />
         <title>Stream {props.release.title}</title>
         <script
-          src={pathForAsset("js", "app.js", {
+          src={pathForAsset("js", "release.js", {
             mode: props.mode,
             revision: props.revision,
           })}
@@ -64,127 +64,9 @@ export const ReleaseApp = (props: ReleaseProps) => {
             `,
           }}
         />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            document.addEventListener("DOMContentLoaded", function() {
-              var translations = {
-                pt: "Selecione sua plataforma",
-                es: "Selecciona tu plataforma",
-                de: "Wählen Sie Ihre Plattform aus",
-                fr: "Sélectionnez votre plateforme",
-                pl: "Wybierz platformę",
-                it: "Seleziona la tua piattaforma",
-                nl: "Selecteer uw platform",
-                tr: "Platformunuzu seçin",
-                cs: "Vyberte platformu",
-                sv: "Välj din plattform",
-                no: "Velg din plattform",
-                he: "בחר את הפלטפורמה שלך",
-                hu: "Válassza ki a platformját",
-                da: "Vælg din platform",
-                uk: "Оберіть платформу",
-                ru: "Выберите платформу",
-                ro: "Selectați platforma",
-                ja: "プラットフォームを選択してください",
-                ko: "플랫폼을 선택하세요",
-                zh: "选择您的平台",
-                bg: "Изберете platформа",
-                vi: "Chọn nền tảng của bạn",
-                ar: "اختر منصتك",
-                fa: "پلتفرم خود را انتخاب کنید"
-              };
-
-              var translationsMore = {
-                pt: "Mais",
-                es: "Más",
-                de: "Mehr",
-                fr: "Plus",
-                pl: "Więcej",
-                it: "Altro",
-                nl: "Meer",
-                tr: "Daha fazla",
-                cs: "Více",
-                sv: "Mer",
-                no: "Mer",
-                he: "עוד",
-                hu: "Tovább",
-                da: "Mere",
-                uk: "Ще",
-                ru: "Ещё",
-                ro: "Mai mult",
-                ja: "もっと",
-                ko: "더 보기",
-                zh: "更多",
-                bg: "Още",
-                vi: "Xem thêm",
-                ar: "المزيد",
-                fa: "بیشتر"
-              };
-
-              var rtlLangs = ['he', 'ar', 'fa', 'ur'];
-              var urlParams = new URLSearchParams(window.location.search);
-              var debugLang = urlParams.get('debug-lang');
-              var userLang = navigator.language || navigator.userLanguage;
-
-              var langCode = debugLang ? debugLang : (userLang ? userLang.split('-')[0] : 'en');
-
-              var text = translations[langCode];
-              var textMore = translationsMore[langCode];
-
-              var heading = document.getElementById("platform-heading");
-              var scrollMore = document.getElementById("scroll-more");
-
-              if (text && heading) {
-                if (rtlLangs.indexOf(langCode) !== -1) {
-                  document.documentElement.dir = "rtl";
-                  document.documentElement.lang = langCode;
-                }
-                heading.innerText = text;
-              }
-
-              if (textMore && scrollMore) {
-                scrollMore.innerText = textMore;
-              }
-
-              window.addEventListener('scroll', function() {
-                if (window.scrollY > 5) {
-                  document.body.classList.add('is-scrolled');
-                } else {
-                  document.body.classList.remove('is-scrolled');
-                }
-              });
-
-              // Plausible
-              var links = document.querySelectorAll("#links-list a[data-store-name]");
-              links.forEach(function (link) {
-                link.addEventListener("click", function (e) {
-                  var a = e.currentTarget;
-                  var href = a.href;
-                  var storeName = a.getAttribute("data-store-name");
-                  if (!storeName) return;
-                  var eventName = "Platform Click " + storeName.trim();
-                  if (typeof window.plausible !== "function") return;
-                  e.preventDefault();
-                  var navigated = false;
-                  function go() {
-                    if (navigated) return;
-                    navigated = true;
-                    window.location.href = href;
-                  }
-                  window.plausible(eventName, { callback: go });
-                  // Safety net for iOS / in-app browsers
-                  setTimeout(go, 150);
-                });
-              });
-
-            });
-            `,
-          }}
-        />
       </head>
       <body>
-        <article>
+        <article id="release" data-track-name={props.release.title}>
           <div id="cover">
             <img
               src={pathForAsset("img", props.release.cover)}

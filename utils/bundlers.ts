@@ -29,15 +29,15 @@ export async function bundleStylesheets(revision: string, name: string) {
  * Bundles and minifies scripts
  * @param revision - current code revision
  */
-export async function bundleScripts(revision: string) {
-  log("bundle", "src/static/js/app.ts", "green");
+export async function bundleScripts(target: string, revision: string) {
+  log("bundle", `src/static/js/${target}.ts`, "green");
   mkDirSync("dist/js");
   await esbuild.build({
     bundle: true,
     minify: true,
     sourcemap: true,
-    entryPoints: ["src/static/js/app.ts"],
-    outfile: `dist/js/app.bundled.${revision}.js`,
+    entryPoints: [`src/static/js/${target}.ts`],
+    outfile: `dist/js/${target}.bundled.${revision}.js`,
   });
 }
 
