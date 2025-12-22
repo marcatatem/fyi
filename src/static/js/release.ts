@@ -9,7 +9,8 @@ declare global {
     fbq: (
       action: string,
       eventName: string,
-      params?: { [key: string]: any },
+      params: { [key: string]: any },
+      options?: { [key: string]: any },
     ) => void;
   }
 }
@@ -102,6 +103,18 @@ const localizationTable: LocalizationTable = {
   },
 };
 
+// CAPI helpers
+
+const generateEventId = () =>
+  Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
+
+const getCookie = (name: string) => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(";").shift();
+  return undefined;
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   // show grid if needed
   const url = new URL(window.location.href);
@@ -157,41 +170,65 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   platformLinks.forEach((platformLink) => {
     platformLink.addEventListener("click", (e) => {
-      if (
-        typeof window.plausible !== "function" ||
-        typeof window.fbq !== "function"
-      ) {
-        console.error("Plausible or Meta Pixel not loaded");
-        return; // avoid blocking in production, just get to the store
-      }
+      // Always prevent default first to control the navigation timing
       e.preventDefault();
+
       const anchor = e.currentTarget as HTMLAnchorElement;
-      // get actual link to store
       const href = anchor.href;
+
+      // Define navigation fallback
+      const navigate = () => {
+        window.location.href = href;
+      };
+
       // get store name and id, and track name
       const storeName = anchor.getAttribute("data-store-name");
       const storeId = anchor.getAttribute("data-store-id");
       const trackName = document.getElementById("release")?.getAttribute(
         "data-track-name",
       );
+
       if (!storeName || !storeId || !trackName) {
         console.error("Couldn't get store and track information");
-        return; // avoid blocking in production, just get to the store
+        navigate(); // ensure we still navigate if data is missing
+        return;
       }
-      // trigger meta event
-      window.fbq("track", "Lead", {
-        content_category: "Music",
-        content_name: trackName,
-        currency: "USD",
-        service: storeName,
-      });
-      // trigger plausible event
-      const eventName = "Platform Click " + storeName.trim();
-      window.plausible(eventName);
+
+      // generate eventID for deduplication
+      const eventId = generateEventId();
+
+      // trigger meta pixel event (safely check if function exists)
+      if (typeof window.fbq === "function") {
+        window.fbq("track", "Lead", {
+          content_category: "Music",
+          content_name: trackName,
+          currency: "USD",
+          service: storeName,
+        }, { eventID: eventId });
+      }
+
+      // trigger CAPI call (always fire, even if fbq is blocked)
+      fetch("https://fyi.marcatatem.deno.net/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        keepalive: true,
+        body: JSON.stringify({
+          eventId: eventId,
+          url: window.location.href,
+          userAgent: navigator.userAgent,
+          fbp: getCookie("_fbp"),
+          fbc: getCookie("_fbc"),
+        }),
+      }).catch((err) => console.error("CAPI failed:", err));
+
+      // trigger plausible event (safely check if function exists)
+      if (typeof window.plausible === "function") {
+        const eventName = "Platform Click " + storeName.trim();
+        window.plausible(eventName);
+      }
+
       // wait until request leaves browser, not ideal, but can't wait forever in ad context
-      setTimeout(() => {
-        window.location.href = href;
-      }, 150);
+      setTimeout(navigate, 150);
     });
   });
 });
