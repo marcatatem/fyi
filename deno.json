@@ -17,7 +17,8 @@
     "jsxImportSource": "npm:preact",
     "lib": [
       "deno.ns",
-      "dom"
+      "dom",
+      "deno.unstable"
     ]
   }
 }

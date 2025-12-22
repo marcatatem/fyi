@@ -116,8 +116,11 @@ const getCookie = (name: string) => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  // show grid if needed
   const url = new URL(window.location.href);
+  // get campaign if available
+  const campaign = url.searchParams.get("utm_campaign") ||
+    url.searchParams.get("campaign") || "default";
+  // show grid if needed
   if (url.searchParams.has("grid")) {
     document.body.classList.add("grid");
     document.body.insertAdjacentHTML(
@@ -226,6 +229,10 @@ document.addEventListener("DOMContentLoaded", () => {
           userAgent: navigator.userAgent,
           fbp: getCookie("_fbp"),
           fbc: getCookie("_fbc"),
+          // metadata
+          trackName: trackName,
+          storeName: storeName,
+          campaign: campaign,
         }),
       }).catch((err) => console.error("CAPI failed:", err));
 
