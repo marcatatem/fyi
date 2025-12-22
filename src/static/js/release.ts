@@ -196,10 +196,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // generate eventID for deduplication
       const eventId = generateEventId();
+      const eventName = "ViewContent";
 
       // trigger meta pixel event (safely check if function exists)
       if (typeof window.fbq === "function") {
-        window.fbq("track", "Lead", {
+        window.fbq("track", eventName, {
           content_category: "Music",
           content_name: trackName,
           currency: "USD",
@@ -220,6 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
         keepalive: true,
         body: JSON.stringify({
           eventId: eventId,
+          eventName: eventName,
           url: window.location.href,
           userAgent: navigator.userAgent,
           fbp: getCookie("_fbp"),

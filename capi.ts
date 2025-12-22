@@ -52,7 +52,7 @@ Deno.serve(async (req) => {
     // build Meta payload
     const payload = {
       data: [{
-        event_name: "Lead",
+        event_name: body.eventName || "ViewContent",
         event_time: Math.floor(Date.now() / 1000),
         event_id: body.eventId, // deduplication key
         event_source_url: body.url,
