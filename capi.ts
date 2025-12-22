@@ -131,7 +131,8 @@ Deno.serve(async (req) => {
           storeName,
         ], 1n);
         atomic.sum(["stats", songSlug, "geo", country], 1n);
-        await atomic.commit();
+        const result = await atomic.commit();
+        console.log(`${result.ok ? "OK" : "ERR"} KV Update for ${songSlug}`);
       } else {
         console.error(`WARN Meta received request but returned:`, data);
       }
