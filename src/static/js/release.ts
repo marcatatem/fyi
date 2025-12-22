@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "#links-list a[data-store-name]",
   );
   platformLinks.forEach((platformLink) => {
-    platformLink.addEventListener("click", (e) => {
+    platformLink.addEventListener("click", async (e) => {
       // Always prevent default first to control the navigation timing
       e.preventDefault();
 
@@ -207,8 +207,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }, { eventID: eventId });
       }
 
+      // trigger plausible event (safely check if function exists)
+      if (typeof window.plausible === "function") {
+        const eventName = "Platform Click " + storeName.trim();
+        window.plausible(eventName);
+      }
+
       // trigger CAPI call (always fire, even if fbq is blocked)
-      fetch("https://fyi.marcatatem.deno.net/", {
+      const respPromise = fetch("https://fyi.marcatatem.deno.net/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         keepalive: true,
@@ -221,14 +227,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }),
       }).catch((err) => console.error("CAPI failed:", err));
 
-      // trigger plausible event (safely check if function exists)
-      if (typeof window.plausible === "function") {
-        const eventName = "Platform Click " + storeName.trim();
-        window.plausible(eventName);
-      }
+      const timeoutPromise = new Promise((resolve) => setTimeout(resolve, 500));
 
-      // wait until request leaves browser, not ideal, but can't wait forever in ad context
-      setTimeout(navigate, 150);
+      try {
+        await Promise.race([respPromise, timeoutPromise]);
+      } catch (e) {
+        // Ignore errors, we must navigate
+      }
+      navigate();
     });
   });
 });
