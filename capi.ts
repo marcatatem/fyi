@@ -78,11 +78,16 @@ Deno.serve(async (req) => {
       },
     );
     const data = await resp.json();
+    if (data.events_received) {
+      console.log(`OK Sent ${body.eventName} to Meta. Response:`, data);
+    } else {
+      console.error(`WARN Meta received request but returned:`, data);
+    }
     return new Response(JSON.stringify(data), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (err) {
-    console.error("CAPI Error:", err);
+    console.error("ERR", err);
     return new Response(JSON.stringify({ error: (err as Error).message }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
