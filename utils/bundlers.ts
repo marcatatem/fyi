@@ -7,6 +7,7 @@ import { log } from "utils/log.ts";
 import { mkDirSync } from "utils/fs.ts";
 import { App, AppProps } from "html/app.tsx";
 import { ReleaseApp, ReleaseProps } from "html/release.tsx";
+import { Dashboard, DashboardProps } from "html/dashboard.tsx";
 import { parameterize } from "html/helpers.ts";
 
 /**
@@ -75,4 +76,14 @@ export async function renderReleasePage(name: string, props: ReleaseProps) {
     resolve("dist", "r", parameterize(name), "index.html"),
     formatted,
   );
+}
+
+/**
+ * Live renders TSX templates and formats resulting HTML for the dashboard
+ * @param name - release name
+ * @param release - whether the build is a release build
+ * @param revision - current code revision
+ */
+export function renderDashboard(props: DashboardProps) {
+  return renderToString(Dashboard(props));
 }

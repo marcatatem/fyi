@@ -3,8 +3,9 @@
   "specifiers": {
     "npm:@ts-stack/markdown@*": "1.5.0",
     "npm:lightningcss@1.22.0": "1.22.0",
-    "npm:preact-render-to-string@6.2.2": "6.2.2_preact@10.27.2",
-    "npm:preact@*": "10.27.2",
+    "npm:preact-render-to-string@6.2.2": "6.2.2_preact@10.18.1",
+    "npm:preact@*": "10.18.1",
+    "npm:preact@10.18.1": "10.18.1",
     "npm:prettier@3.0.2": "3.0.2",
     "npm:rsyncjs@*": "0.0.12",
     "npm:smartypants@0.2.2": "0.2.2"
@@ -136,15 +137,15 @@
         "lightningcss-win32-x64-msvc"
       ]
     },
-    "preact-render-to-string@6.2.2_preact@10.27.2": {
+    "preact-render-to-string@6.2.2_preact@10.18.1": {
       "integrity": "sha512-YDfXQiVeYZutFR8/DpxLSbW3W6b7GgjBExRBxOOqcjrGq5rA9cziitQdNPMZe4RVMSdfBnf4hYqyeLs/KvtIuA==",
       "dependencies": [
         "preact",
         "pretty-format"
       ]
     },
-    "preact@10.27.2": {
-      "integrity": "sha512-5SYSgFKSyhCbk6SrXyMpqjb5+MQBgfvEKE/OC+PujcY34sOpqtr+0AZQtPYx5IA6VxynQ7rUPCtKzyovpj9Bpg=="
+    "preact@10.18.1": {
+      "integrity": "sha512-mKUD7RRkQQM6s7Rkmi7IFkoEHjuFqRQUaXamO61E6Nn7vqF/bo7EZCmSyrUnp2UWHw0O7XjZ2eeXis+m7tf4lg=="
     },
     "prettier@3.0.2": {
       "integrity": "sha512-o2YR9qtniXvwEZlOKbveKfDQVyqxbEIWn48Z8m3ZJjBjcCmUy3xZGIv+7AkaeuaTr6yPXJjwv07ZWlsWbEy1rQ==",

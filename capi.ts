@@ -7,6 +7,9 @@
  */
 
 import { paramCase } from "case";
+import { getDashboardData } from "./src/utils/analytics.ts";
+import { renderDashboard } from "utils/bundlers.ts";
+import { getShortRevision } from "utils/git.ts";
 
 type Env = "development" | "production";
 interface Config {
@@ -15,12 +18,17 @@ interface Config {
   token: string;
 }
 
-if (!Deno.env.get("PIXEL_ID") || !Deno.env.get("ACCESS_TOKEN")) {
+const environment = Deno.env.get("ENV") as Env ?? "development";
+
+if (
+  environment !== "development" &&
+  (!Deno.env.get("PIXEL_ID") || !Deno.env.get("ACCESS_TOKEN"))
+) {
   throw new Error("Have you added ENV variables?");
 }
 
 const config: Config = {
-  env: Deno.env.get("ENV") as Env ?? "development",
+  env: environment,
   pixelId: Deno.env.get("PIXEL_ID")!,
   token: Deno.env.get("ACCESS_TOKEN")!,
 };
@@ -45,28 +53,36 @@ Deno.serve(async (req) => {
   const url = new URL(req.url);
 
   if (url.pathname === "/stats" && req.method === "GET") {
-    const auth = req.headers.get("Authorization");
-
-    // Simple Basic Auth check
-    // Expects "Basic " + base64(username:password)
-    // Here we check for username: "admin" and password from ENV
-    const expectedAuth = btoa(
-      `admin:${Deno.env.get("STATS_PASSWORD") || "default_pass"}`,
-    );
-
-    if (auth !== `Basic ${expectedAuth}`) {
-      return new Response("Unauthorized", {
-        status: 401,
-        headers: { "WWW-Authenticate": 'Basic realm="Artist Stats"' },
-      });
+    if (config.env === "production") {
+      const auth = req.headers.get("Authorization");
+      const expectedAuth = btoa(
+        `admin:${Deno.env.get("STATS_PASSWORD") || "default_pass"}`,
+      );
+      if (auth !== `Basic ${expectedAuth}`) {
+        return new Response("Unauthorized", {
+          status: 401,
+          headers: { "WWW-Authenticate": 'Basic realm="Artist Stats"' },
+        });
+      }
     }
-
-    return new Response("<h1>Hello Stats!</h1>", {
+    const data = await getDashboardData(kv);
+    const html = renderDashboard({
+      revision: getShortRevision(),
+      data: data,
+      env: config.env === "production" ? "production" : "development",
+    });
+    return new Response(html, {
       headers: { "content-type": "text/html; charset=utf-8" },
     });
   }
 
   if (req.method === "POST") {
+    if (config.env === "development") {
+      return new Response("Not Authorized in development mode", {
+        status: 503,
+        headers: corsHeaders,
+      });
+    }
     try {
       // get request body
       const body = await req.json();
