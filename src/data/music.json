@@ -1,5 +1,34 @@
 [
   {
+    "title": "Velvet Near",
+    "artist": "Marca",
+    "releaseDate": "2026-01-08T00:58:16.351Z",
+    "cover": "releases/velvet-near.jpg",
+    "pixel": "1203822274417281",
+    "links": [
+      {
+        "store": "Spotify",
+        "storeId": "spotify",
+        "url": "https://open.spotify.com/track/494C8pYUeR4Mf6ax55uNmD"
+      },
+      {
+        "store": "Apple Music",
+        "storeId": "apple_music",
+        "url": "https://music.apple.com/us/album/velvet-near/1867319385"
+      },
+      {
+        "store": "TIDAL",
+        "storeId": "tidal",
+        "url": "https://tidal.com/track/487952452"
+      },
+      {
+        "store": "Deezer",
+        "storeId": "deezer",
+        "url": "https://link.deezer.com/s/3271hAEVE3dvaEILGMnze"
+      }
+    ]
+  },
+  {
     "title": "Mouth of Madness",
     "artist": "Marca",
     "releaseDate": "2025-12-18T00:58:16.351Z",
