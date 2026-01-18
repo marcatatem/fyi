@@ -27,6 +27,11 @@
         "url": "https://soundcloud.com/marca-tatem-393280298/velvet-near"
       },
       {
+        "store": "YouTube Music",
+        "storeId": "youtube_music",
+        "url": "https://music.youtube.com/watch?v=yj26K2SuUr8"
+      },
+      {
         "store": "Deezer",
         "storeId": "deezer",
         "url": "https://link.deezer.com/s/3271hAEVE3dvaEILGMnze"
@@ -59,6 +64,11 @@
         "store": "SoundCloud",
         "storeId": "soundcloud",
         "url": "https://soundcloud.com/marca-tatem-393280298/mouth-of-madness"
+      },
+      {
+        "store": "YouTube Music",
+        "storeId": "youtube_music",
+        "url": "https://music.youtube.com/watch?v=oapsSJDEHX0"
       },
       {
         "store": "Deezer",

@@ -77,7 +77,6 @@ ul li:last-child {
 }
 ul li a {
     color: #f5f5f5;
-    background-color: yellow;
     display: block;
     text-decoration: none;
     margin: 0 20px;
@@ -107,6 +106,11 @@ a.soundcloud {
 
 a.deezer { 
     background: url(/img/releases/deezer.svg) var(--icon-position) no-repeat; 
+    background-size: auto 30px; 
+}
+
+a.youtube_music {
+    background: url(/img/releases/youtube-music.svg) var(--icon-position) no-repeat; 
     background-size: auto 30px; 
 }
 
