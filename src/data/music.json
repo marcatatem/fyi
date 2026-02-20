@@ -1,5 +1,39 @@
 [
   {
+    "title": "All",
+    "artist": "Marca",
+    "releaseDate": "2026-02-20T00:58:16.351Z",
+    "cover": "releases/all.jpg",
+    "pixel": "1203822274417281",
+    "links": [
+      {
+        "store": "Spotify",
+        "storeId": "spotify",
+        "url": "https://open.spotify.com/track/3CPDF4ISVB3igx4mIffYLq"
+      },
+      {
+        "store": "Apple Music",
+        "storeId": "apple_music",
+        "url": "https://music.apple.com/us/album/all/1878522223"
+      },
+      {
+        "store": "TIDAL",
+        "storeId": "tidal",
+        "url": "https://tidal.com/track/500572453"
+      },
+      {
+        "store": "SoundCloud",
+        "storeId": "soundcloud",
+        "url": "https://soundcloud.com/marca-tatem-393280298/all"
+      },
+      {
+        "store": "Deezer",
+        "storeId": "deezer",
+        "url": "https://link.deezer.com/s/32vq6T3kCeero3zBjQIyG"
+      }
+    ]
+  },
+  {
     "title": "Velvet Near",
     "artist": "Marca",
     "releaseDate": "2026-01-08T00:58:16.351Z",
