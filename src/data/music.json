@@ -1,5 +1,29 @@
 [
   {
+    "title": "Stay Away — Playlist",
+    "artist": "Various",
+    "releaseDate": "2026-05-22T00:58:16.351Z",
+    "cover": "releases/stay-away-playlist.jpg",
+    "pixel": "1203822274417281",
+    "links": [
+      {
+        "store": "Spotify",
+        "storeId": "spotify",
+        "url": "https://open.spotify.com/playlist/5kqhZkPqXr5NdWEwPMA4zM"
+      },
+      {
+        "store": "Apple Music",
+        "storeId": "apple_music",
+        "url": "https://music.apple.com/us/playlist/stay-away/pl.u-WBa3TRWLmV"
+      },
+      {
+        "store": "SoundCloud",
+        "storeId": "soundcloud",
+        "url": "https://soundcloud.com/marca-tatem-393280298/sets/stay-away"
+      }
+    ]
+  },
+  {
     "title": "All",
     "artist": "Marca",
     "releaseDate": "2026-02-20T00:58:16.351Z",
