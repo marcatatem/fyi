@@ -109,6 +109,11 @@ a.deezer {
     background-size: auto 30px; 
 }
 
+a.bandcamp {
+    background: url(/img/releases/bandcamp.svg) var(--icon-position) no-repeat;
+    background-size: auto 30px;
+}
+
 a.youtube_music {
     background: url(/img/releases/youtube-music.svg) var(--icon-position) no-repeat; 
     background-size: auto 30px; 
