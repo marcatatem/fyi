@@ -63,8 +63,9 @@ export const ReleaseApp = (props: ReleaseProps) => {
         )}
         {adProvider === "google" && props.google && (
           <>
-            <script>
-              {`
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
               const marcaConsentRegions = new Set([
                 'AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR',
                 'HU','IS','IE','IT','LV','LI','LT','LU','MT','NL','NO','PL',
@@ -109,8 +110,9 @@ export const ReleaseApp = (props: ReleaseProps) => {
               });
               gtag('js', new Date());
               gtag('config', '${props.google.tagId}');
-              `}
-            </script>
+              `,
+              }}
+            />
             <script
               async
               src={`https://www.googletagmanager.com/gtag/js?id=${props.google.tagId}`}
