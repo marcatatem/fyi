@@ -7,9 +7,19 @@ export type ReleaseProps = {
   mode: RenderingMode;
   revision: string;
   release: Release;
+  adProvider?: "meta" | "google";
+  google?: {
+    tagId: string;
+    conversionLabel: string;
+  };
 };
 
 export const ReleaseApp = (props: ReleaseProps) => {
+  const adProvider = props.adProvider ?? "meta";
+  const googleSendTo = props.google
+    ? `${props.google.tagId}/${props.google.conversionLabel}`
+    : undefined;
+
   return (
     <html lang="en-US">
       <head>
@@ -25,8 +35,10 @@ export const ReleaseApp = (props: ReleaseProps) => {
           })}
           defer
         />
-        <script>
-          {`
+        {adProvider === "meta" && (
+          <>
+            <script>
+              {`
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
         n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -38,15 +50,33 @@ export const ReleaseApp = (props: ReleaseProps) => {
         fbq('init', '${props.release.pixel}');
         fbq('track', 'PageView');
         `}
-        </script>
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style="display:none"
-            src={`https://www.facebook.com/tr?id=${props.release.pixel}&ev=PageView&noscript=1`}
-          />
-        </noscript>
+            </script>
+            <noscript>
+              <img
+                height="1"
+                width="1"
+                style="display:none"
+                src={`https://www.facebook.com/tr?id=${props.release.pixel}&ev=PageView&noscript=1`}
+              />
+            </noscript>
+          </>
+        )}
+        {adProvider === "google" && props.google && (
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${props.google.tagId}`}
+            />
+            <script>
+              {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${props.google.tagId}');
+              `}
+            </script>
+          </>
+        )}
         <link
           rel="stylesheet"
           type="text/css"
@@ -66,7 +96,12 @@ export const ReleaseApp = (props: ReleaseProps) => {
         />
       </head>
       <body>
-        <article id="release" data-track-name={props.release.title}>
+        <article
+          id="release"
+          data-track-name={props.release.title}
+          data-ad-provider={adProvider}
+          data-google-send-to={googleSendTo}
+        >
           <div id="cover">
             <img
               src={pathForAsset("img", props.release.cover)}

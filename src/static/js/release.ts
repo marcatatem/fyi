@@ -12,6 +12,11 @@ declare global {
       params: { [key: string]: any },
       options?: { [key: string]: any },
     ) => void;
+    gtag: (
+      command: string,
+      eventName: string,
+      params?: { [key: string]: any },
+    ) => void;
   }
 }
 
@@ -115,11 +120,71 @@ const getCookie = (name: string) => {
   return undefined;
 };
 
+interface GoogleClickContext {
+  gclid?: string;
+  wbraid?: string;
+  gbraid?: string;
+  campaign: string;
+  source?: string;
+  medium?: string;
+  term?: string;
+  content?: string;
+  landingUrl: string;
+  capturedAt: string;
+}
+
+const googleClickStorageKey = "marcaGoogleClickContext";
+
+const getStoredGoogleClickContext = (): GoogleClickContext | undefined => {
+  try {
+    const stored = sessionStorage.getItem(googleClickStorageKey);
+    return stored ? JSON.parse(stored) : undefined;
+  } catch (_) {
+    return undefined;
+  }
+};
+
+const captureGoogleClickContext = (
+  url: URL,
+  campaign: string,
+): GoogleClickContext | undefined => {
+  const context: GoogleClickContext = {
+    gclid: url.searchParams.get("gclid") ?? undefined,
+    wbraid: url.searchParams.get("wbraid") ?? undefined,
+    gbraid: url.searchParams.get("gbraid") ?? undefined,
+    campaign: campaign,
+    source: url.searchParams.get("utm_source") ?? undefined,
+    medium: url.searchParams.get("utm_medium") ?? undefined,
+    term: url.searchParams.get("utm_term") ?? undefined,
+    content: url.searchParams.get("utm_content") ?? undefined,
+    landingUrl: window.location.href,
+    capturedAt: new Date().toISOString(),
+  };
+
+  if (!context.gclid && !context.wbraid && !context.gbraid) {
+    return getStoredGoogleClickContext();
+  }
+
+  try {
+    sessionStorage.setItem(googleClickStorageKey, JSON.stringify(context));
+  } catch (_) {
+    // Session storage is best effort. The click event still carries live URL data.
+  }
+
+  return context;
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   const url = new URL(window.location.href);
   // get campaign if available
   const campaign = url.searchParams.get("utm_campaign") ||
     url.searchParams.get("campaign") || "default";
+  const release = document.getElementById("release");
+  const adProvider = release?.getAttribute("data-ad-provider") || "meta";
+  const googleSendTo = release?.getAttribute("data-google-send-to") || undefined;
+  const googleClickContext = adProvider === "google"
+    ? captureGoogleClickContext(url, campaign)
+    : undefined;
   // show grid if needed
   if (url.searchParams.has("grid")) {
     document.body.classList.add("grid");
@@ -187,9 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // get store name and id, and track name
       const storeName = anchor.getAttribute("data-store-name");
       const storeId = anchor.getAttribute("data-store-id");
-      const trackName = document.getElementById("release")?.getAttribute(
-        "data-track-name",
-      );
+      const trackName = release?.getAttribute("data-track-name");
 
       if (!storeName || !storeId || !trackName) {
         console.error("Couldn't get store and track information");
@@ -201,8 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const eventId = generateEventId();
       const eventName = "ViewContent";
 
-      // trigger meta pixel event (safely check if function exists)
-      if (typeof window.fbq === "function") {
+      if (adProvider === "meta" && typeof window.fbq === "function") {
         window.fbq("track", eventName, {
           content_category: "Music",
           content_name: trackName,
@@ -217,29 +279,64 @@ document.addEventListener("DOMContentLoaded", () => {
         window.plausible(eventName);
       }
 
-      // trigger CAPI call (always fire, even if fbq is blocked)
-      const respPromise = fetch("https://fyi.marcatatem.deno.net/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        keepalive: true,
-        body: JSON.stringify({
-          eventId: eventId,
-          eventName: eventName,
-          url: window.location.href,
-          userAgent: navigator.userAgent,
-          fbp: getCookie("_fbp"),
-          fbc: getCookie("_fbc"),
-          // metadata
-          trackName: trackName,
-          storeName: storeName,
-          campaign: campaign,
-        }),
-      }).catch((err) => console.error("CAPI failed:", err));
+      let conversionPromise: Promise<unknown> = Promise.resolve();
+
+      if (adProvider === "google") {
+        if (googleSendTo && typeof window.gtag === "function") {
+          conversionPromise = new Promise((resolve) => {
+            window.gtag("event", "conversion", {
+              send_to: googleSendTo,
+              event_callback: resolve,
+              event_timeout: 500,
+            });
+          });
+        }
+
+        conversionPromise = Promise.all([
+          conversionPromise,
+          fetch("https://fyi.marcatatem.deno.net/google", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            keepalive: true,
+            body: JSON.stringify({
+              eventId: eventId,
+              eventName: eventName,
+              url: window.location.href,
+              landingUrl: googleClickContext?.landingUrl,
+              userAgent: navigator.userAgent,
+              google: googleClickContext,
+              trackName: trackName,
+              storeName: storeName,
+              storeId: storeId,
+              campaign: campaign,
+            }),
+          }).catch((err) => console.error("Google event capture failed:", err)),
+        ]);
+      } else {
+        // trigger Meta CAPI call (always fire, even if fbq is blocked)
+        conversionPromise = fetch("https://fyi.marcatatem.deno.net/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          keepalive: true,
+          body: JSON.stringify({
+            eventId: eventId,
+            eventName: eventName,
+            url: window.location.href,
+            userAgent: navigator.userAgent,
+            fbp: getCookie("_fbp"),
+            fbc: getCookie("_fbc"),
+            // metadata
+            trackName: trackName,
+            storeName: storeName,
+            campaign: campaign,
+          }),
+        }).catch((err) => console.error("CAPI failed:", err));
+      }
 
       const timeoutPromise = new Promise((resolve) => setTimeout(resolve, 500));
 
       try {
-        await Promise.race([respPromise, timeoutPromise]);
+        await Promise.race([conversionPromise, timeoutPromise]);
       } catch (e) {
         // Ignore errors, we must navigate
       }

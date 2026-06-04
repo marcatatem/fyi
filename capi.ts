@@ -35,6 +35,12 @@ const config: Config = {
 
 const kv = await Deno.openKv();
 
+const removeEmptyValues = (value: Record<string, unknown>) => {
+  return Object.fromEntries(
+    Object.entries(value).filter(([_, v]) => v !== undefined && v !== null),
+  );
+};
+
 Deno.serve(async (req) => {
   // CORS headers
   const corsHeaders = {
@@ -74,6 +80,97 @@ Deno.serve(async (req) => {
     return new Response(html, {
       headers: { "content-type": "text/html; charset=utf-8" },
     });
+  }
+
+  if (url.pathname === "/google" && req.method === "POST") {
+    if (config.env !== "production") {
+      return new Response("Google event capture is production-only", {
+        status: 503,
+        headers: corsHeaders,
+      });
+    }
+
+    try {
+      const body = await req.json();
+      const {
+        eventId,
+        eventName,
+        trackName,
+        storeName,
+        storeId,
+        campaign,
+        google,
+        landingUrl,
+        userAgent,
+        url: sourceUrl,
+      } = body;
+
+      if (!eventId || !trackName || !storeName) {
+        return new Response(
+          JSON.stringify({ error: "Missing required event fields" }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          },
+        );
+      }
+
+      const forwardedFor = req.headers.get("x-forwarded-for");
+      const clientIp = forwardedFor ? forwardedFor.split(",")[0].trim() : undefined;
+      const country = req.headers.get("cf-ipcountry") || "Unknown";
+      const songSlug = paramCase(trackName);
+      const createdAt = new Date().toISOString();
+      const event = removeEmptyValues({
+        provider: "google",
+        eventId,
+        eventName: eventName || "ViewContent",
+        trackName,
+        songSlug,
+        storeName,
+        storeId,
+        campaign: campaign || "default",
+        sourceUrl,
+        landingUrl,
+        userAgent,
+        clientIp,
+        country,
+        google,
+        createdAt,
+      });
+
+      const atomic = kv.atomic();
+      atomic.set(["events", "google", eventId], event);
+      atomic.sum(["google_stats", songSlug, "total"], 1n);
+      atomic.sum([
+        "google_stats",
+        songSlug,
+        "campaign",
+        campaign || "default",
+        "total",
+      ], 1n);
+      atomic.sum([
+        "google_stats",
+        songSlug,
+        "campaign",
+        campaign || "default",
+        "store",
+        storeName,
+      ], 1n);
+      atomic.sum(["google_stats", songSlug, "geo", country], 1n);
+
+      const result = await atomic.commit();
+      console.log(`${result.ok ? "OK" : "ERR"} Google capture for ${songSlug}`);
+
+      return new Response(JSON.stringify({ ok: result.ok }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    } catch (err) {
+      console.error("ERR Google capture", err);
+      return new Response(JSON.stringify({ error: (err as Error).message }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
   }
 
   if (req.method === "POST") {

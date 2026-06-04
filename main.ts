@@ -30,6 +30,9 @@ const props: AppProps = {
   revision: revision,
 };
 
+const googleTagId = Deno.env.get("GOOGLE_TAG_ID");
+const googleConversionLabel = Deno.env.get("GOOGLE_CONVERSION_LABEL");
+
 // start building
 const t = performance.now();
 // rsync static assets
@@ -74,8 +77,23 @@ for (const release of music) {
     mode: props.mode,
     revision: props.revision,
     release: release as Release,
+    adProvider: "meta",
   };
   await renderReleasePage(release.title, releaseProps);
+
+  const googleReleaseProps: ReleaseProps = {
+    mode: props.mode,
+    revision: props.revision,
+    release: release as Release,
+    adProvider: "google",
+    google: googleTagId && googleConversionLabel
+      ? {
+        tagId: googleTagId,
+        conversionLabel: googleConversionLabel,
+      }
+      : undefined,
+  };
+  await renderReleasePage(release.title, googleReleaseProps, "google");
 }
 
 await bundleScripts("release", revision);

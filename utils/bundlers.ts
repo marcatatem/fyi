@@ -63,7 +63,11 @@ export async function renderHTML(props: AppProps) {
  * @param release - whether the build is a release build
  * @param revision - current code revision
  */
-export async function renderReleasePage(name: string, props: ReleaseProps) {
+export async function renderReleasePage(
+  name: string,
+  props: ReleaseProps,
+  provider?: string,
+) {
   log("render", "html/release.tsx", "green");
   const html = renderToString(ReleaseApp(props));
   const formatted = await format("<!DOCTYPE html>" + html, {
@@ -71,9 +75,12 @@ export async function renderReleasePage(name: string, props: ReleaseProps) {
     embeddedLanguageFormatting: "off",
   });
   mkDirSync(resolve("dist", "r"));
-  mkDirSync(resolve("dist", "r", parameterize(name)));
+  if (provider) {
+    mkDirSync(resolve("dist", "r", provider));
+  }
+  mkDirSync(resolve("dist", "r", provider ?? "", parameterize(name)));
   await Deno.writeTextFile(
-    resolve("dist", "r", parameterize(name), "index.html"),
+    resolve("dist", "r", provider ?? "", parameterize(name), "index.html"),
     formatted,
   );
 }
