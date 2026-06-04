@@ -10,13 +10,13 @@ export type ReleaseProps = {
   adProvider?: "meta" | "google";
   google?: {
     tagId: string;
-    conversionLabel: string;
+    conversionLabel?: string;
   };
 };
 
 export const ReleaseApp = (props: ReleaseProps) => {
   const adProvider = props.adProvider ?? "meta";
-  const googleSendTo = props.google
+  const googleSendTo = props.google?.conversionLabel
     ? `${props.google.tagId}/${props.google.conversionLabel}`
     : undefined;
 
@@ -63,18 +63,58 @@ export const ReleaseApp = (props: ReleaseProps) => {
         )}
         {adProvider === "google" && props.google && (
           <>
-            <script
-              async
-              src={`https://www.googletagmanager.com/gtag/js?id=${props.google.tagId}`}
-            />
             <script>
               {`
+              const marcaConsentRegions = new Set([
+                'AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR',
+                'HU','IS','IE','IT','LV','LI','LT','LU','MT','NL','NO','PL',
+                'PT','RO','SK','SI','ES','SE','GB','UK','CH'
+              ]);
+              const marcaConsentLanguages = new Set([
+                'bg','cs','da','de','es','fr','hu','it','nl','no','pl','pt',
+                'ro','sv'
+              ]);
+              const marcaGoogleConsentRequired = (() => {
+                const debugLang = new URL(window.location.href).searchParams.get('debug-lang');
+                const locales = debugLang
+                  ? [debugLang]
+                  : navigator.languages?.length
+                  ? navigator.languages
+                  : [navigator.language || ''];
+                return locales.some((locale) => {
+                  const parts = locale.toLowerCase().split('-');
+                  const language = parts[0];
+                  const region = parts[1]?.toUpperCase();
+                  return marcaConsentRegions.has(region) ||
+                    (!region && marcaConsentLanguages.has(language));
+                });
+              })();
+              const marcaGoogleConsent = (() => {
+                try {
+                  const stored = localStorage.getItem('marcaGoogleConsent');
+                  if (stored === 'granted' || stored === 'denied') return stored;
+                } catch (_) {
+                }
+                return marcaGoogleConsentRequired ? 'denied' : 'granted';
+              })();
+              window.marcaGoogleConsentRequired = marcaGoogleConsentRequired;
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
+              gtag('consent', 'default', {
+                ad_storage: marcaGoogleConsent,
+                ad_user_data: marcaGoogleConsent,
+                ad_personalization: marcaGoogleConsent,
+                analytics_storage: marcaGoogleConsent,
+                wait_for_update: 500
+              });
               gtag('js', new Date());
               gtag('config', '${props.google.tagId}');
               `}
             </script>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${props.google.tagId}`}
+            />
           </>
         )}
         <link
@@ -96,6 +136,15 @@ export const ReleaseApp = (props: ReleaseProps) => {
         />
       </head>
       <body>
+        {adProvider === "google" && (
+          <aside id="consent-banner" hidden>
+            <p>Allow cookies on this page?</p>
+            <div>
+              <button type="button" data-consent-action="denied">No</button>
+              <button type="button" data-consent-action="granted">Yes</button>
+            </div>
+          </aside>
+        )}
         <article
           id="release"
           data-track-name={props.release.title}

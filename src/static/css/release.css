@@ -51,6 +51,57 @@ body {
     margin: 0;
 }
 
+#consent-banner {
+    position: fixed;
+    z-index: 200;
+    top: max(12px, env(safe-area-inset-top));
+    left: 12px;
+    right: 12px;
+    max-width: 460px;
+    margin: 0 auto;
+    padding: 11px 12px 11px 14px;
+    border-radius: 14px;
+    background: rgba(17, 17, 17, 0.88);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+#consent-banner[hidden] {
+    display: none;
+}
+
+#consent-banner p {
+    flex: 1;
+    margin: 0;
+    color: rgba(245, 245, 245, 0.9);
+    font-size: 13px;
+    line-height: 17px;
+}
+
+#consent-banner div {
+    display: flex;
+    gap: 6px;
+    flex: none;
+}
+
+#consent-banner button {
+    min-width: 42px;
+    border: 0;
+    border-radius: 999px;
+    padding: 7px 11px;
+    font: bold 12px/1 "Aktiv Grotesk", "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+    color: #111111;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+#consent-banner button[data-consent-action="denied"] {
+    color: #f5f5f5;
+    background: rgba(255, 255, 255, 0.16);
+}
+
 /* Base Styles (Portrait/Mobile) */
 
 #cover {

@@ -2,6 +2,7 @@
 
 declare global {
   interface Window {
+    marcaGoogleConsentRequired?: boolean;
     plausible: (
       eventName: string,
       options?: { callback?: () => void; [key: string]: any },
@@ -51,6 +52,9 @@ const rtlLangs: Locale[] = ["he", "ar", "fa"];
 interface LocalizationTable {
   platform: Record<Locale, string>;
   more: Record<Locale, string>;
+  consent: Record<Locale, string>;
+  consentNo: Record<Locale, string>;
+  consentOk: Record<Locale, string>;
 }
 
 const localizationTable: LocalizationTable = {
@@ -106,6 +110,84 @@ const localizationTable: LocalizationTable = {
     ar: "المزيد",
     fa: "بیشتر",
   },
+  consent: {
+    pt: "Permitir cookies nesta página?",
+    es: "¿Permitir cookies en esta página?",
+    de: "Cookies auf dieser Seite erlauben?",
+    fr: "Autoriser les cookies sur cette page ?",
+    pl: "Zezwolić na pliki cookie na tej stronie?",
+    it: "Consentire i cookie su questa pagina?",
+    nl: "Cookies toestaan op deze pagina?",
+    tr: "Bu sayfada çerezlere izin verilsin mi?",
+    cs: "Povolit cookies na této stránce?",
+    sv: "Tillåt cookies på den här sidan?",
+    no: "Tillat informasjonskapsler på denne siden?",
+    he: "לאפשר עוגיות בעמוד הזה?",
+    hu: "Engedélyezi a sütiket ezen az oldalon?",
+    da: "Tillad cookies på denne side?",
+    uk: "Дозволити cookies на цій сторінці?",
+    ru: "Разрешить файлы cookie на этой странице?",
+    ro: "Permiteți cookie-uri pe această pagină?",
+    ja: "このページでCookieを許可しますか？",
+    ko: "이 페이지에서 쿠키를 허용할까요?",
+    zh: "允许此页面使用 Cookie？",
+    bg: "Да се разрешат ли бисквитки на тази страница?",
+    vi: "Cho phép cookie trên trang này?",
+    ar: "هل تسمح بملفات تعريف الارتباط على هذه الصفحة؟",
+    fa: "کوکی‌ها در این صفحه مجاز باشند؟",
+  },
+  consentNo: {
+    pt: "Não",
+    es: "No",
+    de: "Nein",
+    fr: "Non",
+    pl: "Nie",
+    it: "No",
+    nl: "Nee",
+    tr: "Hayır",
+    cs: "Ne",
+    sv: "Nej",
+    no: "Nei",
+    he: "לא",
+    hu: "Nem",
+    da: "Nej",
+    uk: "Ні",
+    ru: "Нет",
+    ro: "Nu",
+    ja: "いいえ",
+    ko: "아니요",
+    zh: "否",
+    bg: "Не",
+    vi: "Không",
+    ar: "لا",
+    fa: "نه",
+  },
+  consentOk: {
+    pt: "Sim",
+    es: "Sí",
+    de: "Ja",
+    fr: "Oui",
+    pl: "Tak",
+    it: "Sì",
+    nl: "Ja",
+    tr: "Evet",
+    cs: "Ano",
+    sv: "Ja",
+    no: "Ja",
+    he: "כן",
+    hu: "Igen",
+    da: "Ja",
+    uk: "Так",
+    ru: "Да",
+    ro: "Da",
+    ja: "はい",
+    ko: "예",
+    zh: "是",
+    bg: "Да",
+    vi: "Có",
+    ar: "نعم",
+    fa: "بله",
+  },
 };
 
 // CAPI helpers
@@ -134,6 +216,76 @@ interface GoogleClickContext {
 }
 
 const googleClickStorageKey = "marcaGoogleClickContext";
+const googleConsentStorageKey = "marcaGoogleConsent";
+const googleConsentRegions = new Set([
+  "AT",
+  "BE",
+  "BG",
+  "HR",
+  "CY",
+  "CZ",
+  "DK",
+  "EE",
+  "FI",
+  "FR",
+  "DE",
+  "GR",
+  "HU",
+  "IS",
+  "IE",
+  "IT",
+  "LV",
+  "LI",
+  "LT",
+  "LU",
+  "MT",
+  "NL",
+  "NO",
+  "PL",
+  "PT",
+  "RO",
+  "SK",
+  "SI",
+  "ES",
+  "SE",
+  "GB",
+  "UK",
+  "CH",
+]);
+const googleConsentLanguages = new Set([
+  "bg",
+  "cs",
+  "da",
+  "de",
+  "es",
+  "fr",
+  "hu",
+  "it",
+  "nl",
+  "no",
+  "pl",
+  "pt",
+  "ro",
+  "sv",
+]);
+
+const localeNeedsGoogleConsent = (locale: string) => {
+  const [language, region] = locale.toLowerCase().split("-");
+  return (region ? googleConsentRegions.has(region.toUpperCase()) : false) ||
+    (!region && googleConsentLanguages.has(language));
+};
+
+const needsGoogleConsent = (debugLang?: string | null) => {
+  if (typeof window.marcaGoogleConsentRequired === "boolean") {
+    return window.marcaGoogleConsentRequired;
+  }
+  const locales = debugLang
+    ? [debugLang]
+    : navigator.languages?.length
+    ? navigator.languages
+    : [navigator.language || ""];
+  return locales.some(localeNeedsGoogleConsent);
+};
 
 const getStoredGoogleClickContext = (): GoogleClickContext | undefined => {
   try {
@@ -174,6 +326,78 @@ const captureGoogleClickContext = (
   return context;
 };
 
+const googleConsentFields = (value: "granted" | "denied") => ({
+  ad_storage: value,
+  ad_user_data: value,
+  ad_personalization: value,
+  analytics_storage: value,
+});
+
+type GoogleConsentValue = "granted" | "denied";
+
+const getStoredGoogleConsent = (): GoogleConsentValue | undefined => {
+  try {
+    const stored = localStorage.getItem(googleConsentStorageKey);
+    return stored === "granted" || stored === "denied" ? stored : undefined;
+  } catch (_) {
+    return undefined;
+  }
+};
+
+const getGoogleConsentContext = (debugLang?: string | null) => {
+  const required = needsGoogleConsent(debugLang);
+  const stored = getStoredGoogleConsent();
+  const effective = stored ?? (required ? "denied" : "granted");
+  return {
+    required: required,
+    stored: stored,
+    effective: effective,
+  };
+};
+
+const updateGoogleConsent = (value: "granted" | "denied", persist = true) => {
+  if (persist) {
+    try {
+      localStorage.setItem(googleConsentStorageKey, value);
+    } catch (_) {
+      // Consent update still applies for the current page if storage is unavailable.
+    }
+  }
+  if (typeof window.gtag === "function") {
+    window.gtag("consent", "update", googleConsentFields(value));
+  }
+};
+
+const initGoogleConsentBanner = (debugLang?: string | null) => {
+  const banner = document.getElementById("consent-banner");
+  if (!banner) return;
+
+  const consent = getGoogleConsentContext(debugLang);
+
+  if (consent.stored) {
+    updateGoogleConsent(consent.stored, false);
+    return;
+  }
+
+  if (!consent.required) {
+    updateGoogleConsent("granted", false);
+    return;
+  }
+
+  banner.removeAttribute("hidden");
+  banner.querySelectorAll<HTMLButtonElement>("button[data-consent-action]").forEach(
+    (button) => {
+      button.addEventListener("click", () => {
+        const action = button.getAttribute("data-consent-action") === "granted"
+          ? "granted"
+          : "denied";
+        updateGoogleConsent(action);
+        banner.setAttribute("hidden", "");
+      });
+    },
+  );
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   const url = new URL(window.location.href);
   // get campaign if available
@@ -203,6 +427,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   // get debug language (if any)
   const debugLang = url.searchParams.get("debug-lang");
+  if (adProvider === "google") {
+    initGoogleConsentBanner(debugLang);
+  }
   // get user language
   const userLang = navigator.language || (navigator as any).userLanguage;
   const lang: Locale = debugLang
@@ -214,9 +441,20 @@ document.addEventListener("DOMContentLoaded", () => {
     // grab labels from localization table
     const platformLabel = localizationTable.platform[lang];
     const moreLabel = localizationTable.more[lang];
+    const consentLabel = localizationTable.consent[lang];
+    const consentNoLabel = localizationTable.consentNo[lang];
+    const consentOkLabel = localizationTable.consentOk[lang];
     // get elements
     const platformHeading = document.getElementById("platform-heading");
     const moreIndicator = document.getElementById("scroll-more");
+    const consentBanner = document.getElementById("consent-banner");
+    const consentText = consentBanner?.querySelector("p");
+    const consentNo = consentBanner?.querySelector<HTMLButtonElement>(
+      'button[data-consent-action="denied"]',
+    );
+    const consentOk = consentBanner?.querySelector<HTMLButtonElement>(
+      'button[data-consent-action="granted"]',
+    );
     // localize
     if (platformLabel && moreLabel) {
       // set language and writing direction
@@ -229,6 +467,15 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       if (moreIndicator) {
         moreIndicator.innerText = moreLabel;
+      }
+      if (consentLabel && consentText) {
+        consentText.innerText = consentLabel;
+      }
+      if (consentNoLabel && consentNo) {
+        consentNo.innerText = consentNoLabel;
+      }
+      if (consentOkLabel && consentOk) {
+        consentOk.innerText = consentOkLabel;
       }
     }
   }
@@ -305,6 +552,7 @@ document.addEventListener("DOMContentLoaded", () => {
               landingUrl: googleClickContext?.landingUrl,
               userAgent: navigator.userAgent,
               google: googleClickContext,
+              consent: getGoogleConsentContext(url.searchParams.get("debug-lang")),
               trackName: trackName,
               storeName: storeName,
               storeId: storeId,

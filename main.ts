@@ -30,7 +30,7 @@ const props: AppProps = {
   revision: revision,
 };
 
-const googleTagId = Deno.env.get("GOOGLE_TAG_ID");
+const googleTagId = Deno.env.get("GOOGLE_TAG_ID") || "AW-18187451330";
 const googleConversionLabel = Deno.env.get("GOOGLE_CONVERSION_LABEL");
 
 // start building
@@ -86,7 +86,7 @@ for (const release of music) {
     revision: props.revision,
     release: release as Release,
     adProvider: "google",
-    google: googleTagId && googleConversionLabel
+    google: googleTagId
       ? {
         tagId: googleTagId,
         conversionLabel: googleConversionLabel,
