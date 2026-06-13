@@ -8,6 +8,7 @@ import { mkDirSync } from "utils/fs.ts";
 import { App, AppProps } from "html/app.tsx";
 import { ReleaseApp, ReleaseProps } from "html/release.tsx";
 import { Dashboard, DashboardProps } from "html/dashboard.tsx";
+import { MusicPage, MusicPageProps } from "html/music.tsx";
 import { parameterize } from "html/helpers.ts";
 
 /**
@@ -55,6 +56,21 @@ export async function renderHTML(props: AppProps) {
     embeddedLanguageFormatting: "off",
   });
   await Deno.writeTextFile(resolve("dist", "index.html"), formatted);
+}
+
+/**
+ * Renders the generated music page.
+ * @param props - rendering mode and current code revision
+ */
+export async function renderMusicPage(props: MusicPageProps) {
+  log("render", "html/music.tsx", "green");
+  const html = renderToString(MusicPage(props));
+  const formatted = await format("<!DOCTYPE html>" + html, {
+    parser: "html",
+    embeddedLanguageFormatting: "off",
+  });
+  mkDirSync(resolve("dist", "music"));
+  await Deno.writeTextFile(resolve("dist", "music", "index.html"), formatted);
 }
 
 /**

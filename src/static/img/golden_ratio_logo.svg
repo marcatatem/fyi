@@ -1,0 +1,28 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="-8.097 -5 177.997 110"
+  role="img"
+  aria-label="Golden ratio geometric M bowtie logo"
+>
+  <title>Golden ratio logo</title>
+  <desc
+  >Single-stroke geometric logo based on the sketch, constructed in a golden-ratio rectangle. Width equals phi squared times 100 and height equals phi times 100.</desc>
+  <defs>
+    <style>
+    .mark {
+      fill: none;
+      stroke: #fff;
+      stroke-width: 10;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .guide {
+      display: none;
+    }
+    </style>
+  </defs>
+  <path
+    class="mark"
+    d="M 0 100 L 0 0 L 100 61.803 L 161.803 0 L 161.803 100 L 0 0"
+  />
+</svg>

@@ -6,6 +6,7 @@ import {
   bundleScripts,
   bundleStylesheets,
   renderHTML,
+  renderMusicPage,
   renderReleasePage,
 } from "utils/bundlers.ts";
 import music from "data/music.json" with { type: "json" };
@@ -31,7 +32,8 @@ const props: AppProps = {
 };
 
 const googleTagId = Deno.env.get("GOOGLE_TAG_ID") || "AW-18187451330";
-const googleConversionLabel = Deno.env.get("GOOGLE_CONVERSION_LABEL");
+const googleConversionLabel = Deno.env.get("GOOGLE_CONVERSION_LABEL") ||
+  "UGtHCIDomrkcEML3ueBD";
 
 // start building
 const t = performance.now();
@@ -42,9 +44,11 @@ await rsync("src/static/css", "dist/css");
 await rsync("src/static/music", "dist/music");
 // bundle and minify css and js
 await bundleStylesheets(revision, "styles");
+await bundleStylesheets(revision, "music");
 await bundleScripts("app", revision);
 // render tsx to html
 await renderHTML(props);
+await renderMusicPage(props);
 // write revision and build time
 const took = (performance.now() - t).toFixed();
 Deno.writeTextFile(
