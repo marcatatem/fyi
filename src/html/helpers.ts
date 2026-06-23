@@ -43,6 +43,19 @@ export function markdown(str: string): string {
  * @returns The parameterized string (e.g. `hello world` -> `hello-world`)
  */
 export function parameterize(str: string): string {
+  return paramCase(str)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .replace(/-{2,}/g, "-");
+}
+
+/**
+ * Returns the historical parameterized route, preserving characters such as accents.
+ * @param str The string to parameterize
+ * @returns The legacy parameterized string
+ */
+export function legacyParameterize(str: string): string {
   return paramCase(str);
 }
 

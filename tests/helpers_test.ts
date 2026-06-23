@@ -5,6 +5,14 @@ import meta from "data/meta.json" with { type: "json" };
 
 Deno.test("parameterize", () => {
   assertEquals(helpers.parameterize("hello world"), "hello-world");
+  assertEquals(helpers.parameterize("goût"), "go-t");
+  assertEquals(helpers.parameterize("ùéùéù"), "");
+  assertEquals(helpers.parameterize("Daddy's Got A—"), "daddy-s-got-a");
+});
+
+Deno.test("legacyParameterize", () => {
+  assertEquals(helpers.legacyParameterize("goût"), "goût");
+  assertEquals(helpers.legacyParameterize("Daddy's Got A—"), "daddy-s-got-a");
 });
 
 Deno.test("markdown", () => {

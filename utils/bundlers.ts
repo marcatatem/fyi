@@ -83,6 +83,7 @@ export async function renderReleasePage(
   name: string,
   props: ReleaseProps,
   provider?: string,
+  slug = parameterize(name),
 ) {
   log("render", "html/release.tsx", "green");
   const html = renderToString(ReleaseApp(props));
@@ -94,9 +95,9 @@ export async function renderReleasePage(
   if (provider) {
     mkDirSync(resolve("dist", "r", provider));
   }
-  mkDirSync(resolve("dist", "r", provider ?? "", parameterize(name)));
+  mkDirSync(resolve("dist", "r", provider ?? "", slug));
   await Deno.writeTextFile(
-    resolve("dist", "r", provider ?? "", parameterize(name), "index.html"),
+    resolve("dist", "r", provider ?? "", slug, "index.html"),
     formatted,
   );
 }

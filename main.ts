@@ -11,6 +11,7 @@ import {
 } from "utils/bundlers.ts";
 import music from "data/music.json" with { type: "json" };
 import { ReleaseProps } from "html/release.tsx";
+import { legacyParameterize, parameterize } from "html/helpers.ts";
 
 /**
  *  FYI
@@ -61,6 +62,11 @@ Deno.writeTextFile(
 
 // build releases
 log("building", `release pages`);
+try {
+  await Deno.remove("dist/r", { recursive: true });
+} catch (err) {
+  if (!(err instanceof Deno.errors.NotFound)) throw err;
+}
 
 export interface Release {
   title: string;
@@ -77,6 +83,8 @@ export interface Release {
 
 for (const release of music) {
   console.log(release.title);
+  const primarySlug = parameterize(release.title);
+  const legacySlug = legacyParameterize(release.title);
   const releaseProps: ReleaseProps = {
     mode: props.mode,
     revision: props.revision,
@@ -84,6 +92,9 @@ for (const release of music) {
     adProvider: "meta",
   };
   await renderReleasePage(release.title, releaseProps);
+  if (legacySlug !== primarySlug) {
+    await renderReleasePage(release.title, releaseProps, undefined, legacySlug);
+  }
 
   const googleReleaseProps: ReleaseProps = {
     mode: props.mode,
@@ -98,6 +109,9 @@ for (const release of music) {
       : undefined,
   };
   await renderReleasePage(release.title, googleReleaseProps, "google");
+  if (legacySlug !== primarySlug) {
+    await renderReleasePage(release.title, googleReleaseProps, "google", legacySlug);
+  }
 }
 
 await bundleScripts("release", revision);
