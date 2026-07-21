@@ -12,11 +12,11 @@ Release pages are generated from `src/data/music.json`. Each item is treated as 
   releaseDate: string;
   cover: string;
   pixel: string;
-  links: {
+  links: Array<{
     store: string;
     storeId: string;
     url: string;
-  }[];
+  }>;
 }
 ```
 
@@ -86,6 +86,9 @@ Production environment variables:
 - `ENV=production`
 - `PIXEL_ID`
 - `ACCESS_TOKEN`
+- `TIKTOK_PIXEL_ID` for TikTok Pixel and Events API routes
+- `TIKTOK_ACCESS_TOKEN` for TikTok Events API
+- `TIKTOK_TEST_EVENT_CODE` optionally routes TikTok server events to Test Events
 - `STATS_PASSWORD` for `/stats` Basic auth
 - `TEST_EVENT_CODE` optionally routes events to Meta test events
 

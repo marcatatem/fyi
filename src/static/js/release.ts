@@ -205,6 +205,10 @@ const getCookie = (name: string) => {
   return undefined;
 };
 
+const getQueryParam = (url: URL, name: string) => {
+  return url.searchParams.get(name) ?? undefined;
+};
+
 interface GoogleClickContext {
   gclid?: string;
   wbraid?: string;
@@ -526,6 +530,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (adProvider === "tiktok" && typeof window.ttq?.track === "function") {
         window.ttq.track(eventName, {
+          event_id: eventId,
           contents: [{
             content_id: trackId,
             content_type: "product",
@@ -596,6 +601,26 @@ document.addEventListener("DOMContentLoaded", () => {
             campaign: campaign,
           }),
         }).catch((err) => console.error("CAPI failed:", err));
+      } else if (adProvider === "tiktok") {
+        conversionPromise = fetch("https://fyi.marcatatem.deno.net/tiktok", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          keepalive: true,
+          body: JSON.stringify({
+            eventId: eventId,
+            eventName: eventName,
+            url: window.location.href,
+            referrer: document.referrer || undefined,
+            userAgent: navigator.userAgent,
+            ttclid: getQueryParam(url, "ttclid"),
+            ttp: getCookie("_ttp"),
+            trackId: trackId,
+            trackName: trackName,
+            storeName: storeName,
+            storeId: storeId,
+            campaign: campaign,
+          }),
+        }).catch((err) => console.error("TikTok event capture failed:", err));
       }
 
       const timeoutPromise = new Promise((resolve) => setTimeout(resolve, 500));

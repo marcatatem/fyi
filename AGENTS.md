@@ -35,7 +35,8 @@ Read these resources before changing behavior:
   `src/html/release.tsx`, `src/static/js/release.ts`, `src/data/music.json`, or `capi.ts`
   need an explicit check of Pixel + CAPI event names, event IDs, and link navigation.
 - Do not commit production secrets. Deno Deploy supplies `ENV`, `PIXEL_ID`,
-  `ACCESS_TOKEN`, optional `TEST_EVENT_CODE`, and `STATS_PASSWORD`.
+  `ACCESS_TOKEN`, optional `TEST_EVENT_CODE`, `TIKTOK_PIXEL_ID`, `TIKTOK_ACCESS_TOKEN`,
+  optional `TIKTOK_TEST_EVENT_CODE`, and `STATS_PASSWORD`.
 - Keep GitHub Pages static. Anything requiring request-time logic belongs in `capi.ts` or
   another separately deployed endpoint.
 - When adding a music service, update the release link data and add any needed icon
