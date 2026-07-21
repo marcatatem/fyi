@@ -88,7 +88,9 @@ Production environment variables:
 - `ACCESS_TOKEN`
 - `TIKTOK_PIXEL_ID` for TikTok Pixel and Events API routes
 - `TIKTOK_ACCESS_TOKEN` for TikTok Events API
-- `TIKTOK_TEST_EVENT_CODE` optionally routes TikTok server events to Test Events
+- `TIKTOK_TEST_EVENT_CODE` optionally routes TikTok server events to Test Events. TikTok
+  routes can also pass a temporary `TIKTOK_T_E=TEST...` query parameter for one-off
+  server-side Test Events.
 - `STATS_PASSWORD` for `/stats` Basic auth
 - `TEST_EVENT_CODE` optionally routes events to Meta test events
 

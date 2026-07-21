@@ -614,6 +614,8 @@ document.addEventListener("DOMContentLoaded", () => {
             userAgent: navigator.userAgent,
             ttclid: getQueryParam(url, "ttclid"),
             ttp: getCookie("_ttp"),
+            testEventCode: getQueryParam(url, "TIKTOK_T_E") ||
+              getQueryParam(url, "tiktok_test_event_code"),
             trackId: trackId,
             trackName: trackName,
             storeName: storeName,

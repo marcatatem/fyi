@@ -211,6 +211,7 @@ Deno.serve(async (req) => {
         campaign,
         ttclid,
         ttp,
+        testEventCode,
         referrer,
         userAgent,
         url: sourceUrl,
@@ -231,6 +232,10 @@ Deno.serve(async (req) => {
       const songSlug = paramCase(trackName);
       const contentId = trackId || songSlug;
       const event = eventName || "ViewContent";
+      const tiktokTestEventCode = typeof testEventCode === "string" &&
+          /^TEST[0-9A-Z_-]+$/i.test(testEventCode)
+        ? testEventCode
+        : Deno.env.get("TIKTOK_TEST_EVENT_CODE");
       const payload = {
         event_source: "web",
         event_source_id: config.tiktokPixelId,
@@ -260,9 +265,7 @@ Deno.serve(async (req) => {
             store_id: storeId,
           }),
         }],
-        ...(Deno.env.get("TIKTOK_TEST_EVENT_CODE")
-          ? { test_event_code: Deno.env.get("TIKTOK_TEST_EVENT_CODE") }
-          : {}),
+        ...(tiktokTestEventCode ? { test_event_code: tiktokTestEventCode } : {}),
       };
 
       const resp = await fetch(
