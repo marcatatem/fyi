@@ -35,6 +35,7 @@ const props: AppProps = {
 const googleTagId = Deno.env.get("GOOGLE_TAG_ID") || "AW-18187451330";
 const googleConversionLabel = Deno.env.get("GOOGLE_CONVERSION_LABEL") ||
   "UGtHCIDomrkcEML3ueBD";
+const tiktokPixelId = Deno.env.get("TIKTOK_PIXEL_ID") || "D9FCLNRC77UBS5FSISG0";
 
 // start building
 const t = performance.now();
@@ -111,6 +112,22 @@ for (const release of music) {
   await renderReleasePage(release.title, googleReleaseProps, "google");
   if (legacySlug !== primarySlug) {
     await renderReleasePage(release.title, googleReleaseProps, "google", legacySlug);
+  }
+
+  const tiktokReleaseProps: ReleaseProps = {
+    mode: props.mode,
+    revision: props.revision,
+    release: release as Release,
+    adProvider: "tiktok",
+    tiktok: tiktokPixelId
+      ? {
+        pixelId: tiktokPixelId,
+      }
+      : undefined,
+  };
+  await renderReleasePage(release.title, tiktokReleaseProps, "tt");
+  if (legacySlug !== primarySlug) {
+    await renderReleasePage(release.title, tiktokReleaseProps, "tt", legacySlug);
   }
 }
 

@@ -18,6 +18,9 @@ declare global {
       eventName: string,
       params?: { [key: string]: any },
     ) => void;
+    ttq: {
+      track: (eventName: string, params?: { [key: string]: any }) => void;
+    };
   }
 }
 
@@ -499,9 +502,10 @@ document.addEventListener("DOMContentLoaded", () => {
       // get store name and id, and track name
       const storeName = anchor.getAttribute("data-store-name");
       const storeId = anchor.getAttribute("data-store-id");
+      const trackId = release?.getAttribute("data-track-id");
       const trackName = release?.getAttribute("data-track-name");
 
-      if (!storeName || !storeId || !trackName) {
+      if (!storeName || !storeId || !trackId || !trackName) {
         console.error("Couldn't get store and track information");
         navigate(); // ensure we still navigate if data is missing
         return;
@@ -518,6 +522,19 @@ document.addEventListener("DOMContentLoaded", () => {
           currency: "USD",
           service: storeName,
         }, { eventID: eventId });
+      }
+
+      if (adProvider === "tiktok" && typeof window.ttq?.track === "function") {
+        window.ttq.track(eventName, {
+          contents: [{
+            content_id: trackId,
+            content_type: "product",
+            content_name: trackName,
+          }],
+          content_type: "product",
+          content_name: trackName,
+          service: storeName,
+        });
       }
 
       // trigger plausible event (safely check if function exists)
@@ -560,7 +577,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }),
           }).catch((err) => console.error("Google event capture failed:", err)),
         ]);
-      } else {
+      } else if (adProvider === "meta") {
         // trigger Meta CAPI call (always fire, even if fbq is blocked)
         conversionPromise = fetch("https://fyi.marcatatem.deno.net/", {
           method: "POST",
