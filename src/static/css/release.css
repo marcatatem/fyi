@@ -4,102 +4,112 @@
 @import "styles/vendor/reset.css";
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 :root {
-    --icon-position: right center;
-    --test-color: red;
+  --icon-position: right center;
+  --test-color: red;
 }
 
 html[dir="rtl"] {
-    --icon-position: left center;
-    --test-color: green;
+  --icon-position: left center;
+  --test-color: green;
 }
 
 body.grid {
-  background-image: repeating-linear-gradient(to bottom,
-      rgba(255, 0, 0, .08),
-      rgba(255, 0, 0, .08) 1px,
-      transparent 1px,
-      transparent 15px);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 0, 0, 0.08),
+    rgba(255, 0, 0, 0.08) 1px,
+    transparent 1px,
+    transparent 15px
+  );
 }
 
 @font-face {
-    font-family: 'Aktiv Grotesk';
-    src: url('/fonts/AktivGrotesk-Bold.woff2') format('woff2'),
-        url('/fonts/AktivGrotesk-Bold.woff') format('woff');
-    font-weight: bold;
-    font-style: normal;
-    font-display: swap;
+  font-family: "Aktiv Grotesk";
+  src:
+    url("/fonts/AktivGrotesk-Bold.woff2") format("woff2"),
+    url("/fonts/AktivGrotesk-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'Aktiv Grotesk';
-    src: url('/fonts/AktivGrotesk-Regular.woff2') format('woff2'),
-        url('/fonts/AktivGrotesk-Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+  font-family: "Aktiv Grotesk";
+  src:
+    url("/fonts/AktivGrotesk-Regular.woff2") format("woff2"),
+    url("/fonts/AktivGrotesk-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 body {
-    min-height: 100vh; /* Changed from height to min-height for mobile scrolling */
-    font: 18px/25px "Aktiv Grotesk", "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
-    background-color: #111111;
-    color: #f5f5f5;
-    margin: 0;
+  min-height: 100vh; /* Changed from height to min-height for mobile scrolling */
+  font: 18px/25px "Aktiv Grotesk", "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+  background-color: #111111;
+  color: #f5f5f5;
+  margin: 0;
 }
 
 #consent-banner {
-    position: fixed;
-    z-index: 200;
-    top: max(12px, env(safe-area-inset-top));
-    left: 12px;
-    right: 12px;
-    max-width: 460px;
-    margin: 0 auto;
-    padding: 11px 12px 11px 14px;
-    border-radius: 14px;
-    background: rgba(17, 17, 17, 0.88);
-    backdrop-filter: blur(12px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
-    display: flex;
-    gap: 12px;
-    align-items: center;
+  position: fixed;
+  z-index: 200;
+  top: max(12px, env(safe-area-inset-top));
+  left: 12px;
+  right: 12px;
+  max-width: 460px;
+  margin: 0 auto;
+  padding: 11px 12px 11px 14px;
+  border-radius: 14px;
+  background: rgba(17, 17, 17, 0.88);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
 #consent-banner[hidden] {
-    display: none;
+  display: none;
 }
 
 #consent-banner p {
-    flex: 1;
-    margin: 0;
-    color: rgba(245, 245, 245, 0.9);
-    font-size: 13px;
-    line-height: 17px;
+  flex: 1;
+  margin: 0;
+  color: rgba(245, 245, 245, 0.9);
+  font-size: 13px;
+  line-height: 17px;
 }
 
 #consent-banner div {
-    display: flex;
-    gap: 6px;
-    flex: none;
+  display: flex;
+  gap: 6px;
+  flex: none;
 }
 
 #consent-banner button {
-    min-width: 42px;
-    border: 0;
-    border-radius: 999px;
-    padding: 7px 11px;
-    font: bold 12px/1 "Aktiv Grotesk", "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
-    color: #111111;
-    background: rgba(255, 255, 255, 0.9);
+  min-width: 42px;
+  border: 0;
+  border-radius: 999px;
+  padding: 7px 11px;
+  font:
+    bold 12px/1 "Aktiv Grotesk",
+    "Helvetica Neue",
+    Arial,
+    Helvetica,
+    Geneva,
+    sans-serif;
+  color: #111111;
+  background: rgba(255, 255, 255, 0.9);
 }
 
 #consent-banner button[data-consent-action="denied"] {
-    color: #f5f5f5;
-    background: rgba(255, 255, 255, 0.16);
+  color: #f5f5f5;
+  background: rgba(255, 255, 255, 0.16);
 }
 
 /* Base Styles (Portrait/Mobile) */
@@ -109,145 +119,161 @@ body {
 }
 
 #cover img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
 }
 
 #content {
-    padding: 19px 0 0;
+  padding: 19px 0 0;
 }
 
-h1 { font-weight: bold; margin: 0 20px; }
-h2 { opacity: 0.5; margin: 0 20px; }
-ul { margin-top: 12px; margin-bottom: 24px }
-ul li { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+h1 {
+  font-weight: bold;
+  margin: 0 20px;
+}
+h2 {
+  opacity: 0.5;
+  margin: 0 20px;
+}
+ul {
+  margin-top: 12px;
+  margin-bottom: 24px;
+}
+ul li {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
 ul li:last-child {
   border: none;
 }
 ul li a {
-    color: #f5f5f5;
-    display: block;
-    text-decoration: none;
-    margin: 0 20px;
-    padding: 18px 0;
+  color: #f5f5f5;
+  display: block;
+  text-decoration: none;
+  margin: 0 20px;
+  padding: 18px 0;
 }
 
 /* Icon Styles */
-a.apple_music { 
-    background: url(/img/releases/apple-music.svg) var(--icon-position) no-repeat; 
-    background-size: auto 30px; 
+a.apple_music {
+  background: url(/img/releases/apple-music.svg) var(--icon-position) no-repeat;
+  background-size: auto 30px;
 }
 
-a.spotify { 
-    background: url(/img/releases/spotify-tile.svg) var(--icon-position) no-repeat; 
-    background-size: auto 30px; 
+a.spotify {
+  background: url(/img/releases/spotify-tile.svg) var(--icon-position) no-repeat;
+  background-size: auto 30px;
 }
 
-a.tidal { 
-    background: url(/img/releases/tidal.svg) var(--icon-position) no-repeat; 
-    background-size: auto 30px; 
+a.tidal {
+  background: url(/img/releases/tidal.svg) var(--icon-position) no-repeat;
+  background-size: auto 30px;
 }
 
-a.soundcloud { 
-    background: url(/img/releases/soundcloud.svg) var(--icon-position) no-repeat; 
-    background-size: auto 30px; 
+a.soundcloud {
+  background: url(/img/releases/soundcloud.svg) var(--icon-position) no-repeat;
+  background-size: auto 30px;
 }
 
-a.deezer { 
-    background: url(/img/releases/deezer.svg) var(--icon-position) no-repeat; 
-    background-size: auto 30px; 
+a.deezer {
+  background: url(/img/releases/deezer.svg) var(--icon-position) no-repeat;
+  background-size: auto 30px;
 }
 
 a.bandcamp {
-    background: url(/img/releases/bandcamp.svg) var(--icon-position) no-repeat;
-    background-size: auto 30px;
+  background: url(/img/releases/bandcamp.svg) var(--icon-position) no-repeat;
+  background-size: auto 30px;
+}
+
+a.audiomack {
+  background: url(/img/releases/audiomack.svg) var(--icon-position) no-repeat;
+  background-size: auto 30px;
 }
 
 a.youtube_music {
-    background: url(/img/releases/youtube-music.svg) var(--icon-position) no-repeat; 
-    background-size: auto 30px; 
+  background: url(/img/releases/youtube-music.svg) var(--icon-position) no-repeat;
+  background-size: auto 30px;
 }
 
 #scroll-more {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 100;
-    
-    display: inline-block;
-    padding: 10px 24px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    
-    font-size: 14px;
-    font-weight: bold;
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    text-decoration: none;
-    
-    /* Transition Mechanics */
-    opacity: 1;
-    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-    
-    pointer-events: auto; 
-    cursor: pointer;
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+
+  display: inline-block;
+  padding: 10px 24px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+
+  /* Transition Mechanics */
+  opacity: 1;
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 /* Hide when scrolled */
 body.is-scrolled #scroll-more {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateX(-50%) translateY(10px);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(10px);
 }
 
 /* Desktop / Landscape Layout */
 @media (min-width: 769px) {
-    body {
-        height: 100vh;
-        overflow: hidden; /* Prevent double scrollbars */
-    }
+  body {
+    height: 100vh;
+    overflow: hidden; /* Prevent double scrollbars */
+  }
 
-    article {
-        display: flex;
-        flex-direction: row;
-        height: 100vh;
-        width: 100%;
-    }
+  article {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100%;
+  }
 
-    #cover {
-        flex: 1; /* Takes up half the space (or more depending on image) */
-        height: 100vh;
-    }
+  #cover {
+    flex: 1; /* Takes up half the space (or more depending on image) */
+    height: 100vh;
+  }
 
-    #cover img {
-        height: 100vh;
-        width: 100%;
-        object-fit: cover; /* Ensures image fills the area without stretching */
-    }
+  #cover img {
+    height: 100vh;
+    width: 100%;
+    object-fit: cover; /* Ensures image fills the area without stretching */
+  }
 
-    #content {
-        flex: 1;
-        height: 100vh;
-        overflow-y: auto; /* Allows links to scroll if they exceed screen height */
-        padding: 40px 0; /* Extra breathing room on desktop */
-        display: flex;
-        flex-direction: column;
-        justify-content: center; /* Centers the content vertically on the right */
-    }
-    
-    .content-inner {
-        width: 100%;
-        max-width: 500px; /* Keeps the list from getting too wide on ultra-wide monitors */
-        margin: 0 auto;
-    }
+  #content {
+    flex: 1;
+    height: 100vh;
+    overflow-y: auto; /* Allows links to scroll if they exceed screen height */
+    padding: 40px 0; /* Extra breathing room on desktop */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers the content vertically on the right */
+  }
 
-    #scroll-more {
-        display: none;
-    }
+  .content-inner {
+    width: 100%;
+    max-width: 500px; /* Keeps the list from getting too wide on ultra-wide monitors */
+    margin: 0 auto;
+  }
+
+  #scroll-more {
+    display: none;
+  }
 }

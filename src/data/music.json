@@ -7,14 +7,18 @@
     "pixel": "1203822274417281",
     "links": [
       {
-        "store": "SoundCloud",
-        "storeId": "soundcloud",
-        "url": "https://soundcloud.com/marca-tatem-393280298/gout"
-      },
-      {
         "store": "YouTube Music",
         "storeId": "youtube_music",
         "url": "https://youtu.be/GNc7bsp0568"
+      },
+      {
+        "store": "Audiomack",
+        "storeId": "audiomack",
+        "url": "https://audiomack.com/marca-tatem-6a603918ae4df/song/go-t"
+      },{
+        "store": "SoundCloud",
+        "storeId": "soundcloud",
+        "url": "https://soundcloud.com/marca-tatem-393280298/gout"
       }
     ]
   },
