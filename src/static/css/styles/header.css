@@ -1,4 +1,4 @@
-/* @override 
+/* @override
   http://127.0.0.1:3000/css/styles/footer.css */
 
 header {
@@ -92,7 +92,6 @@ header nav ul.secondary a.icon {
 }
 
 @media only screen and (max-width: 1024px) {
-
   header .menu {
     display: block;
   }
@@ -155,7 +154,6 @@ header nav ul.secondary a.icon {
   header nav ul.secondary {
     padding: 0 40px;
   }
-
 }
 
 @media only screen and (max-width: 740px) {

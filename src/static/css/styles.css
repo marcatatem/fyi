@@ -1,4 +1,4 @@
-/* @override 
+/* @override
 	http://127.0.0.1:8000/css/styles.css
 	http://localhost:8000/css/styles.css
 */
@@ -35,7 +35,7 @@ a {
 }
 
 a:hover {
-  color: var(--love)
+  color: var(--love);
 }
 
 header {
@@ -81,9 +81,7 @@ header p::after {
   }
 }
 
-header nav {
-  
-}
+header nav {}
 
 a {
   text-decoration: none;
@@ -94,7 +92,7 @@ a {
 }
 
 header nav li {
-  margin-bottom:0.95rem;
+  margin-bottom: 0.95rem;
 }
 
 header nav a .year {
@@ -120,7 +118,7 @@ section {
 }
 
 section .content p {
-  margin-bottom:1.4rem;
+  margin-bottom: 1.4rem;
 }
 
 section .content p:last-of-type {
@@ -128,9 +126,9 @@ section .content p:last-of-type {
 }
 
 section .heading > hgroup {
-  margin-bottom:1.5rem;
+  margin-bottom: 1.5rem;
   position: sticky;
-  top: 4.62rem
+  top: 4.62rem;
 }
 
 section h2 {
@@ -147,7 +145,6 @@ figure {
 
 figure.no-background {
   background: transparent;
-  
 }
 
 figure.no-background img {
@@ -179,9 +176,7 @@ footer .build-info {
 }
 
 /* iPad */
-@media only screen and (max-width: 1024px) {
-
-}
+@media only screen and (max-width: 1024px) {}
 
 /* Phones */
 @media only screen and (max-width: 740px) {
@@ -218,7 +213,8 @@ footer .build-info {
     margin-bottom: 4rem;
   }
 
-  section .heading, section .content {
+  section .heading,
+  section .content {
     grid-column: span 12;
   }
 
@@ -255,12 +251,11 @@ footer .build-info {
 
   section#music-artist + figure.no-background img {
     aspect-ratio: 1 / 1;
-      object-fit: cover;
-      object-position: left center;
-      width: 100%;
-      height: auto; 
-    }
-
+    object-fit: cover;
+    object-position: left center;
+    width: 100%;
+    height: auto;
+  }
 }
 
 @media only screen and (max-width: 430px) {

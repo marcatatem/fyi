@@ -9,6 +9,7 @@ import { App, AppProps } from "html/app.tsx";
 import { ReleaseApp, ReleaseProps } from "html/release.tsx";
 import { Dashboard, DashboardProps } from "html/dashboard.tsx";
 import { MusicPage, MusicPageProps } from "html/music.tsx";
+import { PenseePage, PenseePageProps } from "html/pensee.tsx";
 import { parameterize } from "html/helpers.ts";
 
 /**
@@ -71,6 +72,18 @@ export async function renderMusicPage(props: MusicPageProps) {
   });
   mkDirSync(resolve("dist", "music"));
   await Deno.writeTextFile(resolve("dist", "music", "index.html"), formatted);
+}
+
+/** Renders the standalone Pensée video page. */
+export async function renderPenseePage(props: PenseePageProps) {
+  log("render", "html/pensee.tsx", "green");
+  const html = renderToString(PenseePage(props));
+  const formatted = await format("<!DOCTYPE html>" + html, {
+    parser: "html",
+    embeddedLanguageFormatting: "off",
+  });
+  mkDirSync(resolve("dist", "pensee"));
+  await Deno.writeTextFile(resolve("dist", "pensee", "index.html"), formatted);
 }
 
 /**

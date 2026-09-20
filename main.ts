@@ -7,6 +7,7 @@ import {
   bundleStylesheets,
   renderHTML,
   renderMusicPage,
+  renderPenseePage,
   renderReleasePage,
 } from "utils/bundlers.ts";
 import music from "data/music.json" with { type: "json" };
@@ -47,10 +48,12 @@ await rsync("src/static/music", "dist/music");
 // bundle and minify css and js
 await bundleStylesheets(revision, "styles");
 await bundleStylesheets(revision, "music");
+await bundleStylesheets(revision, "pensee");
 await bundleScripts("app", revision);
 // render tsx to html
 await renderHTML(props);
 await renderMusicPage(props);
+await renderPenseePage(props);
 // write revision and build time
 const took = (performance.now() - t).toFixed();
 Deno.writeTextFile(
