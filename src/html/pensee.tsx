@@ -101,6 +101,7 @@ export const PenseePage = (props: PenseePageProps) => (
               <a href="/">Marca Tatem</a>
             </p>
             <h1>Pensée</h1>
+            <p class="pensee-duration">9 min</p>
           </div>
           <a class="pensee-download" href={downloadUrl}>
             <span>Download</span>

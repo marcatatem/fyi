@@ -51,7 +51,8 @@ body {
 }
 
 .pensee-site,
-.pensee-details h1 {
+.pensee-details h1,
+.pensee-duration {
   margin: 0;
 }
 
@@ -73,6 +74,13 @@ body {
   font-size: 1.5rem;
   font-weight: 500;
   line-height: 1.1;
+}
+
+.pensee-duration {
+  margin-top: 7px;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 0.75rem;
+  line-height: 1.25;
 }
 
 .pensee-download {
