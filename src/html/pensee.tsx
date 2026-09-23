@@ -13,9 +13,9 @@ const pageDescription = "Pensée, a film presented by Marca Tatem.";
 const canonicalUrl = "https://marca.fyi/pensee/";
 const posterUrl = "https://marca.fyi/img/pensee/intro.png";
 const videoUrl =
-  "https://audio.stay-away.cc/marca-fyi/pensee/demo-pensee-final-cropped-anon-full-v3.mp4";
+  "https://audio.stay-away.cc/marca-fyi/pensee/demo-pensee-final-cropped-anon-3-v4.mp4";
 const downloadUrl =
-  "https://audio.stay-away.cc/marca-fyi/pensee/download/demo-pensee-final-cropped-anon-full-v3.mp4";
+  "https://audio.stay-away.cc/marca-fyi/pensee/download/demo-pensee-final-cropped-anon-3-v4.mp4";
 
 export const PenseePage = (props: PenseePageProps) => (
   <html lang="en-US">
@@ -105,7 +105,7 @@ export const PenseePage = (props: PenseePageProps) => (
           </div>
           <a class="pensee-download" href={downloadUrl}>
             <span>Download</span>
-            <small>MP4 · 192 MB</small>
+            <small>MP4 · 210 MB</small>
           </a>
         </aside>
       </main>
