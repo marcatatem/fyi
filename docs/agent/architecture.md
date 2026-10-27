@@ -75,6 +75,12 @@ Source assets live under `src/static`. Build output mirrors those folders in `di
 - CSS: `src/static/css`
 - Browser scripts: `src/static/js`
 - Audio files: `src/static/music`
+- Pensée's standalone results snapshot: `src/static/pensee/longmemeval/index.html`, copied
+  to `dist/pensee/longmemeval/index.html` during the normal build. Refresh it with
+  `deno task pensee:longmemeval /path/to/pensee`; only the generated shareable HTML is
+  imported, with no build-time dependency on the private Pensée checkout. The importer
+  adds the standard `marca.fyi` Plausible script after source validation; analytics is a
+  site-owned addition, not a change to Pensée's export.
 
 Use `pathForAsset` from `src/html/helpers.ts` when templates need revisioned script or
 stylesheet paths. Use `imgixAsset` and `srcsetBuilder` for Imgix-backed responsive image

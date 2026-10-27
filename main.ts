@@ -45,6 +45,7 @@ await rsync("src/static/img", "dist/img");
 await rsync("src/static/fonts", "dist/fonts");
 await rsync("src/static/css", "dist/css");
 await rsync("src/static/music", "dist/music");
+await rsync("src/static/pensee", "dist/pensee");
 // bundle and minify css and js
 await bundleStylesheets(revision, "styles");
 await bundleStylesheets(revision, "music");

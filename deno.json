@@ -1,9 +1,11 @@
 {
   "tasks": {
     "build": "deno run -A main.ts",
-    "dev": "nodemon -e tsx,json,ts,css,html -i dist --exec deno run -A main.ts"
+    "dev": "nodemon -e tsx,json,ts,css,html -i dist --exec deno run -A main.ts",
+    "pensee:longmemeval": "deno run --allow-read --allow-write=src/static/pensee/longmemeval scripts/pull-longmemeval.ts"
   },
   "fmt": {
+    "exclude": ["src/static/pensee/longmemeval"],
     "options": {
       "lineWidth": 90
     }
