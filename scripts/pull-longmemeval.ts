@@ -5,6 +5,7 @@ const snapshotFile = fromFileUrl(
 );
 const plausibleScript =
   '<script defer data-domain="marca.fyi" src="https://plausible.io/js/script.js"></script>';
+const robotsMeta = '<meta name="robots" content="noindex, nofollow, noarchive">';
 
 /** Copies only Pensée's generated shareable HTML, never its private ledger or receipts. */
 export async function pullLongMemEval(
@@ -17,7 +18,9 @@ export async function pullLongMemEval(
   );
   const html = await Deno.readTextFile(sourceFile);
   validateSnapshot(html);
-  const siteHtml = html.replace(/<\/head\s*>/i, `${plausibleScript}\n</head>`);
+  const siteHtml = html
+    .replace(/<meta\b(?=[^>]*\bname\s*=\s*["']robots["'])[^>]*>\s*/gi, "")
+    .replace(/<\/head\s*>/i, `${robotsMeta}\n${plausibleScript}\n</head>`);
   await Deno.mkdir(dirname(outputFile), { recursive: true });
   await Deno.writeTextFile(outputFile, siteHtml);
   return { sourceFile, outputFile };

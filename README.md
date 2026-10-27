@@ -62,9 +62,10 @@ The pull task copies only the generated `question-site/index.html`. It does not 
 private JSON, transcripts, logs, or receipts, and it rejects known internal-viewer or
 live-development exports. It does not sanitize arbitrary HTML: use Pensée's shareable
 exporter. After validation, the importer adds the same `marca.fyi` Plausible pageview
-script used by the Pensée video page, so tracking survives each refresh. It does not send
-question text or answers as analytics properties. Refreshing and building do not deploy
-the site.
+script and `noindex, nofollow, noarchive` robots tag used by the Pensée video page, so
+both survive each refresh. The robots tag discourages indexing; it is not access control.
+The importer does not send question text or answers as analytics properties. Refreshing
+and building do not deploy the site.
 
 ## Conclusion
 

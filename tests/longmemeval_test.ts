@@ -10,7 +10,8 @@ const page = `<!DOCTYPE html>
 <script>addEventListener("hashchange", () => {});</script></body></html>`;
 const plausibleScript =
   '<script defer data-domain="marca.fyi" src="https://plausible.io/js/script.js"></script>';
-const trackedPage = page.replace("</head>", `${plausibleScript}\n</head>`);
+const robotsMeta = '<meta name="robots" content="noindex, nofollow, noarchive">';
+const trackedPage = page.replace("</head>", `${robotsMeta}\n${plausibleScript}\n</head>`);
 
 async function withFixture(
   test: (source: string, input: string, output: string) => Promise<void>,
@@ -30,7 +31,7 @@ async function withFixture(
   }
 }
 
-Deno.test("LongMemEval pull adds site analytics to the static HTML and preserves its source", async () => {
+Deno.test("LongMemEval pull adds site analytics and noindex while preserving its source", async () => {
   await withFixture(async (source, input, output) => {
     await Deno.writeTextFile(input, page);
     await Deno.writeTextFile(resolve(dirname(input), "receipt.json"), "private receipt");
@@ -60,6 +61,7 @@ Deno.test("LongMemEval pull replaces the prior snapshot on repeated updates", as
     const html = await Deno.readTextFile(output);
     assertEquals(html, trackedPage.replace("Actual answer", "Updated answer"));
     assertEquals(html.split(plausibleScript).length - 1, 1);
+    assertEquals(html.split(robotsMeta).length - 1, 1);
   });
 });
 
@@ -97,12 +99,30 @@ Deno.test("LongMemEval pull preserves the snapshot when the source is missing or
   });
 });
 
-Deno.test("LongMemEval pull requires a head boundary for analytics injection", async () => {
+Deno.test("LongMemEval pull requires a head boundary for site metadata", async () => {
   await withFixture(async (source, input, output) => {
     await Deno.writeTextFile(input, page);
     await pullLongMemEval(source, output);
     await Deno.writeTextFile(input, page.replace("</head>", ""));
     await assertRejects(() => pullLongMemEval(source, output), Error, "Expected");
     assertEquals(await Deno.readTextFile(output), trackedPage);
+  });
+});
+
+Deno.test("LongMemEval pull enforces one parent-matching robots tag on every refresh", async () => {
+  await withFixture(async (source, input, output) => {
+    for (
+      const tag of [
+        robotsMeta,
+        '<meta name="robots" content="index, follow">',
+        "<meta content='index, follow' NAME = 'ROBOTS' />",
+      ]
+    ) {
+      const original = page.replace("</head>", `${tag}</head>`);
+      await Deno.writeTextFile(input, original);
+      await pullLongMemEval(source, output);
+      assertEquals(await Deno.readTextFile(output), trackedPage);
+      assertEquals(await Deno.readTextFile(input), original);
+    }
   });
 });
