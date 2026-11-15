@@ -16,14 +16,18 @@ export type MusicPageProps = {
   revision: string;
 };
 
-const datedReleases = [...(music as Release[])].sort((a, b) =>
-  Date.parse(b.releaseDate) - Date.parse(a.releaseDate)
-);
-const trackReleases = datedReleases.filter((release) => release.artist === "Marca");
-const latestTrack = datedReleases.find((release) => release.artist === "Marca");
+export const getReleasedTracks = (releases: Release[], now = Date.now()) =>
+  releases
+    .filter((release) =>
+      release.artist === "Marca" && Date.parse(release.releaseDate) <= now
+    )
+    .sort((a, b) => Date.parse(b.releaseDate) - Date.parse(a.releaseDate));
+
+const trackReleases = getReleasedTracks(music as Release[]);
+const latestTrack = trackReleases[0];
 const releaseHref = (release: Release) => `/r/${parameterize(release.title)}/`;
 const pageTitle = "Marca Makes Music";
-const pageDescription = "French Touch and Soft Machines.";
+const pageDescription = "Music by Marca Tatem.";
 const canonicalUrl = "https://marca.fyi/music/";
 const previewImageUrl = "https://marca.fyi/img/music-og.png";
 const jsonLd = {
@@ -106,13 +110,7 @@ export const MusicPage = (props: MusicPageProps) => (
       <main class="music-page">
         <header class="music-header">
           <p class="eyebrow">Marca Makes Music</p>
-          <img
-            class="music-logo"
-            src={pathForAsset("img", "golden_ratio_logo.svg")}
-            alt="Marca Makes Music"
-          />
           <h1>Marca Makes Music</h1>
-          <p>French Touch and Soft Machines.</p>
         </header>
 
         {latestTrack && (

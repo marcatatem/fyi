@@ -55,6 +55,7 @@ const rtlLangs: Locale[] = ["he", "ar", "fa"];
 interface LocalizationTable {
   platform: Record<Locale, string>;
   more: Record<Locale, string>;
+  available: Record<Locale, string>;
   consent: Record<Locale, string>;
   consentNo: Record<Locale, string>;
   consentOk: Record<Locale, string>;
@@ -112,6 +113,32 @@ const localizationTable: LocalizationTable = {
     vi: "Xem thêm",
     ar: "المزيد",
     fa: "بیشتر",
+  },
+  available: {
+    pt: "Disponível {time} em todas as plataformas",
+    es: "Disponible {time} en todas las plataformas",
+    de: "{time} auf allen Plattformen verfügbar",
+    fr: "Disponible {time} sur toutes les plateformes",
+    pl: "Dostępne {time} na wszystkich platformach",
+    it: "Disponibile {time} su tutte le piattaforme",
+    nl: "{time} beschikbaar op elk platform",
+    tr: "Tüm platformlarda {time} yayınlanacak",
+    cs: "Dostupné {time} na všech platformách",
+    sv: "Tillgänglig {time} på alla plattformar",
+    no: "Tilgjengelig {time} på alle plattformer",
+    he: "זמין {time} בכל הפלטפורמות",
+    hu: "{time} minden platformon elérhető",
+    da: "Tilgængelig {time} på alle platforme",
+    uk: "Буде доступно {time} на всіх платформах",
+    ru: "Будет доступно {time} на всех платформах",
+    ro: "Disponibil {time} pe toate platformele",
+    ja: "すべてのプラットフォームで{time}に配信",
+    ko: "모든 플랫폼에서 {time} 공개",
+    zh: "{time}在所有平台上线",
+    bg: "Налично {time} във всички платформи",
+    vi: "Có mặt trên mọi nền tảng {time}",
+    ar: "متاح {time} على جميع المنصات",
+    fa: "{time} در همه پلتفرم‌ها در دسترس خواهد بود",
   },
   consent: {
     pt: "Permitir cookies nesta página?",
@@ -405,6 +432,51 @@ const initGoogleConsentBanner = (debugLang?: string | null) => {
   );
 };
 
+const updateReleaseAvailability = (
+  release: HTMLElement,
+  locale: string,
+  template: string,
+) => {
+  const releaseDateValue = release.getAttribute("data-release-date") || "";
+  const [year, month, day] = releaseDateValue.slice(0, 10).split("-").map(Number);
+  const releaseDate = year && month && day
+    ? new Date(year, month - 1, day).getTime()
+    : Date.parse(releaseDateValue);
+  if (!Number.isFinite(releaseDate)) return false;
+
+  const remaining = releaseDate - Date.now();
+  const isUpcoming = remaining > 0;
+  const platformHeading = document.getElementById("platform-heading");
+  const availability = document.getElementById("release-availability");
+  const links = document.getElementById("links-list");
+  const moreIndicator = document.getElementById("scroll-more");
+  const robots = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
+
+  platformHeading?.toggleAttribute("hidden", isUpcoming);
+  availability?.toggleAttribute("hidden", !isUpcoming);
+  links?.toggleAttribute("hidden", isUpcoming);
+  moreIndicator?.toggleAttribute("hidden", isUpcoming);
+
+  if (!isUpcoming) {
+    if (
+      robots?.content === "noindex, follow" && release.dataset.adProvider !== "tiktok"
+    ) {
+      robots.remove();
+    }
+    return false;
+  }
+
+  if (availability) {
+    const hours = remaining / 3_600_000;
+    const unit: Intl.RelativeTimeFormatUnit = hours >= 24 ? "day" : "hour";
+    const value = Math.max(1, Math.ceil(unit === "day" ? hours / 24 : hours));
+    const relativeTime = new Intl.RelativeTimeFormat(locale, { numeric: "always" })
+      .format(value, unit);
+    availability.textContent = template.replace("{time}", relativeTime);
+  }
+  return true;
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   const url = new URL(window.location.href);
   // get campaign if available
@@ -439,18 +511,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   // get user language
   const userLang = navigator.language || (navigator as any).userLanguage;
-  const lang: Locale = debugLang
+  const lang: Locale | undefined = debugLang
     ? debugLang
     : userLang
     ? userLang.split("-")[0]
     : undefined;
-  if (lang) { // if lang is undefined, use default values that are burnt in the HTML
+  const supportedLang = lang && localizationTable.platform[lang] ? lang : undefined;
+  const locale = supportedLang || navigator.language || "en";
+  if (supportedLang) { // if unsupported, use default values burnt into the HTML
     // grab labels from localization table
-    const platformLabel = localizationTable.platform[lang];
-    const moreLabel = localizationTable.more[lang];
-    const consentLabel = localizationTable.consent[lang];
-    const consentNoLabel = localizationTable.consentNo[lang];
-    const consentOkLabel = localizationTable.consentOk[lang];
+    const platformLabel = localizationTable.platform[supportedLang];
+    const moreLabel = localizationTable.more[supportedLang];
+    const consentLabel = localizationTable.consent[supportedLang];
+    const consentNoLabel = localizationTable.consentNo[supportedLang];
+    const consentOkLabel = localizationTable.consentOk[supportedLang];
     // get elements
     const platformHeading = document.getElementById("platform-heading");
     const moreIndicator = document.getElementById("scroll-more");
@@ -465,8 +539,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // localize
     if (platformLabel && moreLabel) {
       // set language and writing direction
-      document.documentElement.lang = lang;
-      if (rtlLangs.indexOf(lang) !== -1) {
+      document.documentElement.lang = supportedLang;
+      if (rtlLangs.indexOf(supportedLang) !== -1) {
         document.documentElement.dir = "rtl";
       }
       if (platformHeading) {
@@ -484,6 +558,17 @@ document.addEventListener("DOMContentLoaded", () => {
       if (consentOkLabel && consentOk) {
         consentOk.innerText = consentOkLabel;
       }
+    }
+  }
+  if (release) {
+    const availabilityTemplate = supportedLang
+      ? localizationTable.available[supportedLang]
+      : "Available {time} on every platform";
+    if (updateReleaseAvailability(release, locale, availabilityTemplate)) {
+      window.setInterval(
+        () => updateReleaseAvailability(release, locale, availabilityTemplate),
+        60_000,
+      );
     }
   }
   // attach events to platform links

@@ -19,6 +19,7 @@ export type ReleaseProps = {
 
 export const ReleaseApp = (props: ReleaseProps) => {
   const adProvider = props.adProvider ?? "meta";
+  const isUpcoming = Date.parse(props.release.releaseDate) > Date.now();
   const googleSendTo = props.google?.conversionLabel
     ? `${props.google.tagId}/${props.google.conversionLabel}`
     : undefined;
@@ -31,9 +32,11 @@ export const ReleaseApp = (props: ReleaseProps) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:title" content="Marca Tatem" />
         <meta property="og:image" content={pathForAsset("img", props.release.cover)} />
+        {(adProvider === "tiktok" || isUpcoming) && (
+          <meta name="robots" content="noindex, follow" />
+        )}
         {adProvider === "tiktok" && (
           <>
-            <meta name="robots" content="noindex, follow" />
             <link rel="canonical" href={`https://marca.fyi${releasePath}`} />
           </>
         )}
@@ -181,6 +184,7 @@ export const ReleaseApp = (props: ReleaseProps) => {
           data-track-name={props.release.title}
           data-ad-provider={adProvider}
           data-google-send-to={googleSendTo}
+          data-release-date={props.release.releaseDate}
         >
           <div id="cover">
             <img
@@ -191,8 +195,11 @@ export const ReleaseApp = (props: ReleaseProps) => {
           <div id="content">
             <div className="content-inner">
               <h1>{props.release.title}</h1>
-              <h2 id="platform-heading">Pick your platform</h2>
-              <ul id="links-list">
+              <h2 id="platform-heading" hidden={isUpcoming}>Pick your platform</h2>
+              <p id="release-availability" hidden={!isUpcoming} aria-live="polite">
+                Available in a few days on every platform
+              </p>
+              <ul id="links-list" hidden={isUpcoming}>
                 {props.release.links?.map((link) => {
                   return (
                     <li key={link.storeId}>
@@ -213,7 +220,7 @@ export const ReleaseApp = (props: ReleaseProps) => {
         </article>
 
         {/* Changed to an anchor tag pointing to the list */}
-        <a id="scroll-more" href="#links-list">More</a>
+        <a id="scroll-more" href="#links-list" hidden={isUpcoming}>More</a>
       </body>
     </html>
   );
